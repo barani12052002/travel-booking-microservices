@@ -1,20 +1,37 @@
 package com.barani.travel.dto;
 
+import jakarta.validation.constraints.*;
+
 import java.time.LocalDate;
 
 public class BookingRequest {
 
-    private String timeSlot;
+    @NotBlank(message = "Customer name is required")
     private String customerName;
+
+    @NotBlank(message = "Customer email is required")
+    @Email(message = "Invalid email format")
     private String customerEmail;
+
+    @NotBlank(message = "Customer phone is required")
     private String customerPhone;
 
+    @NotBlank(message = "Attraction code is required")
     private String attractionCode;
 
+    @NotNull(message = "Travel date is required")
+    @Future(message = "Travel date must be in the future")
     private LocalDate travelDate;
 
+    @NotBlank(message = "Time slot is required")
+    private String timeSlot;
+
+    @NotNull
+    @Min(value = 1, message = "At least one adult is required")
     private Integer adultCount;
 
+    @NotNull
+    @Min(value = 0, message = "Child count cannot be negative")
     private Integer childCount;
 
     public String getTimeSlot() {

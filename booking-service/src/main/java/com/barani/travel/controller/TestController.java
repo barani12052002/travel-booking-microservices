@@ -2,6 +2,9 @@ package com.barani.travel.controller;
 
 import com.barani.travel.client.ProviderClient;
 import com.barani.travel.dto.*;
+import com.barani.travel.dto.provider.PriceRequest;
+import com.barani.travel.dto.provider.PriceResponse;
+import com.barani.travel.dto.provider.TimeslotResponse;
 import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.web.bind.annotation.*;
 

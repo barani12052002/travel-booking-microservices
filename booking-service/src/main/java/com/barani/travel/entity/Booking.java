@@ -42,6 +42,9 @@ public class Booking {
     private LocalDateTime createdDate;
 
     private LocalDateTime updatedDate;
+    private String providerName;
+
+    private String currency;
 
     public Booking() {
     }
@@ -55,6 +58,22 @@ public class Booking {
     @PreUpdate
     public void preUpdate() {
         updatedDate = LocalDateTime.now();
+    }
+
+    public String getProviderName() {
+        return providerName;
+    }
+
+    public void setProviderName(String providerName) {
+        this.providerName = providerName;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public Long getId() {

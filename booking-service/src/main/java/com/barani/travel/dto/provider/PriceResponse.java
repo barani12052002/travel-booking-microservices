@@ -4,20 +4,26 @@ import java.math.BigDecimal;
 
 public class PriceResponse {
 
+    private String currency;
+
     private BigDecimal adultPrice;
+
     private BigDecimal childPrice;
+
+    private BigDecimal tax;
+
+    private BigDecimal serviceCharge;
+
+    private BigDecimal discount;
+
     private BigDecimal totalPrice;
 
-    public PriceResponse() {
+    public String getCurrency() {
+        return currency;
     }
 
-    public PriceResponse(BigDecimal adultPrice,
-                         BigDecimal childPrice,
-                         BigDecimal totalPrice) {
-
-        this.adultPrice = adultPrice;
-        this.childPrice = childPrice;
-        this.totalPrice = totalPrice;
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public BigDecimal getAdultPrice() {
@@ -34,6 +40,30 @@ public class PriceResponse {
 
     public void setChildPrice(BigDecimal childPrice) {
         this.childPrice = childPrice;
+    }
+
+    public BigDecimal getTax() {
+        return tax;
+    }
+
+    public void setTax(BigDecimal tax) {
+        this.tax = tax;
+    }
+
+    public BigDecimal getServiceCharge() {
+        return serviceCharge;
+    }
+
+    public void setServiceCharge(BigDecimal serviceCharge) {
+        this.serviceCharge = serviceCharge;
+    }
+
+    public BigDecimal getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
     }
 
     public BigDecimal getTotalPrice() {

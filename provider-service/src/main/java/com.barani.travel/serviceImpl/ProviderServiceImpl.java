@@ -28,20 +28,31 @@ public class ProviderServiceImpl implements ProviderService {
     @Override
     public PriceResponse getPrice(PriceRequest request) {
 
-        double adultPrice = request.getAdultCount() * 1000;
+        BigDecimal adultPrice = BigDecimal.valueOf(request.getAdultCount() * 1000);
 
-        double childPrice = request.getChildCount() * 500;
+        BigDecimal childPrice = BigDecimal.valueOf(request.getChildCount() * 500);
 
-        double totalPrice = adultPrice + childPrice;
+        BigDecimal subTotal = adultPrice.add(childPrice);
+
+        BigDecimal tax = subTotal.multiply(BigDecimal.valueOf(0.05));
+
+        BigDecimal serviceCharge = BigDecimal.valueOf(25);
+
+        BigDecimal discount = BigDecimal.valueOf(50);
+
+        BigDecimal total = subTotal.add(tax).add(serviceCharge).subtract(discount);
 
         PriceResponse response = new PriceResponse();
 
+        response.setCurrency("AED");
         response.setAdultPrice(adultPrice);
         response.setChildPrice(childPrice);
-        response.setTotalPrice(totalPrice);
+        response.setTax(tax);
+        response.setServiceCharge(serviceCharge);
+        response.setDiscount(discount);
+        response.setTotalPrice(total);
 
         return response;
-
     }
 
     @Override

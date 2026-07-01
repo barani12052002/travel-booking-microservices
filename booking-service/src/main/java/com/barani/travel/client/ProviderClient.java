@@ -2,10 +2,9 @@ package com.barani.travel.client;
 
 import com.barani.travel.dto.BookingRequest;
 import com.barani.travel.dto.BookingResponse;
-import com.barani.travel.dto.PriceRequest;
-import com.barani.travel.dto.PriceResponse;
-import com.barani.travel.dto.TimeslotResponse;
-
+import com.barani.travel.dto.provider.PriceRequest;
+import com.barani.travel.dto.provider.PriceResponse;
+import com.barani.travel.dto.provider.TimeslotResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 

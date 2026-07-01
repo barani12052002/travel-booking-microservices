@@ -1,9 +1,11 @@
 package com.barani.travel.serviceImpl;
-import com.barani.travel.dto.PriceRequest;
-import com.barani.travel.dto.PriceResponse;
+import com.barani.travel.dto.provider.PriceRequest;
+import com.barani.travel.dto.provider.PriceResponse;
 import com.barani.travel.entity.Booking;
 import com.barani.travel.enums.BookingStatus;
-import java.math.BigDecimal;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -69,10 +71,14 @@ public class BookingServiceImpl implements BookingService {
         booking.setTravelDate(request.getTravelDate());
         booking.setAdultCount(request.getAdultCount());
         booking.setChildCount(request.getChildCount());
-        booking.setTotalAmount(BigDecimal.valueOf(priceResponse.getTotalPrice()));
+        booking.setTotalAmount(priceResponse.getTotalPrice());
 
         booking.setBookingStatus(BookingStatus.CONFIRMED);
+        booking.setProviderName("Adventure Park");
 
+        booking.setCurrency(priceResponse.getCurrency());
+
+        booking.setTimeSlot(request.getTimeSlot());
         bookingRepository.save(booking);
         log.info("Booking saved successfully : {}", booking.getBookingReference());
         // Step 4 - Return Response
@@ -84,7 +90,13 @@ public class BookingServiceImpl implements BookingService {
         response.setBookingStatus(booking.getBookingStatus().name());
         response.setTotalAmount(booking.getTotalAmount());
         response.setMessage(providerResponse.getMessage());
-
+        response.setProviderName(booking.getProviderName());
+        response.setBookingDate(booking.getCreatedDate());
+        response.setTravelDate(booking.getTravelDate());
+        response.setTimeSlot(booking.getTimeSlot());
+        response.setCurrency(booking.getCurrency());
+        response.setAdultCount(booking.getAdultCount());
+        response.setChildCount(booking.getChildCount());
 
         return response;
     }
@@ -108,8 +120,25 @@ public class BookingServiceImpl implements BookingService {
         BookingResponse response = new BookingResponse();
 
         response.setBookingReference(booking.getBookingReference());
+
         response.setProviderBookingId(booking.getProviderBookingId());
+
+        response.setProviderName(booking.getProviderName());
+
         response.setBookingStatus(booking.getBookingStatus().name());
+
+        response.setBookingDate(booking.getCreatedDate());
+
+        response.setTravelDate(booking.getTravelDate());
+
+        response.setTimeSlot(booking.getTimeSlot());
+
+        response.setCurrency(booking.getCurrency());
+
+        response.setAdultCount(booking.getAdultCount());
+
+        response.setChildCount(booking.getChildCount());
+
         response.setTotalAmount(booking.getTotalAmount());
 
         return response;
@@ -133,12 +162,53 @@ public class BookingServiceImpl implements BookingService {
         BookingResponse response = new BookingResponse();
 
         response.setBookingReference(booking.getBookingReference());
+
         response.setProviderBookingId(booking.getProviderBookingId());
+
+        response.setProviderName(booking.getProviderName());
+
         response.setBookingStatus(booking.getBookingStatus().name());
+
+        response.setBookingDate(booking.getCreatedDate());
+
+        response.setTravelDate(booking.getTravelDate());
+
+        response.setTimeSlot(booking.getTimeSlot());
+
+        response.setCurrency(booking.getCurrency());
+
+        response.setAdultCount(booking.getAdultCount());
+
+        response.setChildCount(booking.getChildCount());
+
         response.setTotalAmount(booking.getTotalAmount());
 
         response.setMessage("Booking Cancelled Successfully");
 
         return response;
+    }
+    @Override
+    public Page<BookingResponse> getBookings(int page, int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        return bookingRepository.findAll(pageable)
+                .map(booking -> {
+                    BookingResponse response = new BookingResponse();
+
+                    response.setBookingReference(booking.getBookingReference());
+                    response.setProviderBookingId(booking.getProviderBookingId());
+                    response.setProviderName(booking.getProviderName());
+                    response.setBookingStatus(booking.getBookingStatus().name());
+                    response.setBookingDate(booking.getCreatedDate());
+                    response.setTravelDate(booking.getTravelDate());
+                    response.setTimeSlot(booking.getTimeSlot());
+                    response.setCurrency(booking.getCurrency());
+                    response.setAdultCount(booking.getAdultCount());
+                    response.setChildCount(booking.getChildCount());
+                    response.setTotalAmount(booking.getTotalAmount());
+
+                    return response;
+                });
     }
 }

@@ -52,6 +52,6 @@ public class BookingController {
     public Page<BookingResponse> getBookings(@RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
 
-        return null;
+        return bookingService.getBookings(page, size);
     }
 }

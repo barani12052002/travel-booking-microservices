@@ -126,19 +126,20 @@ Response
 
 ### Swagger UI
 
-_Add screenshot_
+<img width="1365" height="626" alt="swagger-ui" src="https://github.com/user-attachments/assets/496fd0f1-feb8-4fe1-adc7-37bdf07ea959" />
+
 
 ### Eureka Dashboard
 
-_Add screenshot_
+<img width="1350" height="642" alt="eureka-dashboard" src="https://github.com/user-attachments/assets/28f7e411-c506-4470-9604-57d0815a7b04" />
 
 ### Booking API Response
 
-_Add screenshot_
+<img width="1022" height="681" alt="bookings-postman" src="https://github.com/user-attachments/assets/ae37de3f-2e0e-458c-a05e-17f77d03ab9a" />
 
 ### MySQL Database
 
-_Add screenshot_
+<img width="1366" height="768" alt="mysql-booking-tables" src="https://github.com/user-attachments/assets/78800f85-df5b-4409-8e6d-2e14cf346c0c" />
 
 ---
 

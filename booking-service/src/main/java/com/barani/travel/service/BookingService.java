@@ -9,6 +9,6 @@ public interface BookingService {
 
     BookingResponse createBooking(BookingRequest request);
     BookingResponse getBooking(String bookingReference);
-    List<BookingResponse> getBookingsByEmail(String email);
-
+    List<BookingResponse> getBookingsByCustomerEmail(String customerEmail);
+    BookingResponse cancelBooking(String bookingReference);
 }

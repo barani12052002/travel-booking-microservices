@@ -2,10 +2,12 @@ package com.barani.travel.controller;
 
 import com.barani.travel.client.ProviderClient;
 import com.barani.travel.dto.*;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Hidden
 @RestController
 @RequestMapping("/test")
 public class TestController {

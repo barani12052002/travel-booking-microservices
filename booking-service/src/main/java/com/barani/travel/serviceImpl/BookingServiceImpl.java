@@ -13,6 +13,7 @@ import com.barani.travel.dto.BookingResponse;
 import com.barani.travel.exception.BookingNotFoundException;
 import com.barani.travel.repository.BookingRepository;
 import com.barani.travel.service.BookingService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,7 @@ public class BookingServiceImpl implements BookingService {
 
     private static final Logger log = LoggerFactory.getLogger(BookingServiceImpl.class);
 
+    @CircuitBreaker(name = "providerService", fallbackMethod = "bookingFallback")
     @Override
     public BookingResponse createBooking(BookingRequest request) {
 
@@ -78,12 +80,25 @@ public class BookingServiceImpl implements BookingService {
         BookingResponse response = new BookingResponse();
 
         response.setBookingReference(booking.getBookingReference());
+        response.setProviderBookingId(booking.getProviderBookingId());
         response.setBookingStatus(booking.getBookingStatus().name());
         response.setTotalAmount(booking.getTotalAmount());
         response.setMessage(providerResponse.getMessage());
 
+
         return response;
     }
+
+    public BookingResponse bookingFallback(BookingRequest request, Exception ex) {
+
+        BookingResponse response = new BookingResponse();
+
+        response.setBookingStatus("FAILED");
+        response.setMessage("Provider Service is temporarily unavailable. Please try again later.");
+
+        return response;
+    }
+
     @Override
     public BookingResponse getBooking(String bookingReference) {
 
@@ -93,6 +108,7 @@ public class BookingServiceImpl implements BookingService {
         BookingResponse response = new BookingResponse();
 
         response.setBookingReference(booking.getBookingReference());
+        response.setProviderBookingId(booking.getProviderBookingId());
         response.setBookingStatus(booking.getBookingStatus().name());
         response.setTotalAmount(booking.getTotalAmount());
 
@@ -100,7 +116,29 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<BookingResponse> getBookingsByEmail(String email) {
+    public List<BookingResponse> getBookingsByCustomerEmail(String customerEmail) {
         return List.of();
+    }
+
+    @Override
+    public BookingResponse cancelBooking(String bookingReference) {
+
+        Booking booking = bookingRepository.findByBookingReference(bookingReference).orElseThrow(() ->
+                        new BookingNotFoundException("Booking not found : " + bookingReference));
+
+        booking.setBookingStatus(BookingStatus.CANCELLED);
+
+        bookingRepository.save(booking);
+
+        BookingResponse response = new BookingResponse();
+
+        response.setBookingReference(booking.getBookingReference());
+        response.setProviderBookingId(booking.getProviderBookingId());
+        response.setBookingStatus(booking.getBookingStatus().name());
+        response.setTotalAmount(booking.getTotalAmount());
+
+        response.setMessage("Booking Cancelled Successfully");
+
+        return response;
     }
 }

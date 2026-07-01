@@ -135,7 +135,12 @@ Response
 
 ### Booking API Response
 
-<img width="1022" height="681" alt="bookings-postman" src="https://github.com/user-attachments/assets/ae37de3f-2e0e-458c-a05e-17f77d03ab9a" />
+<img width="1323" height="628" alt="creating booking" src="https://github.com/user-attachments/assets/c73077f5-2e1f-4794-87d1-adce87bc61f4" />
+<img width="1366" height="768" alt="creating_booking" src="https://github.com/user-attachments/assets/13ce384d-d518-46aa-a548-9a4043574975" />
+
+### Get Booking
+
+<img width="1342" height="646" alt="GET-Booking" src="https://github.com/user-attachments/assets/02961bc9-d6f5-4731-986a-5a120b6d7ae0" />
 
 ### MySQL Database
 

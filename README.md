@@ -136,7 +136,7 @@ Response
 ### Booking API Response
 
 <img width="1323" height="628" alt="creating booking" src="https://github.com/user-attachments/assets/c73077f5-2e1f-4794-87d1-adce87bc61f4" />
-<img width="1366" height="768" alt="creating_booking" src="https://github.com/user-attachments/assets/13ce384d-d518-46aa-a548-9a4043574975" />
+<img width="1325" height="651" alt="creating_booking" src="https://github.com/user-attachments/assets/cbb47448-a869-48a0-85f1-8e713ffb8aa8" />
 
 ### Get Booking
 

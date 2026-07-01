@@ -1,6 +1,6 @@
 # ✈️ Travel Booking Microservices
 
-A microservices-based Travel Booking System built using **Java 17**, **Spring Boot**, and **Spring Cloud**. The project demonstrates service discovery, centralized configuration, API Gateway, inter-service communication using OpenFeign, booking management, and MySQL persistence.
+A microservices-based Travel Booking System built using **Java 17**, **Spring Boot**, and **Spring Cloud**. The project demonstrates service discovery, API Gateway, inter-service communication using OpenFeign, booking management, Docker containerization, and MySQL persistence.
 
 ---
 
@@ -13,8 +13,9 @@ A microservices-based Travel Booking System built using **Java 17**, **Spring Bo
 - ✅ Price Calculation
 - ✅ OpenFeign Inter-Service Communication
 - ✅ Eureka Service Discovery
-- ✅ Spring Cloud Config Server
 - ✅ Spring Cloud API Gateway
+- ✅ Docker
+- ✅ Docker Compose
 - ✅ MySQL Integration
 - ✅ Spring Data JPA & Hibernate
 - ✅ Request Validation
@@ -26,25 +27,23 @@ A microservices-based Travel Booking System built using **Java 17**, **Spring Bo
 
 ## 🏗️ Architecture
 
-```
-                   Client
-                      │
-                      ▼
-               API Gateway
-                      │
-        ┌─────────────┴─────────────┐
-        │                           │
-        ▼                           ▼
- Booking Service            Provider Service
-        │
-        ▼
-      MySQL
+```text
+                Client
+                   │
+                   ▼
+             API Gateway
+                   │
+      ┌────────────┴────────────┐
+      ▼                         ▼
+Booking Service          Provider Service
+      │
+      ▼
+    MySQL
 
- Eureka Server
- Config Server
-```
+ Eureka Discovery Server
 
----
+ Docker Compose manages all services.
+```
 
 ## 🛠️ Tech Stack
 
@@ -54,7 +53,7 @@ A microservices-based Travel Booking System built using **Java 17**, **Spring Bo
 | Framework | Spring Boot 3 |
 | Microservices | Spring Cloud |
 | Service Discovery | Eureka Server |
-| Configuration | Spring Cloud Config |
+| Containerization | Docker, Docker Compose |
 | API Gateway | Spring Cloud Gateway |
 | Communication | OpenFeign |
 | Database | MySQL |
@@ -65,24 +64,60 @@ A microservices-based Travel Booking System built using **Java 17**, **Spring Bo
 | Testing Tool | Postman |
 
 ---
+## 📈 Project Status
+
+✅ Completed
+
+- Eureka Discovery Server
+- API Gateway
+- Booking Service
+- Provider Service
+- OpenFeign Communication
+- MySQL Integration
+- Docker
+- Docker Compose
+- Swagger/OpenAPI
 
 ## 📂 Project Structure
 
-```
+```text
 travel-booking-microservices
 │
 ├── discovery-server
-├── config-server
 ├── api-gateway
 ├── booking-service
-└── provider-service
+├── provider-service
+├── docker-compose.yml
+└── README.md
 ```
 
----
+## 🐳 Docker Support
 
-## 📌 Booking Flow
+The complete application can be started using Docker Compose.
 
+### Build Images
+
+```bash
+mvn clean package
+
+docker build -t discovery-server ./discovery-server
+docker build -t provider-service ./provider-service
+docker build -t booking-service ./booking-service
+docker build -t api-gateway ./api-gateway
 ```
+
+### Run
+
+```bash
+docker compose up --build
+```
+
+### Stop
+
+```bash
+docker compose down
+```
+
 Client
    │
    ▼
@@ -133,6 +168,10 @@ Response
 
 <img width="1350" height="642" alt="eureka-dashboard" src="https://github.com/user-attachments/assets/28f7e411-c506-4470-9604-57d0815a7b04" />
 
+### Provider Service
+
+<img width="1354" height="642" alt="provider-service" src="https://github.com/user-attachments/assets/c2bb1c38-5e94-4f4e-a581-7140c10f6e4e" />
+
 ### Booking API Response
 
 <img width="1323" height="628" alt="creating booking" src="https://github.com/user-attachments/assets/c73077f5-2e1f-4794-87d1-adce87bc61f4" />
@@ -146,19 +185,27 @@ Response
 
 <img width="1366" height="768" alt="mysql-booking-tables" src="https://github.com/user-attachments/assets/78800f85-df5b-4409-8e6d-2e14cf346c0c" />
 
+### Docker Desktop
+
+<img width="1366" height="768" alt="docker_desktop" src="https://github.com/user-attachments/assets/ed5e939d-a163-4876-98b2-4f446345d554" />
 ---
 
 ## ▶️ How to Run
 
-### Start Services
+### Using Docker
 
-1. Config Server
-2. Eureka Discovery Server
-3. API Gateway
-4. Provider Service
-5. Booking Service
+```bash
+docker compose up --build
+```
 
----
+Access the services:
+
+| Service | URL |
+|---------|-----|
+| Eureka Dashboard | http://localhost:8761 |
+| API Gateway | http://localhost:8080 |
+| Booking Service Swagger | http://localhost:8081/swagger-ui/index.html |
+| Provider Service Swagger | http://localhost:8082/swagger-ui/index.html |
 
 ## 💻 Clone Repository
 
@@ -177,7 +224,6 @@ git clone https://github.com/barani12052002/travel-booking-microservices.git
 - Spring Data JPA
 - Service Discovery
 - API Gateway
-- Centralized Configuration
 - OpenFeign
 - Validation
 - Exception Handling
@@ -188,8 +234,6 @@ git clone https://github.com/barani12052002/travel-booking-microservices.git
 
 ## 🚀 Future Enhancements
 
-- Docker
-- Docker Compose
 - Spring Security + JWT
 - Resilience4j Circuit Breaker
 - Unit Testing (JUnit & Mockito)

@@ -1,244 +1,127 @@
-# ✈️ Travel Booking Microservices
+# 🌍 Travel Booking Microservices
 
-A microservices-based Travel Booking System built using **Java 17**, **Spring Boot**, and **Spring Cloud**. The project demonstrates service discovery, API Gateway, inter-service communication using OpenFeign, booking management, Docker containerization, and MySQL persistence.
-
----
+A production-style Travel Booking Microservices application built using Java 17, Spring Boot 3, Spring Security, JWT Authentication, Docker, and MySQL.
 
 ## 🚀 Features
 
-- ✅ Booking Creation
-- ✅ Booking Retrieval
-- ✅ Booking Cancellation
-- ✅ Timeslot Availability
-- ✅ Price Calculation
-- ✅ OpenFeign Inter-Service Communication
-- ✅ Eureka Service Discovery
-- ✅ Spring Cloud API Gateway
-- ✅ Docker
-- ✅ Docker Compose
-- ✅ MySQL Integration
-- ✅ Spring Data JPA & Hibernate
-- ✅ Request Validation
-- ✅ Global Exception Handling
-- ✅ Swagger / OpenAPI Documentation
-- ✅ Structured Logging (SLF4J)
+- 🔐 JWT Authentication & Authorization
+- 👤 Role-Based Access Control (ADMIN / USER)
+- 📧 HTML Email Confirmation
+- 📄 PDF Ticket Generation
+- 📱 QR Code in PDF Ticket
+- 🌐 API Gateway
+- 🔍 Eureka Service Discovery
+- 🔗 OpenFeign Client
+- 🐳 Docker & Docker Compose
+- 📚 Swagger API Documentation
+- 🗄️ MySQL Database
 
 ---
 
-## 🏗️ Architecture
+## 🛠 Tech Stack
 
-```text
-                Client
-                   │
-                   ▼
-             API Gateway
-                   │
-      ┌────────────┴────────────┐
-      ▼                         ▼
-Booking Service          Provider Service
-      │
-      ▼
-    MySQL
-
- Eureka Discovery Server
-
- Docker Compose manages all services.
-```
-
-## 🛠️ Tech Stack
-
-| Category | Technologies |
-|----------|--------------|
+| Category | Technology |
+|----------|------------|
 | Language | Java 17 |
 | Framework | Spring Boot 3 |
-| Microservices | Spring Cloud |
-| Service Discovery | Eureka Server |
-| Containerization | Docker, Docker Compose |
-| API Gateway | Spring Cloud Gateway |
-| Communication | OpenFeign |
-| Database | MySQL |
+| Security | Spring Security, JWT |
+| Database | MySQL 8 |
 | ORM | Spring Data JPA, Hibernate |
-| Documentation | Swagger / OpenAPI |
+| Microservices | Eureka, API Gateway, OpenFeign |
+| Documentation | Swagger OpenAPI |
 | Build Tool | Maven |
-| Version Control | Git & GitHub |
-| Testing Tool | Postman |
+| Containerization | Docker, Docker Compose |
+| PDF | OpenPDF |
+| Email | Spring Mail |
 
 ---
-## 📈 Project Status
 
-✅ Completed
+## 🏗 Architecture
 
-- Eureka Discovery Server
-- API Gateway
-- Booking Service
-- Provider Service
-- OpenFeign Communication
-- MySQL Integration
-- Docker
-- Docker Compose
-- Swagger/OpenAPI
+```
+                  Client
+                     │
+                     ▼
+              API Gateway (8080)
+                     │
+     ┌───────────────┼───────────────┐
+     ▼                               ▼
+Booking Service                Provider Service
+     │
+     ▼
+ MySQL Database
+     │
+     ▼
+ HTML Email + PDF Ticket + QR Code
 
-## 📂 Project Structure
-
-```text
-travel-booking-microservices
-│
-├── discovery-server
-├── api-gateway
-├── booking-service
-├── provider-service
-├── docker-compose.yml
-└── README.md
+              Eureka Discovery Server
 ```
 
-## 🐳 Docker Support
+---
 
-The complete application can be started using Docker Compose.
+## 🔐 Authentication
 
-### Build Images
+- User Registration
+- User Login
+- BCrypt Password Encryption
+- JWT Token Authentication
+- Role-Based Authorization
 
-```bash
-mvn clean package
+---
 
-docker build -t discovery-server ./discovery-server
-docker build -t provider-service ./provider-service
-docker build -t booking-service ./booking-service
-docker build -t api-gateway ./api-gateway
-```
+## 📄 Booking Features
 
-### Run
+- Create Booking
+- Get Booking
+- Cancel Booking
+- Booking History
+- Email Confirmation
+- PDF Ticket
+- QR Code Verification
+
+---
+
+## 🐳 Docker
 
 ```bash
 docker compose up --build
 ```
 
-### Stop
+---
 
-```bash
-docker compose down
-```
-```text
-Client
-   │
-   ▼
+## 📚 Swagger
+
 Booking Service
-   │
-   ├── Validate Request
-   │
-   ├── Fetch Price (Provider Service)
-   │
-   ├── Create Booking (Provider Service)
-   │
-   ├── Save Booking (MySQL)
-   │
-   ▼
-Response
+
+```
+http://localhost:8081/swagger-ui/index.html
+```
+
+Eureka
+
+```
+http://localhost:8761
 ```
 
 ---
 
-## 📡 REST APIs
-
-### Booking Service
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | /booking | Create Booking |
-| GET | /booking/{bookingReference} | Get Booking |
-| PUT | /booking/cancel/{bookingReference} | Cancel Booking |
-
-### Provider Service
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | /provider/timeslots | Get Available Timeslots |
-| POST | /provider/price | Calculate Price |
-| POST | /provider/book | Create Provider Booking |
-
----
-
-## 📷 Screenshots
+## 📸 Screenshots
 
 ### Swagger UI
 
-<img width="1365" height="626" alt="swagger-ui" src="https://github.com/user-attachments/assets/496fd0f1-feb8-4fe1-adc7-37bdf07ea959" />
+(Add Screenshot)
 
+### Booking Confirmation Email
+
+(Add Screenshot)
+
+### PDF Ticket
+
+(Add Screenshot)
 
 ### Eureka Dashboard
 
-<img width="1350" height="642" alt="eureka-dashboard" src="https://github.com/user-attachments/assets/28f7e411-c506-4470-9604-57d0815a7b04" />
-
-### Provider Service
-
-<img width="1354" height="642" alt="provider-service" src="https://github.com/user-attachments/assets/c2bb1c38-5e94-4f4e-a581-7140c10f6e4e" />
-
-### Booking API Response
-
-<img width="1323" height="628" alt="creating booking" src="https://github.com/user-attachments/assets/c73077f5-2e1f-4794-87d1-adce87bc61f4" />
-<img width="1325" height="651" alt="creating_booking" src="https://github.com/user-attachments/assets/cbb47448-a869-48a0-85f1-8e713ffb8aa8" />
-
-### Get Booking
-
-<img width="1342" height="646" alt="GET-Booking" src="https://github.com/user-attachments/assets/02961bc9-d6f5-4731-986a-5a120b6d7ae0" />
-
-### MySQL Database
-
-<img width="1366" height="768" alt="mysql-booking-tables" src="https://github.com/user-attachments/assets/78800f85-df5b-4409-8e6d-2e14cf346c0c" />
-
-### Docker Desktop
-
-<img width="1366" height="768" alt="docker_desktop" src="https://github.com/user-attachments/assets/ed5e939d-a163-4876-98b2-4f446345d554" />
----
-
-## ▶️ How to Run
-
-### Using Docker
-
-```bash
-docker compose up --build
-```
-
-Access the services:
-
-| Service | URL |
-|---------|-----|
-| Eureka Dashboard | http://localhost:8761 |
-| API Gateway | http://localhost:8080 |
-| Booking Service Swagger | http://localhost:8081/swagger-ui/index.html |
-| Provider Service Swagger | http://localhost:8082/swagger-ui/index.html |
-
-## 💻 Clone Repository
-
-```bash
-git clone https://github.com/barani12052002/travel-booking-microservices.git
-```
-
----
-
-## 📚 Key Concepts Implemented
-
-- Microservices Architecture
-- Layered Architecture
-- RESTful APIs
-- DTO Mapping
-- Spring Data JPA
-- Service Discovery
-- API Gateway
-- OpenFeign
-- Validation
-- Exception Handling
-- Logging
-- Booking Lifecycle Management
-
----
-
-## 🚀 Future Enhancements
-
-- Spring Security + JWT
-- Resilience4j Circuit Breaker
-- Unit Testing (JUnit & Mockito)
-- CI/CD using GitHub Actions
-- AWS Deployment
+(Add Screenshot)
 
 ---
 
@@ -246,8 +129,10 @@ git clone https://github.com/barani12052002/travel-booking-microservices.git
 
 **Barani K**
 
-📧 baraniec2002@gmail.com
+Java Backend Developer
 
-🔗 LinkedIn: https://linkedin.com/in/k-barani
+LinkedIn:
+(Add LinkedIn URL)
 
-🔗 GitHub: https://github.com/barani12052002
+GitHub:
+https://github.com/barani12052002

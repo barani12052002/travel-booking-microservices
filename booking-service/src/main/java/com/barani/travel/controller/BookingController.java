@@ -6,6 +6,7 @@ import com.barani.travel.service.BookingService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Create Booking")
     @PostMapping
     public BookingResponse createBooking(@Valid @RequestBody BookingRequest request){
@@ -28,6 +30,7 @@ public class BookingController {
 
     }
 
+    @PreAuthorize("hasRole('USER')")
     @Operation(summary = "Get Booking By Reference")
     @GetMapping("/{bookingReference}")
     public BookingResponse getBooking(@PathVariable String bookingReference) {
@@ -40,7 +43,7 @@ public class BookingController {
 
         return bookingService.getBookingsByCustomerEmail(email);
     }
-
+    @PreAuthorize("hasRole('USER')")
     @PutMapping("/cancel/{bookingReference}")
     public BookingResponse cancelBooking(@PathVariable String bookingReference){
 
@@ -48,6 +51,7 @@ public class BookingController {
 
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public Page<BookingResponse> getBookings(@RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {

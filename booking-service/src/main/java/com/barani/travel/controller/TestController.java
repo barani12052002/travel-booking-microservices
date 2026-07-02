@@ -1,39 +1,21 @@
 package com.barani.travel.controller;
 
-import com.barani.travel.client.ProviderClient;
-import com.barani.travel.dto.*;
-import com.barani.travel.dto.provider.PriceRequest;
-import com.barani.travel.dto.provider.PriceResponse;
-import com.barani.travel.dto.provider.TimeslotResponse;
-import io.swagger.v3.oas.annotations.Hidden;
-import org.springframework.web.bind.annotation.*;
+import com.barani.travel.security.JwtService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
-@Hidden
 @RestController
-@RequestMapping("/test")
 public class TestController {
 
-    private final ProviderClient providerClient;
+    private final JwtService jwtService;
 
-    public TestController(ProviderClient providerClient) {
-        this.providerClient = providerClient;
+    public TestController(JwtService jwtService) {
+        this.jwtService = jwtService;
     }
 
-    @GetMapping("/timeslots")
-    public List<TimeslotResponse> getTimeslots() {
-        return providerClient.getTimeslots();
-    }
+    @GetMapping("/token")
+    public String token() {
 
-    @PostMapping("/price")
-    public PriceResponse getPrice(@RequestBody PriceRequest request) {
-        return providerClient.getPrice(request);
-    }
-    @PostMapping("/book")
-    public BookingResponse createBooking(@RequestBody BookingRequest request) {
-
-        return providerClient.createBooking(request);
-
+        return jwtService.generateToken("baranibarani732@gmail.com");
     }
 }

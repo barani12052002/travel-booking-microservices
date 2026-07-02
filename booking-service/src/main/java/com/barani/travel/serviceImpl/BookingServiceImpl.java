@@ -3,6 +3,7 @@ import com.barani.travel.dto.provider.PriceRequest;
 import com.barani.travel.dto.provider.PriceResponse;
 import com.barani.travel.entity.Booking;
 import com.barani.travel.enums.BookingStatus;
+import com.barani.travel.service.EmailService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,17 +20,20 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.barani.travel.pdf.PdfService;
 
 @Service
 public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepository;
-
+    private final PdfService pdfService;
     private final ProviderClient providerClient;
-
-    public BookingServiceImpl(BookingRepository bookingRepository, ProviderClient providerClient) {
+    private final EmailService emailService;
+    public BookingServiceImpl(BookingRepository bookingRepository, ProviderClient providerClient,EmailService emailService,PdfService pdfService) {
         this.bookingRepository = bookingRepository;
         this.providerClient = providerClient;
+        this.emailService=emailService;
+        this.pdfService=pdfService;
     }
 
     private static final Logger log = LoggerFactory.getLogger(BookingServiceImpl.class);
@@ -81,6 +85,85 @@ public class BookingServiceImpl implements BookingService {
         booking.setTimeSlot(request.getTimeSlot());
         bookingRepository.save(booking);
         log.info("Booking saved successfully : {}", booking.getBookingReference());
+        String subject = "Booking Confirmation - " + booking.getBookingReference();
+
+        String body = """
+<html>
+
+<body style="font-family:Arial;background:#f5f5f5;padding:20px">
+
+<div style="max-width:650px;
+background:white;
+padding:30px;
+border-radius:10px">
+
+<h2 style="color:#1E88E5">
+🎉 Booking Confirmed
+</h2>
+
+<p>Hello <b>%s</b>,</p>
+
+<p>Your booking has been confirmed successfully.</p>
+
+<table border="0" cellpadding="8">
+
+<tr>
+<td><b>Booking Reference</b></td>
+<td>%s</td>
+</tr>
+
+<tr>
+<td><b>Travel Date</b></td>
+<td>%s</td>
+</tr>
+
+<tr>
+<td><b>Time Slot</b></td>
+<td>%s</td>
+</tr>
+
+<tr>
+<td><b>Total Amount</b></td>
+<td>%s %s</td>
+</tr>
+
+</table>
+
+<br>
+
+<p>📎 Your booking ticket is attached as a PDF.</p>
+
+<hr>
+
+<p style="color:gray">
+Travel Booking Team
+
+📧 support@travelbooking.com
+🌐 www.travelbooking.com
+📞 +91 8667600676
+</p>
+
+</div>
+
+</body>
+
+</html>
+""".formatted(
+                booking.getCustomerName(),
+                booking.getBookingReference(),
+                booking.getTravelDate(),
+                booking.getTimeSlot(),
+                booking.getCurrency(),
+                booking.getTotalAmount());
+        byte[] pdf = pdfService.generateBookingPdf(booking);
+        log.info("Sending confirmation email to {}", booking.getCustomerEmail());
+        try {
+            emailService.sendBookingConfirmation(booking.getCustomerEmail(), subject, body, pdf,
+                    "Booking-" + booking.getBookingReference() + ".pdf");
+            log.info("Email sent successfully");
+        } catch (Exception e) {
+            log.error("Mail sending failed", e);
+        }
         // Step 4 - Return Response
 
         BookingResponse response = new BookingResponse();

@@ -12,12 +12,14 @@ services:
       - mysql-data:/var/lib/mysql
 
   discovery-server:
+    build: ./discovery-server
     image: discovery-server
     container_name: discovery-server
     ports:
       - "8761:8761"
 
   provider-service:
+    build: ./provider-service
     image: provider-service
     container_name: provider-service
     ports:
@@ -26,6 +28,7 @@ services:
       - discovery-server
 
   booking-service:
+    build: ./booking-service
     image: booking-service
     container_name: booking-service
     ports:
@@ -36,6 +39,7 @@ services:
       - provider-service
 
   api-gateway:
+    build: ./api-gateway
     image: api-gateway
     container_name: api-gateway
     ports:

@@ -296,43 +296,45 @@ http://localhost:8761
 
 ## Swagger UI
 
-> Add screenshot here
+<img width="1342" height="638" alt="Swagger UI" src="https://github.com/user-attachments/assets/28211ae1-797e-4db4-9d78-0bf5be1b16a6" />
 
 ---
 
 ## JWT Authorization
 
-> Add screenshot here
+<img width="1332" height="474" alt="JWT" src="https://github.com/user-attachments/assets/f0c69bd0-193f-4435-a9ac-362d409ac272" />
+
+<img width="1334" height="641" alt="JWT 2" src="https://github.com/user-attachments/assets/9fa6a5b4-1fb4-42c2-bf3d-dda5f8cf1c0c" />
 
 ---
 
 ## Booking Created Successfully
 
-> Add screenshot here
+<img width="1346" height="639" alt="booking reesponse" src="https://github.com/user-attachments/assets/9a2a5d57-d26f-404a-901f-9294a0259878" />
 
 ---
 
 ## Booking Confirmation Email
 
-> Add screenshot here
+<img width="1018" height="630" alt="booking mail" src="https://github.com/user-attachments/assets/20104b85-9744-4b1f-9c9b-6b04b93726ed" />
 
 ---
 
 ## PDF Ticket
 
-> Add screenshot here
+<img width="332" height="604" alt="ticket pdf" src="https://github.com/user-attachments/assets/af678562-ec99-43d2-9724-ef08d6de1b17" />
 
 ---
 
 ## QR Code
 
-> Add screenshot here
+<img width="1072" height="627" alt="QR Code" src="https://github.com/user-attachments/assets/6c27d04b-420e-4e59-9670-ddbf232fe51f" />
 
 ---
 
 ## Eureka Dashboard
 
-> Add screenshot here
+<img width="1350" height="642" alt="eureka-dashboard" src="https://github.com/user-attachments/assets/b3f35d4c-71bf-442e-9501-e0fe493f4c55" />
 
 ---
 
@@ -344,7 +346,7 @@ http://localhost:8761
 
 ## Docker Containers
 
-> Add screenshot here
+<img width="1366" height="768" alt="docker_desktop" src="https://github.com/user-attachments/assets/add6e697-6715-4e16-9ffe-cea67d809265" />
 
 ---
 

@@ -340,7 +340,7 @@ http://localhost:8761
 
 ## GitHub Actions
 
-> Add screenshot here
+<img width="1359" height="617" alt="github action" src="https://github.com/user-attachments/assets/aa62551c-0d86-4b89-8fce-80cda0a87e6e" />
 
 ---
 

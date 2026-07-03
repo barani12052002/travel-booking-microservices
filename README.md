@@ -1,20 +1,24 @@
 # 🌍 Travel Booking Microservices
 
-A production-style Travel Booking Microservices application built using Java 17, Spring Boot 3, Spring Security, JWT Authentication, Docker, and MySQL.
+[![Build and Deploy](https://github.com/barani12052002/travel-booking-microservices/actions/workflows/deploy.yml/badge.svg)](https://github.com/barani12052002/travel-booking-microservices/actions/workflows/deploy.yml)
+
+A production-style Travel Booking Microservices application built with Spring Boot, Spring Cloud, Docker, GitHub Actions, and AWS EC2.
 
 ## 🚀 Features
 
-- 🔐 JWT Authentication & Authorization
-- 👤 Role-Based Access Control (ADMIN / USER)
-- 📧 HTML Email Confirmation
-- 📄 PDF Ticket Generation
-- 📱 QR Code in PDF Ticket
-- 🌐 API Gateway
-- 🔍 Eureka Service Discovery
-- 🔗 OpenFeign Client
-- 🐳 Docker & Docker Compose
-- 📚 Swagger API Documentation
-- 🗄️ MySQL Database
+- JWT Authentication & Authorization
+- Spring Security
+- API Gateway
+- Eureka Discovery Server
+- OpenFeign Communication
+- Resilience4j Circuit Breaker
+- Swagger/OpenAPI Documentation
+- Docker & Docker Compose
+- GitHub Actions CI/CD
+- AWS EC2 Deployment
+- MySQL Database
+- PDF Generation
+- Email Notifications
 
 ---
 

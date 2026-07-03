@@ -3,6 +3,7 @@ services:
   mysql:
     image: mysql:8.0
     container_name: mysql
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: Barani@2002
       MYSQL_DATABASE: travel_booking
@@ -12,25 +13,25 @@ services:
       - mysql-data:/var/lib/mysql
 
   discovery-server:
-    build: ./discovery-server
-    image: discovery-server
+    image: barani12052002/discovery-server:latest
     container_name: discovery-server
+    restart: always
     ports:
       - "8761:8761"
 
   provider-service:
-    build: ./provider-service
-    image: provider-service
+    image: barani12052002/provider-service:latest
     container_name: provider-service
+    restart: always
     ports:
       - "8082:8082"
     depends_on:
       - discovery-server
 
   booking-service:
-    build: ./booking-service
-    image: booking-service
+    image: barani12052002/booking-service:latest
     container_name: booking-service
+    restart: always
     ports:
       - "8081:8081"
     depends_on:
@@ -39,9 +40,9 @@ services:
       - provider-service
 
   api-gateway:
-    build: ./api-gateway
-    image: api-gateway
+    image: barani12052002/api-gateway:latest
     container_name: api-gateway
+    restart: always
     ports:
       - "8080:8080"
     depends_on:

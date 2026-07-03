@@ -1,16 +1,15 @@
 package com.barani.travel.auth;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
 public class AuthResponse {
 
-    private String accessToken;
+    private final String accessToken;
+    private final String refreshToken;
 
-    private String refreshToken;
-
-    public AuthResponse(String token) {
+    public AuthResponse(String accessToken) {
+        this.accessToken = accessToken;
+        this.refreshToken = null;
     }
 }

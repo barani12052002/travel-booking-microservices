@@ -435,8 +435,7 @@ https://github.com/barani12052002
 
 ### LinkedIn
 
-> Add your LinkedIn profile URL here
-
+https://www.linkedin.com/in/k-barani
 ---
 
 # ⭐ Support

@@ -50,5 +50,14 @@ services:
       - booking-service
       - provider-service
 
+  travel-web:
+    image: barani12052002/travel-web:latest
+    container_name: travel-web
+    restart: always
+    ports:
+      - "8090:8090"
+    depends_on:
+      - api-gateway
+
 volumes:
   mysql-data:

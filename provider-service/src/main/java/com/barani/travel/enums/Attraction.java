@@ -1,4 +1,4 @@
-package enums;
+package com.barani.travel.enums;
 
 public enum Attraction {
 

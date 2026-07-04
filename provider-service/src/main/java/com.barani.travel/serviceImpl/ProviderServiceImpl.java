@@ -2,7 +2,7 @@ package com.barani.travel.serviceImpl;
 
 import com.barani.travel.dto.*;
 import com.barani.travel.service.ProviderService;
-import enums.Attraction;
+import com.barani.travel.enums.Attraction;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

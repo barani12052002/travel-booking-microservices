@@ -60,7 +60,7 @@ jobs:
       - name: Push Booking Docker Image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/booking-service:latest
 
-      # API Gateway
+        # API Gateway
       - name: Build API Gateway
         working-directory: api-gateway
         run: mvn clean package -DskipTests
@@ -70,6 +70,17 @@ jobs:
 
       - name: Push API Gateway Docker Image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/api-gateway:latest
+
+      # Travel Web
+      - name: Build Travel Web
+        working-directory: travel-web
+        run: mvn clean package -DskipTests
+
+      - name: Build Travel Web Docker Image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/travel-web:latest ./travel-web
+
+      - name: Push Travel Web Docker Image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/travel-web:latest
 
       # Deploy to EC2
       - name: Deploy to EC2
@@ -83,3 +94,6 @@ jobs:
             docker compose pull
             docker compose up -d
             docker image prune -f
+
+            
+

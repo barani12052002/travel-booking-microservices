@@ -431,8 +431,8 @@ docker compose up --build
 
 ### GitHub
 
-**https://github.com/barani12052002
-**
+https://github.com/barani12052002
+
 ### LinkedIn
 
 https://www.linkedin.com/in/k-barani

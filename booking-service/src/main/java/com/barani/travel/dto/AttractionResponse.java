@@ -14,6 +14,9 @@ public class AttractionResponse {
 
     private String currency;
 
+    public AttractionResponse(String code, String displayName) {
+    }
+
     public String getAttractionCode() {
         return attractionCode;
     }

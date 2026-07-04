@@ -2,10 +2,12 @@ package com.barani.travel.serviceImpl;
 
 import com.barani.travel.dto.*;
 import com.barani.travel.service.ProviderService;
+import enums.Attraction;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -70,6 +72,16 @@ public class ProviderServiceImpl implements ProviderService {
         response.setMessage("Booking Confirmed Successfully");
 
         return response;
+
+    }
+    public List<AttractionResponse> getAttractions() {
+
+        return Arrays.stream(Attraction.values())
+                .map(a -> new AttractionResponse(
+                        a.getCode(),
+                        a.getDisplayName()
+                ))
+                .toList();
 
     }
 }

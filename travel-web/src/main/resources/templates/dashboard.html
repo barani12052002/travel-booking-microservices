@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>Dashboard</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+          rel="stylesheet">
+
+    <style>
+
+        body{
+
+            background:#f5f7fb;
+
+        }
+
+        .sidebar{
+
+            height:100vh;
+
+            background:#0d6efd;
+
+            color:white;
+
+        }
+
+        .sidebar a{
+
+            color:white;
+
+            text-decoration:none;
+
+            display:block;
+
+            padding:15px;
+
+            border-radius:8px;
+
+            margin-bottom:10px;
+
+        }
+
+        .sidebar a:hover{
+
+            background:rgba(255,255,255,.2);
+
+        }
+
+        .card{
+
+            border:none;
+
+            border-radius:15px;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+
+    <div class="row">
+
+        <div class="col-md-2 sidebar p-4">
+
+            <h3>🌍 Travel</h3>
+
+            <hr>
+
+            <a href="/dashboard">
+
+                <i class="bi bi-house"></i>
+
+                Dashboard
+
+            </a>
+
+            <a href="/search">
+
+                <i class="bi bi-search"></i>
+
+                Search Tours
+
+            </a>
+
+            <a href="/bookings">
+
+                <i class="bi bi-ticket"></i>
+
+                My Bookings
+
+            </a>
+
+            <a href="/profile">
+
+                <i class="bi bi-person"></i>
+
+                Profile
+
+            </a>
+
+            <a href="/">
+
+                <i class="bi bi-box-arrow-right"></i>
+
+                Logout
+
+            </a>
+
+        </div>
+
+        <div class="col-md-10 p-5">
+
+            <h2>
+
+                Welcome 👋
+
+            </h2>
+
+            <p>
+
+                Manage your travel bookings from one place.
+
+            </p>
+
+            <div class="row mt-4">
+
+                <div class="col-md-4">
+
+                    <div class="card shadow">
+
+                        <div class="card-body text-center">
+
+                            <h1>
+
+                                ✈
+
+                            </h1>
+
+                            <h4>
+
+                                Search Tours
+
+                            </h4>
+
+                            <a href="/search"
+                               class="btn btn-primary">
+
+                                Explore
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="card shadow">
+
+                        <div class="card-body text-center">
+
+                            <h1>
+
+                                🎫
+
+                            </h1>
+
+                            <h4>
+
+                                My Bookings
+
+                            </h4>
+
+                            <a href="/bookings"
+                               class="btn btn-success">
+
+                                View
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="card shadow">
+
+                        <div class="card-body text-center">
+
+                            <h1>
+
+                                👤
+
+                            </h1>
+
+                            <h4>
+
+                                Profile
+
+                            </h4>
+
+                            <a href="/profile"
+                               class="btn btn-warning">
+
+                                Open
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <hr class="my-5">
+
+            <h3>
+
+                Popular Destinations
+
+            </h3>
+
+            <div class="row">
+
+                <div class="col-md-4">
+
+                    <div class="card shadow">
+
+                        <img src="https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?auto=format&fit=crop&w=800&q=80">
+
+                        <div class="card-body">
+
+                            <h5>
+
+                                Goa
+
+                            </h5>
+
+                            <p>
+
+                                Starting ₹2999
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="card shadow">
+
+                        <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=800&q=80">
+
+                        <div class="card-body">
+
+                            <h5>
+
+                                Ooty
+
+                            </h5>
+
+                            <p>
+
+                                Starting ₹1999
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="card shadow">
+
+                        <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=800&q=80">
+
+                        <div class="card-body">
+
+                            <h5>
+
+                                Kerala
+
+                            </h5>
+
+                            <p>
+
+                                Starting ₹3499
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

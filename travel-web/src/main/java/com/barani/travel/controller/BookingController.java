@@ -21,31 +21,23 @@ public class BookingController {
         this.bookingClient = bookingClient;
     }
 
+
     @GetMapping("/booking")
-    public String booking(
-            @RequestParam String code,
-            @RequestParam String travelDate,
-            @RequestParam Integer adults,
-            @RequestParam Integer children,
-            Model model) {
+    public String booking(@RequestParam String code,
+                          @RequestParam String travelDate,
+                          @RequestParam Integer adults,
+                          @RequestParam Integer children,
+                          Model model) {
 
         model.addAttribute("tour",
                 providerClient.getAttraction(code));
 
-        model.addAttribute("timeslots",
-                providerClient.getTimeslots());
-
-        PriceRequest request = new PriceRequest();
-
-        request.setAdultCount(adults);
-        request.setChildCount(children);
-
-        model.addAttribute("price",
-                providerClient.getPrice(request));
-
         model.addAttribute("travelDate", travelDate);
         model.addAttribute("adults", adults);
         model.addAttribute("children", children);
+
+        model.addAttribute("timeslots",
+                providerClient.getTimeslots());
 
         return "booking";
     }

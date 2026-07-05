@@ -25,7 +25,7 @@ public interface ProviderClient {
     AttractionResponse getAttractionByCode(@PathVariable String code);
 
     @GetMapping("/provider/attractions/{code}")
-    AttractionResponse getAttraction(@PathVariable("code") String code);
+    AttractionResponse getAttraction(@PathVariable String code);
 
 
 }

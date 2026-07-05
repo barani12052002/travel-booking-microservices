@@ -20,22 +20,32 @@ public class SearchController {
     }
 
     @GetMapping("/search")
-    public String search(Model model){
+    public String search(@RequestParam(required = false) String code,
+                         Model model) {
 
-        model.addAttribute(
-                "attractions",
-                providerClient.getAttractions());
+        List<AttractionResponse> attractions = providerClient.getAttractions();
+
+        if(code != null){
+
+            attractions = attractions.stream()
+                    .filter(a -> a.getCode().equalsIgnoreCase(code))
+                    .toList();
+
+        }
+
+        model.addAttribute("attractions", attractions);
 
         return "search";
     }
 
     @GetMapping("/details")
-    public String details(@RequestParam String code, Model model) {
+    public String details(@RequestParam String code,
+                          Model model) {
 
-        AttractionResponse attraction =
-                providerClient.getAttraction(code);
-
-        model.addAttribute("attraction", attraction);
+        model.addAttribute(
+                "tour",
+                providerClient.getAttraction(code)
+        );
 
         return "details";
     }

@@ -1,0 +1,90 @@
+body{
+    background:#f4f7fc;
+    font-family:'Segoe UI',sans-serif;
+}
+
+.sidebar{
+    width:260px;
+    height:100vh;
+    position:fixed;
+    left:0;
+    top:0;
+    background:#0f172a;
+    color:#fff;
+    padding:30px;
+}
+
+.sidebar h3{
+    font-weight:700;
+    margin-bottom:40px;
+}
+
+.sidebar a{
+    display:block;
+    color:#dbeafe;
+    text-decoration:none;
+    padding:14px 18px;
+    border-radius:12px;
+    margin-bottom:12px;
+    transition:.3s;
+}
+
+.sidebar a:hover{
+    background:#2563eb;
+    color:white;
+}
+
+.content{
+    margin-left:280px;
+    padding:40px;
+}
+
+.top-card{
+    background:linear-gradient(135deg,#2563eb,#3b82f6);
+    color:white;
+    border-radius:25px;
+    padding:40px;
+    box-shadow:0 15px 40px rgba(0,0,0,.15);
+}
+
+.stat-card{
+    border:none;
+    border-radius:20px;
+    transition:.3s;
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+.stat-card:hover{
+    transform:translateY(-6px);
+}
+
+.destination-card{
+    overflow:hidden;
+    border:none;
+    border-radius:20px;
+    transition:.3s;
+}
+
+.destination-card img{
+    height:220px;
+    object-fit:cover;
+    transition:.5s;
+}
+
+.destination-card:hover img{
+    transform:scale(1.08);
+}
+
+.destination-card:hover{
+    transform:translateY(-6px);
+}
+
+.destination-price{
+    color:#0d6efd;
+    font-weight:bold;
+    font-size:20px;
+}
+
+.activity-card{
+    border-radius:20px;
+}

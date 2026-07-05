@@ -32,10 +32,11 @@ public class ProviderController {
         return providerService.createBooking(request);
 
     }
-    @GetMapping("/attractions")
-    public List<AttractionResponse> getAttractions() {
 
-        return providerService.getAttractions();
+    @GetMapping("/attractions/{code}")
+    public AttractionResponse getAttraction(@PathVariable String code) {
+
+        return providerService.getAttraction(code);
 
     }
 }

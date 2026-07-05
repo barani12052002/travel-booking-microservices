@@ -2,12 +2,10 @@ package com.barani.travel.serviceImpl;
 
 import com.barani.travel.dto.*;
 import com.barani.travel.service.ProviderService;
-import com.barani.travel.enums.Attraction;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -74,14 +72,77 @@ public class ProviderServiceImpl implements ProviderService {
         return response;
 
     }
+
+    @Override
     public List<AttractionResponse> getAttractions() {
 
-        return Arrays.stream(Attraction.values())
-                .map(a -> new AttractionResponse(
-                        a.getCode(),
-                        a.getDisplayName()
-                ))
-                .toList();
+        return List.of(
 
+                new AttractionResponse(
+                        "OOTY001",
+                        "Ooty",
+                        "Beautiful hill station with tea estates.",
+                        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+                        BigDecimal.valueOf(1999),
+                        "2 Days / 1 Night",
+                        25,
+                        4.8
+                ),
+
+                new AttractionResponse(
+                        "GOA001",
+                        "Goa",
+                        "Enjoy beaches, nightlife and adventure.",
+                        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+                        BigDecimal.valueOf(2999),
+                        "3 Days / 2 Nights",
+                        30,
+                        4.9
+                ),
+
+                new AttractionResponse(
+                        "KER001",
+                        "Kerala",
+                        "God's Own Country with backwaters.",
+                        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+                        BigDecimal.valueOf(3499),
+                        "4 Days / 3 Nights",
+                        18,
+                        4.9
+                ),
+
+                new AttractionResponse(
+                        "KOD001",
+                        "Kodaikanal",
+                        "Princess of Hill Stations.",
+                        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+                        BigDecimal.valueOf(2499),
+                        "2 Days",
+                        20,
+                        4.7
+                ),
+
+                new AttractionResponse(
+                        "MYS001",
+                        "Mysore",
+                        "Explore palaces and rich heritage.",
+                        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+                        BigDecimal.valueOf(2299),
+                        "2 Days",
+                        15,
+                        4.6
+                )
+
+        );
+    }
+    @Override
+    public AttractionResponse getAttraction(String code) {
+
+        return getAttractions()
+                .stream()
+                .filter(a -> a.getCode().equalsIgnoreCase(code))
+                .findFirst()
+                .orElseThrow(() ->
+                        new RuntimeException("Attraction not found"));
     }
 }

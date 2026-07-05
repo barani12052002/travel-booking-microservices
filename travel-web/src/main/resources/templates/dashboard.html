@@ -1,231 +1,211 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 
+    <title>Travel Dashboard</title>
+
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
-          rel="stylesheet">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
-          rel="stylesheet">
-
-    <style>
-
-        body{
-
-            background:#f5f7fb;
-
-        }
-
-        .sidebar{
-
-            height:100vh;
-
-            background:#0d6efd;
-
-            color:white;
-
-        }
-
-        .sidebar a{
-
-            color:white;
-
-            text-decoration:none;
-
-            display:block;
-
-            padding:15px;
-
-            border-radius:8px;
-
-            margin-bottom:10px;
-
-        }
-
-        .sidebar a:hover{
-
-            background:rgba(255,255,255,.2);
-
-        }
-
-        .card{
-
-            border:none;
-
-            border-radius:15px;
-
-        }
-
-    </style>
+    <link rel="stylesheet" href="/css/dashboard.css">
 
 </head>
 
 <body>
 
-<div class="container-fluid">
+<!-- Sidebar -->
 
-    <div class="row">
+<div class="sidebar">
 
-        <div class="col-md-2 sidebar p-4">
+    <h3>🌍 Travel Booking</h3>
 
-            <h3>🌍 Travel</h3>
+    <a href="/dashboard">
+        <i class="bi bi-house"></i> Dashboard
+    </a>
 
-            <hr>
+    <a href="/search">
+        <i class="bi bi-search"></i> Search Tours
+    </a>
 
-            <a href="/dashboard">
+    <a href="/bookings">
+        <i class="bi bi-ticket"></i> My Bookings
+    </a>
 
-                <i class="bi bi-house"></i>
+    <a href="/profile">
+        <i class="bi bi-person"></i> Profile
+    </a>
 
-                Dashboard
+    <a href="/">
+        <i class="bi bi-box-arrow-right"></i> Logout
+    </a>
 
-            </a>
+</div>
 
-            <a href="/search">
+<!-- Content -->
 
-                <i class="bi bi-search"></i>
+<div class="content">
 
-                Search Tours
+    <!-- Welcome -->
 
-            </a>
+    <div class="top-card">
 
-            <a href="/bookings">
+        <div class="row align-items-center">
 
-                <i class="bi bi-ticket"></i>
+            <div class="col-md-8">
 
-                My Bookings
+                <h2>
 
-            </a>
+                    Good Morning 👋
 
-            <a href="/profile">
+                </h2>
 
-                <i class="bi bi-person"></i>
+                <h4>
 
-                Profile
+                    Ready for your next adventure?
 
-            </a>
+                </h4>
 
-            <a href="/">
+                <p>
 
-                <i class="bi bi-box-arrow-right"></i>
+                    Discover beautiful destinations across India.
 
-                Logout
+                </p>
 
-            </a>
+            </div>
+
+            <div class="col-md-4 text-end">
+
+                <a href="/search" class="btn btn-light btn-lg">
+
+                    Search Tours
+
+                </a>
+
+            </div>
 
         </div>
 
-        <div class="col-md-10 p-5">
+    </div>
 
-            <h2>
+    <!-- Statistics -->
 
-                Welcome 👋
+    <div class="row mt-5">
 
-            </h2>
+        <div class="col-lg-3">
 
-            <p>
+            <div class="card stat-card">
 
-                Manage your travel bookings from one place.
+                <div class="card-body text-center">
 
-            </p>
+                    <h1>🌍</h1>
 
-            <div class="row mt-4">
+                    <h3>5</h3>
 
-                <div class="col-md-4">
-
-                    <div class="card shadow">
-
-                        <div class="card-body text-center">
-
-                            <h1>
-
-                                ✈
-
-                            </h1>
-
-                            <h4>
-
-                                Search Tours
-
-                            </h4>
-
-                            <a href="/search"
-                               class="btn btn-primary">
-
-                                Explore
-
-                            </a>
-
-                        </div>
-
-                    </div>
+                    <p>Available Tours</p>
 
                 </div>
 
-                <div class="col-md-4">
+            </div>
 
-                    <div class="card shadow">
+        </div>
 
-                        <div class="card-body text-center">
+        <div class="col-lg-3">
 
-                            <h1>
+            <div class="card stat-card">
 
-                                🎫
+                <div class="card-body text-center">
 
-                            </h1>
+                    <h1>🎫</h1>
 
-                            <h4>
+                    <h3>0</h3>
 
-                                My Bookings
-
-                            </h4>
-
-                            <a href="/bookings"
-                               class="btn btn-success">
-
-                                View
-
-                            </a>
-
-                        </div>
-
-                    </div>
+                    <p>My Bookings</p>
 
                 </div>
 
-                <div class="col-md-4">
+            </div>
 
-                    <div class="card shadow">
+        </div>
 
-                        <div class="card-body text-center">
+        <div class="col-lg-3">
 
-                            <h1>
+            <div class="card stat-card">
 
-                                👤
+                <div class="card-body text-center">
 
-                            </h1>
+                    <h1>📍</h1>
 
-                            <h4>
+                    <h3>5</h3>
 
-                                Profile
+                    <p>Destinations</p>
 
-                            </h4>
+                </div>
 
-                            <a href="/profile"
-                               class="btn btn-warning">
+            </div>
 
-                                Open
+        </div>
 
-                            </a>
+        <div class="col-lg-3">
 
-                        </div>
+            <div class="card stat-card">
+
+                <div class="card-body text-center">
+
+                    <h1>👤</h1>
+
+                    <h3>100%</h3>
+
+                    <p>Profile</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Featured Destinations -->
+
+    <div class="mt-5">
+
+        <h3>
+
+            Featured Destinations
+
+        </h3>
+
+        <div class="row mt-4">
+
+            <!-- Goa -->
+
+            <div class="col-lg-4 mb-4">
+
+                <div class="card destination-card">
+
+                    <img src="/images/goa.jpg" class="card-img-top">
+
+                    <div class="card-body">
+
+                        <h4>🌴 Goa</h4>
+
+                        <p>★★★★★</p>
+
+                        <p class="destination-price">
+
+                            ₹2999
+
+                        </p>
+
+                        <a href="/search" class="btn btn-primary w-100">
+
+                            Explore
+
+                        </a>
 
                     </div>
 
@@ -233,89 +213,127 @@
 
             </div>
 
-            <hr class="my-5">
+            <!-- Ooty -->
 
-            <h3>
+            <div class="col-lg-4 mb-4">
 
-                Popular Destinations
+                <div class="card destination-card">
 
-            </h3>
+                    <img src="/images/ooty.jpg" class="card-img-top">
 
-            <div class="row">
+                    <div class="card-body">
 
-                <div class="col-md-4">
+                        <h4>🏔 Ooty</h4>
 
-                    <div class="card shadow">
+                        <p>★★★★★</p>
 
-                        <img src="https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?auto=format&fit=crop&w=800&q=80">
+                        <p class="destination-price">
 
-                        <div class="card-body">
+                            ₹1999
 
-                            <h5>
+                        </p>
 
-                                Goa
+                        <a href="/search" class="btn btn-primary w-100">
 
-                            </h5>
+                            Explore
 
-                            <p>
-
-                                Starting ₹2999
-
-                            </p>
-
-                        </div>
+                        </a>
 
                     </div>
 
                 </div>
 
-                <div class="col-md-4">
+            </div>
 
-                    <div class="card shadow">
+            <!-- Chennai -->
 
-                        <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=800&q=80">
+            <div class="col-lg-4 mb-4">
 
-                        <div class="card-body">
+                <div class="card destination-card">
 
-                            <h5>
+                    <img src="/images/chennai.jpg" class="card-img-top">
 
-                                Ooty
+                    <div class="card-body">
 
-                            </h5>
+                        <h4>🌊 Chennai</h4>
 
-                            <p>
+                        <p>★★★★☆</p>
 
-                                Starting ₹1999
+                        <p class="destination-price">
 
-                            </p>
+                            ₹1499
 
-                        </div>
+                        </p>
+
+                        <a href="/search" class="btn btn-primary w-100">
+
+                            Explore
+
+                        </a>
 
                     </div>
 
                 </div>
 
-                <div class="col-md-4">
+            </div>
 
-                    <div class="card shadow">
+            <!-- Kerala -->
 
-                        <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=800&q=80">
+            <div class="col-lg-6 mb-4">
 
-                        <div class="card-body">
+                <div class="card destination-card">
 
-                            <h5>
+                    <img src="/images/kerala.jpg" class="card-img-top">
 
-                                Kerala
+                    <div class="card-body">
 
-                            </h5>
+                        <h4>🌿 Kerala</h4>
 
-                            <p>
+                        <p>★★★★★</p>
 
-                                Starting ₹3499
+                        <p class="destination-price">
 
-                            </p>
+                            ₹3499
 
-                        </div>
+                        </p>
+
+                        <a href="/search" class="btn btn-success w-100">
+
+                            Explore
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Kodaikanal -->
+
+            <div class="col-lg-6 mb-4">
+
+                <div class="card destination-card">
+
+                    <img src="/images/kodaikanal.jpg" class="card-img-top">
+
+                    <div class="card-body">
+
+                        <h4>⛰ Kodaikanal</h4>
+
+                        <p>★★★★★</p>
+
+                        <p class="destination-price">
+
+                            ₹2499
+
+                        </p>
+
+                        <a href="/search" class="btn btn-success w-100">
+
+                            Explore
+
+                        </a>
 
                     </div>
 
@@ -327,8 +345,33 @@
 
     </div>
 
+    <!-- Activity -->
+
+    <div class="card activity-card shadow mt-4">
+
+        <div class="card-body">
+
+            <h4>
+
+                Recent Activity
+
+            </h4>
+
+            <hr>
+
+            <p>✅ Logged in successfully</p>
+
+            <p>🌍 Browse available destinations</p>
+
+            <p>🎫 Book your next unforgettable trip</p>
+
+        </div>
+
+    </div>
+
 </div>
 
-</body>
+<script src="/js/dashboard.js"></script>
 
+</body>
 </html>

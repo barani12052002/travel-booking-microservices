@@ -21,4 +21,12 @@ public interface ProviderClient {
     @GetMapping("/provider/attractions")
     List<AttractionResponse> getAttractions();
 
+    @GetMapping("/provider/attractions/{code}")
+    AttractionResponse getAttractionByCode(@PathVariable String code);
+
+    @GetMapping("/provider/attractions/{code}")
+    AttractionResponse getAttraction(@PathVariable("code") String code);
+
+
 }
+

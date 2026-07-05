@@ -1,6 +1,7 @@
 package com.barani.travel.controller;
 
 import com.barani.travel.client.ProviderClient;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ public class HomeController {
     ProviderClient providerClient;
     @GetMapping("/")
     public String home() {
+
         return "index";
     }
 
@@ -23,10 +25,17 @@ public class HomeController {
 
     @GetMapping("/register")
     public String register() {
+
         return "register";
     }
+
     @GetMapping("/dashboard")
-    public String dashboard() {
+    public String dashboard(HttpSession session) {
+
+        if (session.getAttribute("TOKEN") == null) {
+            return "redirect:/login";
+        }
+
         return "dashboard";
     }
 

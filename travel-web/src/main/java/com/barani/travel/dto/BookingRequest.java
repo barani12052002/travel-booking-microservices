@@ -33,7 +33,14 @@ public class BookingRequest {
     @NotNull
     @Min(value = 0, message = "Child count cannot be negative")
     private Integer childCount;
+    private String providerCode;
+    public String getProviderCode() {
+        return providerCode;
+    }
 
+    public void setProviderCode(String providerCode) {
+        this.providerCode = providerCode;
+    }
     public String getTimeSlot() {
         return timeSlot;
     }

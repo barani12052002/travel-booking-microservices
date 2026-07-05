@@ -41,15 +41,22 @@ public class BookingController {
 
         return "booking";
     }
-    @PostMapping("/confirm-booking")
-    public String confirmBooking(BookingRequest request,
-                                 Model model) {
 
-        BookingResponse response =
-                bookingClient.createBooking(request);
 
-        model.addAttribute("booking", response);
+        @PostMapping("/confirm-booking")
+        public String confirmBooking(@RequestParam String code,
+                                     Model model) {
 
-        return "success";
+            BookingRequest request = new BookingRequest();
+
+            request.setProviderCode(code);
+
+            BookingResponse response =
+                    bookingClient.createBooking(request);
+
+            model.addAttribute("booking", response);
+
+            return "success";
+        }
+
     }
-}

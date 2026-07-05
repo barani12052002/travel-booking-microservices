@@ -29,8 +29,27 @@ public class BookingResponse {
     private BigDecimal totalAmount;
 
     private String message;
+    private String providerCode;
+    private String attractionCode;
+
 
     public BookingResponse() {
+    }
+
+    public String getProviderCode() {
+        return providerCode;
+    }
+
+    public void setProviderCode(String providerCode) {
+        this.providerCode = providerCode;
+    }
+
+    public String getAttractionCode() {
+        return attractionCode;
+    }
+
+    public void setAttractionCode(String attractionCode) {
+        this.attractionCode = attractionCode;
     }
 
     public String getBookingReference() {

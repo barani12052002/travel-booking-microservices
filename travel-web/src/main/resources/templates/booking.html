@@ -3,120 +3,171 @@
 
 <head>
 
-    <title>Booking</title>
+    <title>My Bookings</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet">
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet">
+
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+            rel="stylesheet">
+
+    <style>
+
+        body{
+            background:#f4f7fc;
+            font-family:Segoe UI,sans-serif;
+        }
+
+        .booking-card{
+
+            border:none;
+            border-radius:18px;
+            box-shadow:0 10px 25px rgba(0,0,0,.12);
+            transition:.3s;
+        }
+
+        .booking-card:hover{
+
+            transform:translateY(-5px);
+        }
+
+        .status{
+
+            font-weight:bold;
+            padding:8px 18px;
+            border-radius:20px;
+        }
+
+        .confirmed{
+
+            background:#d1fae5;
+            color:#065f46;
+        }
+
+        h2{
+
+            font-weight:700;
+            color:#1e3a8a;
+        }
+
+    </style>
 
 </head>
 
-<body style="background:#f4f7fc;">
+<body>
 
 <div class="container py-5">
 
-    <div class="card shadow-lg border-0">
+    <div class="d-flex justify-content-between mb-4">
 
-        <div class="row">
+        <h2>
 
-            <div class="col-lg-6">
+            🎫 My Bookings
 
-                <img th:src="${tour.imageUrl}"
-                     style="width:100%;height:500px;object-fit:cover;">
+        </h2>
 
-            </div>
+        <a href="/dashboard"
+           class="btn btn-primary">
 
-            <div class="col-lg-6 p-5">
+            Dashboard
 
-                <h2 th:text="${tour.displayName}"></h2>
+        </a>
 
-                <h5 class="text-primary">
+    </div>
 
-                    ₹<span th:text="${tour.price}"></span>
+    <div th:if="${#lists.isEmpty(bookings)}">
 
-                </h5>
+        <div class="alert alert-warning text-center">
 
-                <hr>
+            No Bookings Found
 
-                <p>
+        </div>
 
-                    <b>Travel Date :</b>
+    </div>
 
-                    <span th:text="${travelDate}"></span>
+    <div class="row g-4">
 
-                </p>
+        <div class="col-lg-6"
 
-                <p>
+             th:each="booking : ${bookings}">
 
-                    <b>Adults :</b>
+            <div class="card booking-card">
 
-                    <span th:text="${adults}"></span>
+                <div class="card-body">
 
-                </p>
+                    <div class="d-flex justify-content-between">
 
-                <p>
+                        <h4>
 
-                    <b>Children :</b>
+                            <span th:text="${booking.attractionCode}"></span>
 
-                    <span th:text="${children}"></span>
+                        </h4>
 
-                </p>
+                        <span class="status confirmed"
 
-                <hr>
-
-                <h4>Select Time Slot</h4>
-
-                <form action="/price" method="post">
-
-                    <input type="hidden"
-                           name="code"
-                           th:value="${tour.code}">
-
-                    <input type="hidden"
-                           name="travelDate"
-                           th:value="${travelDate}">
-
-                    <input type="hidden"
-                           name="adults"
-                           th:value="${adults}">
-
-                    <input type="hidden"
-                           name="children"
-                           th:value="${children}">
-
-                    <div th:each="slot:${timeslots}"
-                         class="form-check">
-
-                        <input
-
-                                class="form-check-input"
-
-                                type="radio"
-
-                                name="time"
-
-                                th:value="${slot.time}"
-
-                                required>
-
-                        <label
-
-                                class="form-check-label">
-
-                            <span th:text="${slot.time}"></span>
-
-                        </label>
+                              th:text="${booking.bookingStatus}">
+                        </span>
 
                     </div>
 
-                    <button
+                    <hr>
 
-                            class="btn btn-success mt-4 w-100">
+                    <p>
 
-                        Calculate Price
+                        <b>Booking Reference :</b>
 
-                    </button>
+                        <span th:text="${booking.bookingReference}"></span>
 
-                </form>
+                    </p>
+
+                    <p>
+
+                        <b>Provider Booking ID :</b>
+
+                        <span th:text="${booking.providerBookingId}"></span>
+
+                    </p>
+
+                    <p>
+
+                        <b>Travel Date :</b>
+
+                        <span th:text="${booking.travelDate}"></span>
+
+                    </p>
+
+                    <p>
+
+                        <b>Adults :</b>
+
+                        <span th:text="${booking.adultCount}"></span>
+
+                    </p>
+
+                    <p>
+
+                        <b>Children :</b>
+
+                        <span th:text="${booking.childCount}"></span>
+
+                    </p>
+
+                    <p>
+
+                        <b>Total Amount :</b>
+
+                        ₹<span th:text="${booking.totalAmount}"></span>
+
+                    </p>
+
+                </div>
 
             </div>
 

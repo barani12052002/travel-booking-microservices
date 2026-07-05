@@ -5,7 +5,10 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@FeignClient(name = "provider-service", url = "${provider.service.url}")
+@FeignClient(
+        name = "provider-service",
+        contextId = "providerClient",
+         url = "${provider.service.url}")
 public interface ProviderClient {
 
     @GetMapping("/provider/timeslots")

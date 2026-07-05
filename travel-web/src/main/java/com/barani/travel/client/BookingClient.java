@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(
-        name="booking-service",
-        url="${booking.service.url}"
+        name = "booking-service",
+        contextId = "bookingClient",
+        url = "${booking.service.url}"
 )
 public interface BookingClient {
 

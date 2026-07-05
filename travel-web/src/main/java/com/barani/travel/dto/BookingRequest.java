@@ -2,6 +2,7 @@ package com.barani.travel.dto;
 
 import jakarta.validation.constraints.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class BookingRequest {
@@ -34,6 +35,25 @@ public class BookingRequest {
     @Min(value = 0, message = "Child count cannot be negative")
     private Integer childCount;
     private String providerCode;
+    private BigDecimal totalAmount;
+    private String currency;
+
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
     public String getProviderCode() {
         return providerCode;
     }
@@ -104,4 +124,7 @@ public class BookingRequest {
     public void setChildCount(Integer childCount) {
         this.childCount = childCount;
     }
+
+
+
 }

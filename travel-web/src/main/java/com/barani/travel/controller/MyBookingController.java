@@ -17,7 +17,6 @@ public class MyBookingController {
     @GetMapping("/bookings")
     public String bookings(Model model) {
 
-        // temporary email
         String email = "baraniece007@gmail.com";
 
         model.addAttribute(
@@ -26,5 +25,4 @@ public class MyBookingController {
 
         return "bookings";
     }
-
 }

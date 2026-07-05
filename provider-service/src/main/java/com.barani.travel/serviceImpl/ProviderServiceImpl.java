@@ -145,4 +145,5 @@ public class ProviderServiceImpl implements ProviderService {
                 .orElseThrow(() ->
                         new RuntimeException("Attraction not found"));
     }
+
 }

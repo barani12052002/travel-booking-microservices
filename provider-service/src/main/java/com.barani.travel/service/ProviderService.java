@@ -15,4 +15,5 @@ public interface ProviderService {
     List<AttractionResponse> getAttractions();
 
     AttractionResponse getAttraction(String code);
+
 }

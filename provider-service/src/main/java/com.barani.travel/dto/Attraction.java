@@ -6,7 +6,7 @@ public enum Attraction {
     GOA("GOA001","Goa"),
     KERALA("KER001","Kerala"),
     KODAIKANAL("KOD001","Kodaikanal"),
-    MYSORE("MYS001","Mysore");
+    MYSORE("CHE001","Chennai");
 
     private final String code;
     private final String displayName;

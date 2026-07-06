@@ -21,7 +21,7 @@ public class BookingRequest {
     private String attractionCode;
 
     @NotNull(message = "Travel date is required")
-    @Future(message = "Travel date must be in the future")
+    @FutureOrPresent(message = "Travel date cannot be in the past")
     private LocalDate travelDate;
 
     @NotBlank(message = "Time slot is required")

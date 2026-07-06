@@ -1,6 +1,7 @@
 package com.barani.travel.controller;
 
 import com.barani.travel.client.BookingHistoryClient;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,14 +16,19 @@ public class MyBookingController {
     }
 
     @GetMapping("/bookings")
-    public String bookings(Model model) {
+    public String bookings(HttpSession session,
+                           Model model) {
 
-        String email = "baraniece007@gmail.com";
+        String email =
+                (String) session.getAttribute("EMAIL");
+
+        String token =
+                "Bearer " + session.getAttribute("TOKEN");
 
         model.addAttribute(
                 "bookings",
-                bookingHistoryClient.getBookings(email));
+                bookingHistoryClient.getBookings(token, email));
 
-        return "bookings";
+        return "booking";
     }
 }

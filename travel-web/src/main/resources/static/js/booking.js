@@ -7,8 +7,13 @@ document.addEventListener("DOMContentLoaded", () => {
         slot.addEventListener("change", calculatePrice);
 
     });
+    document.getElementById("adultCount")
+        .addEventListener("change", calculatePrice);
 
+    document.getElementById("childCount")
+        .addEventListener("change", calculatePrice);
 });
+
 
 async function calculatePrice() {
 
@@ -50,11 +55,6 @@ async function calculatePrice() {
 
     document.getElementById("priceCard").style.display = "block";
 
-    document.getElementById("adultPrice").innerHTML =
-        price.adultPrice;
-
-    document.getElementById("childPrice").innerHTML =
-        price.childPrice;
 
     document.getElementById("tax").innerHTML =
         price.tax;

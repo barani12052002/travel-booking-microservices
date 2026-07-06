@@ -26,6 +26,6 @@ public class MyBookingController {
         System.out.println("TOKEN = " + token);
         model.addAttribute("bookings", bookingHistoryClient.getBookings(token, email));
 
-        return "booking";
+        return "bookings";
     }
 }

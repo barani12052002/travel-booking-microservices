@@ -82,7 +82,11 @@ public class BookingController {
         request.setCurrency(currency);
         String token = "Bearer " +
                 (String) session.getAttribute("TOKEN");
+        String jwt = (String) session.getAttribute("TOKEN");
 
+        System.out.println("JWT = " + jwt);
+
+        System.out.println("HEADER = " + token);
         BookingResponse response =
                 bookingClient.createBooking(token, request);
 

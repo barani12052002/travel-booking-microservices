@@ -2,97 +2,554 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
-    <title>Search Tours</title>
-
+    <title>Search Results - Travel Booking</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
-          rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
     <style>
-
-        body{
-            background:#f4f7fc;
-            font-family:'Segoe UI',sans-serif;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        h2{
-            font-weight:700;
-            color:#1e3a8a;
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        .search-box{
-            border-radius:15px;
-            overflow:hidden;
-            box-shadow:0 8px 20px rgba(0,0,0,.12);
+        /* Header */
+        .navbar-custom {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+            padding: 1rem 0;
         }
 
-        .search-box input{
-            height:58px;
-            border:none;
-            font-size:18px;
+        .navbar-brand {
+            font-size: 24px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white !important;
         }
 
-        .search-box button{
-            width:160px;
+        .navbar-brand i {
+            font-size: 28px;
         }
 
-        .card{
-            border:none;
-            border-radius:20px;
-            overflow:hidden;
-            box-shadow:0 10px 25px rgba(0,0,0,.12);
-            transition:.3s;
-            height:100%;
+        /* Breadcrumb */
+        .breadcrumb-section {
+            background: white;
+            padding: 20px 0;
+            border-bottom: 1px solid #e0e0e0;
         }
 
-        .card:hover{
-
-            transform:translateY(-8px);
-
-            box-shadow:0 20px 40px rgba(0,0,0,.18);
-
+        .breadcrumb {
+            margin-bottom: 0;
         }
 
-        .tour-img{
-
-            width:100%;
-            height:250px;
-            object-fit:cover;
-
+        /* Main Container */
+        .main-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+            padding: 30px 0;
+            min-height: calc(100vh - 200px);
         }
 
-        .price{
-
-            color:#0d6efd;
-            font-size:24px;
-            font-weight:bold;
-
+        /* Sidebar - Filters */
+        .filters-sidebar {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
         }
 
-        .rating{
-
-            color:#f5b301;
-            font-weight:bold;
-
+        .filter-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .duration{
-
-            color:#6c757d;
-
+        .filter-group {
+            margin-bottom: 24px;
         }
 
-        .description{
-
-            min-height:50px;
-            color:#666;
-
+        .filter-group-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .filter-option input[type="checkbox"] {
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            accent-color: #667eea;
+        }
+
+        .filter-option label {
+            cursor: pointer;
+            margin-bottom: 0;
+            font-size: 14px;
+            color: #555;
+            flex-grow: 1;
+        }
+
+        .filter-option input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #e0e0e0;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .filter-option input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+        }
+
+        .filter-option input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            border: none;
+        }
+
+        .price-range-display {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .reset-filters {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 8px;
+            color: #667eea;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .reset-filters:hover {
+            background: #f8f9ff;
+            border-color: #667eea;
+        }
+
+        /* Results Section */
+        .results-area {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+            gap: 15px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 20px;
+        }
+
+        .results-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+
+        .view-options {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .sort-select {
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .sort-select:hover {
+            border-color: #667eea;
+        }
+
+        /* Tour Card - List Style */
+        .tour-item {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 24px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .tour-item:hover {
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .tour-image-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .tour-image-wrapper img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .tour-item:hover .tour-image-wrapper img {
+            transform: scale(1.05);
+        }
+
+        .tour-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-weight: 700;
+            color: #667eea;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .tour-badge.hot {
+            background: rgba(255, 77, 79, 0.9);
+            color: white;
+        }
+
+        /* Tour Details */
+        .tour-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .tour-header {
+            margin-bottom: 12px;
+        }
+
+        .tour-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 6px;
+        }
+
+        .tour-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        /* Rating & Reviews */
+        .rating-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .rating-stars {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .rating-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #f5b301;
+        }
+
+        .rating-count {
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* Info Grid */
+        .tour-info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 16px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .info-icon {
+            width: 36px;
+            height: 36px;
+            background: #f0f4ff;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #667eea;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .info-text {
+            flex-grow: 1;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .info-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-top: 2px;
+        }
+
+        /* Footer - Price & Action */
+        .tour-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 16px;
+        }
+
+        .tour-price-section {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .price-label {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .price-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .price-suffix {
+            font-size: 13px;
+            color: #999;
+            margin-left: 4px;
+        }
+
+        .tour-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-primary-custom {
+            padding: 12px 32px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            color: white;
+            text-decoration: none;
+        }
+
+        .btn-secondary-custom {
+            padding: 12px 24px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            color: #666;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-secondary-custom:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 80px 40px;
+        }
+
+        .empty-state i {
+            font-size: 80px;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            color: #999;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+
+            .filters-sidebar {
+                display: none;
+            }
+
+            .tour-item {
+                grid-template-columns: 1fr;
+            }
+
+            .tour-image-wrapper img {
+                height: 200px;
+            }
+
+            .tour-info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .results-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .tour-footer {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+
+            .tour-actions {
+                width: 100%;
+            }
+
+            .btn-primary-custom {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .tour-info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .price-value {
+                font-size: 24px;
+            }
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tour-item {
+            animation: slideIn 0.5s ease forwards;
+        }
+
+        .tour-item:nth-child(1) { animation-delay: 0.1s; }
+        .tour-item:nth-child(2) { animation-delay: 0.2s; }
+        .tour-item:nth-child(3) { animation-delay: 0.3s; }
+        .tour-item:nth-child(4) { animation-delay: 0.4s; }
+        .tour-item:nth-child(5) { animation-delay: 0.5s; }
 
     </style>
 
@@ -100,154 +557,304 @@
 
 <body>
 
-<div class="container py-5">
+<!-- Navigation Bar -->
+<nav class="navbar navbar-custom">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/dashboard}">
+            <i class="bi bi-globe2"></i>
+            Travel Booking
+        </a>
+        <div style="color: white; font-size: 14px;">Search Results</div>
+    </div>
+</nav>
 
-    <h2 class="text-center mb-4">
+<!-- Breadcrumb -->
+<div class="breadcrumb-section">
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/" style="text-decoration: none; color: #667eea;">Dashboard</a></li>
+                <li class="breadcrumb-item active">Search Results</li>
+            </ol>
+        </nav>
+    </div>
+</div>
 
-        🌍 Available Attractions
+<!-- Main Container -->
+<div class="container-fluid py-4">
+    <div class="main-container">
 
-    </h2>
-
-    <!-- Search -->
-
-    <div class="row justify-content-center mb-5">
-
-        <div class="col-lg-8">
-
-            <div class="input-group search-box">
-
-                <input
-
-                        id="searchInput"
-
-                        type="text"
-
-                        class="form-control"
-
-                        placeholder="Search destination (Goa, Ooty, Kerala...)">
-
-                <button class="btn btn-primary">
-
-                    <i class="bi bi-search"></i>
-
-                    Search
-
-                </button>
-
+        <!-- Sidebar Filters -->
+        <div class="filters-sidebar">
+            <div class="filter-title">
+                <i class="bi bi-funnel"></i>
+                Filters
             </div>
 
-        </div>
-
-    </div>
-
-    <!-- Cards -->
-
-    <div class="row g-4">
-
-        <div class="col-lg-4 col-md-6 tour-card"
-
-             th:each="tour : ${attractions}">
-
-            <div class="card">
-
-                <img
-
-                        th:src="${tour.imageUrl}"
-
-                        class="tour-img">
-
-                <div class="card-body">
-
-                    <h4
-
-                            th:text="${tour.displayName}">
-
-                    </h4>
-
-                    <p
-
-                            class="description"
-
-                            th:text="${tour.description}">
-
-                    </p>
-
-                    <div class="mb-2">
-
-                        <span class="duration">
-
-                            <i class="bi bi-clock"></i>
-
-                            <span th:text="${tour.duration}"></span>
-
-                        </span>
-
-                    </div>
-
-                    <div class="mb-2">
-
-                        <span class="rating">
-
-                            ⭐
-
-                            <span th:text="${tour.rating}"></span>
-
-                        </span>
-
-                    </div>
-
-                    <div class="price mb-3">
-
-                        ₹<span th:text="${tour.price}"></span>
-
-                    </div>
-
-                    <a
-
-                            th:href="@{/details(code=${tour.code})}"
-
-                            class="btn btn-primary w-100">
-
-                        View Details
-
-                    </a>
-
+            <!-- Price Range -->
+            <div class="filter-group">
+                <div class="filter-group-title">Price Range</div>
+                <div class="filter-option">
+                    <input type="range" id="priceRange" min="0" max="5000" value="5000" step="100">
                 </div>
-
+                <div class="price-range-display">
+                    <span>₹0</span>
+                    <span>₹<span id="priceValue">5000</span></span>
+                </div>
             </div>
 
+            <!-- Duration -->
+            <div class="filter-group">
+                <div class="filter-group-title">Duration</div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-1day" value="1">
+                    <label for="filter-1day">1 Day</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-2day" value="2">
+                    <label for="filter-2day">2-3 Days</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-4day" value="4">
+                    <label for="filter-4day">4+ Days</label>
+                </div>
+            </div>
+
+            <!-- Rating -->
+            <div class="filter-group">
+                <div class="filter-group-title">Rating</div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-5star" value="5">
+                    <label for="filter-5star">5 Star (4.5+)</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-4star" value="4">
+                    <label for="filter-4star">4 Star (4.0+)</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-3star" value="3">
+                    <label for="filter-3star">3 Star (3.5+)</label>
+                </div>
+            </div>
+
+            <!-- Destination Type -->
+            <div class="filter-group">
+                <div class="filter-group-title">Type</div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-beach">
+                    <label for="filter-beach">Beach Destinations</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-hill">
+                    <label for="filter-hill">Hill Stations</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-heritage">
+                    <label for="filter-heritage">Heritage Sites</label>
+                </div>
+            </div>
+
+            <button class="reset-filters">Clear All Filters</button>
+        </div>
+
+        <!-- Results Area -->
+        <div class="results-area">
+            <!-- Results Header -->
+            <div class="results-header">
+                <div class="results-title">
+                    <span id="resultCount">All Destinations</span>
+                </div>
+                <div class="view-options">
+                    <label style="margin: 0; font-size: 14px; color: #666;">Sort:</label>
+                    <select class="sort-select" id="sortBy">
+                        <option value="relevant">Most Relevant</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="rating">Highest Rated</option>
+                        <option value="popular">Most Popular</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Tours List -->
+            <div id="toursContainer">
+                <div class="tour-item" th:each="tour : ${attractions}">
+                    <!-- Image Section -->
+                    <div class="tour-image-wrapper">
+                        <img th:src="${tour.imageUrl}" alt="tour-image">
+                        <div class="tour-badge">
+                            <span>⭐</span>
+                            <span th:text="${tour.rating}"></span>
+                        </div>
+                    </div>
+
+                    <!-- Details Section -->
+                    <div class="tour-details">
+                        <!-- Header -->
+                        <div class="tour-header">
+                            <h3 class="tour-title" th:text="${tour.displayName}"></h3>
+                            <p class="tour-description" th:text="${tour.description}"></p>
+                        </div>
+
+                        <!-- Rating -->
+                        <div class="rating-section">
+                            <div class="rating-stars">
+                                <span class="rating-value" th:text="${tour.rating}"></span>
+                                ⭐ <span th:text="${tour.rating}"></span>
+                            </div>
+                            <span class="rating-count">(234 reviews)</span>
+                        </div>
+
+                        <!-- Info Grid -->
+                        <div class="tour-info-grid">
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="bi bi-calendar3"></i>
+                                </div>
+                                <div class="info-text">
+                                    <div class="info-label">Duration</div>
+                                    <div class="info-value" th:text="${tour.duration}"></div>
+                                </div>
+                            </div>
+
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <div class="info-text">
+                                    <div class="info-label">Group Size</div>
+                                    <div class="info-value">Suitable for Groups</div>
+                                </div>
+                            </div>
+
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="bi bi-geo-alt"></i>
+                                </div>
+                                <div class="info-text">
+                                    <div class="info-label">Location</div>
+                                    <div class="info-value" th:text="${tour.displayName}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Footer - Price & Action -->
+                        <div class="tour-footer">
+                            <div class="tour-price-section">
+                                <span class="price-label">Starting From</span>
+                                <div style="display: flex; align-items: baseline;">
+                                    <span class="price-value">₹<span th:text="${tour.price}"></span></span>
+                                    <span class="price-suffix">per person</span>
+                                </div>
+                            </div>
+
+                            <div class="tour-actions">
+                                <a th:href="@{/details(code=${tour.code})}" class="btn-primary-custom">
+                                    <i class="bi bi-arrow-right"></i>
+                                    View Details
+                                </a>
+                                <button class="btn-secondary-custom">
+                                    <i class="bi bi-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <i class="bi bi-search"></i>
+                <h3>No destinations found</h3>
+                <p>Try adjusting your filters or search criteria</p>
+            </div>
         </div>
 
     </div>
-
 </div>
 
 <script>
+    const priceRange = document.getElementById('priceRange');
+    const priceValue = document.getElementById('priceValue');
+    const sortBy = document.getElementById('sortBy');
+    const toursContainer = document.getElementById('toursContainer');
+    const emptyState = document.getElementById('emptyState');
+    const resultCount = document.getElementById('resultCount');
 
-    const searchInput=document.getElementById("searchInput");
-
-    searchInput.addEventListener("keyup",function(){
-
-        let value=this.value.toLowerCase();
-
-        document.querySelectorAll(".tour-card").forEach(function(card){
-
-            let text=card.innerText.toLowerCase();
-
-            if(text.includes(value)){
-
-                card.style.display="block";
-
-            }else{
-
-                card.style.display="none";
-
-            }
-
-        });
-
+    // Update price display
+    priceRange.addEventListener('input', function() {
+        priceValue.textContent = this.value;
+        filterTours();
     });
 
+    // Sort functionality
+    sortBy.addEventListener('change', sortTours);
+
+    // Filter checkboxes
+    document.querySelectorAll('.filter-option input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', filterTours);
+    });
+
+    // Reset filters
+    document.querySelector('.reset-filters').addEventListener('click', function() {
+        priceRange.value = 5000;
+        priceValue.textContent = '5000';
+        document.querySelectorAll('.filter-option input[type="checkbox"]').forEach(checkbox => {
+            checkbox.checked = false;
+        });
+        sortBy.value = 'relevant';
+        filterTours();
+    });
+
+    function filterTours() {
+        const maxPrice = parseInt(priceRange.value);
+        let visibleCount = 0;
+
+        document.querySelectorAll('.tour-item').forEach(item => {
+            const priceText = item.innerText.match(/₹(\d+)/);
+            const price = priceText ? parseInt(priceText[1]) : 0;
+
+            if (price <= maxPrice) {
+                item.style.display = 'block';
+                visibleCount++;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+        resultCount.textContent = visibleCount > 0
+            ? `${visibleCount} destination${visibleCount !== 1 ? 's' : ''} found`
+            : 'No destinations found';
+    }
+
+    function sortTours() {
+        const sortValue = sortBy.value;
+        const tours = Array.from(document.querySelectorAll('.tour-item'));
+
+        tours.sort((a, b) => {
+            const priceA = parseInt(a.innerText.match(/₹(\d+)/)[1]);
+            const priceB = parseInt(b.innerText.match(/₹(\d+)/)[1]);
+            const ratingA = parseFloat(a.innerText.match(/([\d.]+)\s*★/)[1]);
+            const ratingB = parseFloat(b.innerText.match(/([\d.]+)\s*★/)[1]);
+
+            switch(sortValue) {
+                case 'price-low':
+                    return priceA - priceB;
+                case 'price-high':
+                    return priceB - priceA;
+                case 'rating':
+                    return ratingB - ratingA;
+                default:
+                    return 0;
+            }
+        });
+
+        tours.forEach(tour => toursContainer.appendChild(tour));
+    }
+
+    // Initialize
+    filterTours();
 </script>
 
 </body>

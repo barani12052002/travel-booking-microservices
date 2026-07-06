@@ -40,7 +40,7 @@ public class BookingController {
 
     @GetMapping("/customer/{email}")
     public List<BookingResponse> getBookingsByCustomerEmail(@PathVariable String email) {
-
+        System.out.println("Booking history endpoint reached");
         return bookingService.getBookingsByCustomerEmail(email);
     }
     @PreAuthorize("hasRole('USER')")

@@ -16,18 +16,15 @@ public class MyBookingController {
     }
 
     @GetMapping("/bookings")
-    public String bookings(HttpSession session,
-                           Model model) {
+    public String bookings(HttpSession session, Model model) {
 
-        String email =
-                (String) session.getAttribute("EMAIL");
+        String email = (String) session.getAttribute("EMAIL");
 
-        String token =
-                "Bearer " + session.getAttribute("TOKEN");
+        String token = "Bearer " + session.getAttribute("TOKEN");
 
-        model.addAttribute(
-                "bookings",
-                bookingHistoryClient.getBookings(token, email));
+        System.out.println("EMAIL = " + email);
+        System.out.println("TOKEN = " + token);
+        model.addAttribute("bookings", bookingHistoryClient.getBookings(token, email));
 
         return "booking";
     }

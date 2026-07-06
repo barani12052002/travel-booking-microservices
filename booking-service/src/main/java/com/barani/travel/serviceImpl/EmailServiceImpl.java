@@ -28,7 +28,7 @@ public class EmailServiceImpl implements EmailService {
 
             helper.setTo(to);
             helper.setSubject(subject);
-            helper.setFrom("baranibarani732@gmail.com", "Travel Booking");
+            helper.setFrom("baranibarani732@gmail.com", "Dream Destination Tours");
             helper.setText(body, true);
 
             helper.addAttachment(fileName, new ByteArrayResource(pdf));

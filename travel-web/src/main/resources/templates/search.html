@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Search Results - Travel Booking</title>
+    <title>Search Results - Dream Destination </title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -217,15 +217,15 @@
             border-color: #667eea;
         }
 
-        /* Tour Card - List Style */
+        /* Tour Card - List Style (Booking.com / Airbnb style compact card) */
         .tour-item {
             display: grid;
-            grid-template-columns: 320px 1fr;
-            gap: 24px;
-            padding: 20px;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+            padding: 16px;
             border: 1px solid #e0e0e0;
-            border-radius: 12px;
-            margin-bottom: 20px;
+            border-radius: 14px;
+            margin-bottom: 22px;
             transition: all 0.3s ease;
             background: white;
         }
@@ -239,10 +239,10 @@
         .tour-image-wrapper {
             position: relative;
             overflow: hidden;
-            border-radius: 12px;
+            border-radius: 14px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             height: 100%;
-            min-height: 280px;
+            min-height: 210px;
         }
 
         .tour-image-wrapper img {
@@ -260,10 +260,10 @@
 
         .tour-badge {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: 12px;
+            right: 12px;
             background: rgba(255, 255, 255, 0.95);
-            padding: 8px 14px;
+            padding: 6px 12px;
             border-radius: 20px;
             font-weight: 700;
             color: #667eea;
@@ -288,21 +288,26 @@
         }
 
         .tour-header {
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
         .tour-title {
-            font-size: 22px;
+            font-size: 19px;
             font-weight: 700;
             color: #1a1a2e;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
+            line-height: 1.25;
         }
 
         .tour-description {
-            font-size: 14px;
+            font-size: 13px;
             color: #666;
             line-height: 1.5;
-            margin-bottom: 12px;
+            margin-bottom: 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         /* Rating & Reviews */
@@ -310,7 +315,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 16px;
+            margin-bottom: 10px;
         }
 
         .rating-stars {
@@ -320,7 +325,7 @@
         }
 
         .rating-value {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
             color: #f5b301;
         }
@@ -334,26 +339,26 @@
         .tour-info-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 16px;
+            gap: 10px;
+            margin-bottom: 12px;
         }
 
         .info-item {
             display: flex;
             align-items: flex-start;
-            gap: 10px;
+            gap: 8px;
         }
 
         .info-icon {
-            width: 36px;
-            height: 36px;
+            width: 30px;
+            height: 30px;
             background: #f0f4ff;
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #667eea;
-            font-size: 18px;
+            font-size: 15px;
             flex-shrink: 0;
         }
 
@@ -362,17 +367,17 @@
         }
 
         .info-label {
-            font-size: 12px;
+            font-size: 11px;
             color: #999;
             text-transform: uppercase;
             letter-spacing: 0.3px;
         }
 
         .info-value {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             color: #1a1a2e;
-            margin-top: 2px;
+            margin-top: 1px;
         }
 
         /* Footer - Price & Action */
@@ -381,41 +386,41 @@
             justify-content: space-between;
             align-items: center;
             border-top: 1px solid #f0f0f0;
-            padding-top: 16px;
+            padding-top: 12px;
         }
 
         .tour-price-section {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 2px;
         }
 
         .price-label {
-            font-size: 12px;
+            font-size: 11px;
             color: #999;
             text-transform: uppercase;
             letter-spacing: 0.3px;
         }
 
         .price-value {
-            font-size: 28px;
+            font-size: 23px;
             font-weight: 700;
             color: #667eea;
         }
 
         .price-suffix {
-            font-size: 13px;
+            font-size: 12px;
             color: #999;
             margin-left: 4px;
         }
 
         .tour-actions {
             display: flex;
-            gap: 12px;
+            gap: 10px;
         }
 
         .btn-primary-custom {
-            padding: 12px 32px;
+            padding: 11px 26px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border: none;
             color: white;
@@ -438,7 +443,7 @@
         }
 
         .btn-secondary-custom {
-            padding: 12px 24px;
+            padding: 11px 20px;
             background: white;
             border: 2px solid #e0e0e0;
             color: #666;
@@ -495,7 +500,8 @@
             }
 
             .tour-image-wrapper {
-                min-height: 200px;
+                height: 220px;
+                min-height: 0;
             }
 
             .tour-info-grid {
@@ -507,6 +513,10 @@
             .results-header {
                 flex-direction: column;
                 align-items: flex-start;
+            }
+
+            .tour-image-wrapper {
+                height: 200px;
             }
 
             .tour-footer {
@@ -529,7 +539,7 @@
             }
 
             .price-value {
-                font-size: 24px;
+                font-size: 22px;
             }
         }
 

@@ -12,8 +12,7 @@ import java.util.Date;
 @Service
 public class JwtService {
 
-    private static final String SECRET =
-            "TravelBookingApplicationSecretKeyForJwtAuthentication123456";
+    private static final String SECRET = "TravelBookingApplicationSecretKeyForJwtAuthentication123456";
 
     private final SecretKey key =
             Keys.hmacShaKeyFor(SECRET.getBytes());

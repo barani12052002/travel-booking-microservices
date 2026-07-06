@@ -111,6 +111,22 @@
             z-index: 1;
         }
 
+        .destination-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            color: rgba(255,255,255,0.9);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.09em;
+            margin-top: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .destination-tag i { font-size: 0.95rem; color: var(--gold); }
+
         .ref-pill {
             display: inline-flex;
             align-items: center;
@@ -119,7 +135,7 @@
             border: 1px solid rgba(255,255,255,0.25);
             border-radius: 999px;
             padding: 8px 18px;
-            margin-top: 18px;
+            margin-top: 12px;
             font-weight: 700;
             font-size: 0.95rem;
             letter-spacing: 0.03em;
@@ -317,6 +333,10 @@
                         Thank you <strong th:text="${session.USERNAME}"></strong>,
                         your booking has been confirmed successfully.
                     </p>
+                    <div class="destination-tag">
+                        <i class="bi bi-geo-alt-fill"></i>
+                        <span th:text="${booking.destination}"></span>
+                    </div>
                     <div class="ref-pill">
                         <i class="bi bi-ticket-perforated"></i>
                         <span th:text="${booking.bookingReference}"></span>

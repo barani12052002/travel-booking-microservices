@@ -80,8 +80,11 @@ public class BookingController {
         request.setTotalAmount(totalAmount);
 
         request.setCurrency(currency);
+        String token = "Bearer " +
+                (String) session.getAttribute("TOKEN");
+
         BookingResponse response =
-                bookingClient.createBooking(request);
+                bookingClient.createBooking(token, request);
 
         model.addAttribute("booking", response);
 

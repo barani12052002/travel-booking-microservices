@@ -56,8 +56,6 @@ public class AuthServiceImpl implements AuthService {
 
         response.setEmail(user.getEmail());
 
-        response.setPhone(user.getPhone());
-
         return response;
     }
 
@@ -81,7 +79,6 @@ public class AuthServiceImpl implements AuthService {
 
         response.setEmail(user.getEmail());
 
-        response.setPhone(user.getPhone());
 
         return response;
     }

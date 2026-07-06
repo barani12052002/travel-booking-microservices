@@ -14,9 +14,6 @@ public class BookingRequest {
     @Email(message = "Invalid email format")
     private String customerEmail;
 
-    @NotBlank(message = "Customer phone is required")
-    private String customerPhone;
-
     @NotBlank(message = "Attraction code is required")
     private String attractionCode;
 
@@ -76,14 +73,6 @@ public class BookingRequest {
 
     public void setCustomerEmail(String customerEmail) {
         this.customerEmail = customerEmail;
-    }
-
-    public String getCustomerPhone() {
-        return customerPhone;
-    }
-
-    public void setCustomerPhone(String customerPhone) {
-        this.customerPhone = customerPhone;
     }
 
     public String getAttractionCode() {

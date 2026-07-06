@@ -65,9 +65,6 @@ public class BookingController {
         request.setCustomerEmail(
                 (String) session.getAttribute("EMAIL"));
 
-        request.setCustomerPhone(
-                (String) session.getAttribute("PHONE"));
-
         request.setAttractionCode(code);
 
         request.setTravelDate(LocalDate.parse(travelDate));

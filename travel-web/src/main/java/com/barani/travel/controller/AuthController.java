@@ -35,7 +35,6 @@ public class AuthController {
         System.out.println("TOKEN = " + response.getAccessToken());
         System.out.println("USERNAME = " + response.getUsername());
         System.out.println("EMAIL = " + response.getEmail());
-        System.out.println("PHONE = " + response.getPhone());
         session.setAttribute("TOKEN",
                 response.getAccessToken());
 
@@ -45,8 +44,6 @@ public class AuthController {
         session.setAttribute("EMAIL",
                 response.getEmail());
 
-        session.setAttribute("PHONE",
-                response.getPhone());
 
         return "redirect:/dashboard";
     }

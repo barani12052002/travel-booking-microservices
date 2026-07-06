@@ -70,7 +70,6 @@ public class BookingServiceImpl implements BookingService {
         booking.setProviderBookingId(providerResponse.getProviderBookingId());
         booking.setCustomerName(request.getCustomerName());
         booking.setCustomerEmail(request.getCustomerEmail());
-        booking.setCustomerPhone(request.getCustomerPhone());
         booking.setAttractionCode(request.getAttractionCode());
         booking.setTravelDate(request.getTravelDate());
         booking.setAdultCount(request.getAdultCount());

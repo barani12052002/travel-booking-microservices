@@ -44,7 +44,7 @@ public class ProviderServiceImpl implements ProviderService {
 
         PriceResponse response = new PriceResponse();
 
-        response.setCurrency("AED");
+        response.setCurrency("INR");
         response.setAdultPrice(adultPrice);
         response.setChildPrice(childPrice);
         response.setTax(tax);

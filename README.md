@@ -1,5 +1,10 @@
 # 🌍 Travel Booking Microservices
-
+![Java](https://img.shields.io/badge/Java-17-orange)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-brightgreen)
+![JWT](https://img.shields.io/badge/JWT-Security-blue)
+![Docker](https://img.shields.io/badge/Docker-Enabled-2496ED)
+![AWS](https://img.shields.io/badge/AWS-EC2-orange)
+![CI/CD](https://img.shields.io/badge/GitHub_Actions-CI/CD-success)
 [![Build and Deploy](https://github.com/barani12052002/travel-booking-microservices/actions/workflows/deploy.yml/badge.svg)](https://github.com/barani12052002/travel-booking-microservices/actions/workflows/deploy.yml)
 
 A production-ready **Travel Booking Microservices** application built using **Spring Boot**, **Spring Cloud**, **Spring Security (JWT)**, **Docker**, **GitHub Actions CI/CD**, and **AWS EC2**.
@@ -19,7 +24,12 @@ This project demonstrates how a real-world microservices architecture can be des
 - Stateless Security
 
 ### ✈️ Booking Management
-- Create Booking
+- Search Attractions
+- View Attraction Details
+- Select Travel Date
+- View Available Time Slots
+- Dynamic Price Calculation
+- Confirm Booking
 - Get Booking Details
 - Cancel Booking
 - Customer Booking History
@@ -74,7 +84,9 @@ This project demonstrates how a real-world microservices architecture can be des
 | Cloud | AWS EC2 |
 | Email | Spring Mail |
 | PDF | iText PDF |
-| QR Code | ZXing |
+| QR Code | ZXing | 
+| Thymeleaf | Bootstrap | 
+  
 
 ---
 
@@ -111,6 +123,7 @@ travel-booking-microservices
 ├── provider-service
 ├── discovery-server
 ├── config-server
+├── travel-web
 ├── docker-compose.yml
 ├── .github
 │   └── workflows

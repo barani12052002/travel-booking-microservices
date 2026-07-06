@@ -20,9 +20,8 @@ public class SearchController {
     }
 
     @GetMapping("/search")
-    public String search(
-            @RequestParam(required = false) String destination,
-            Model model) {
+    public String search(@RequestParam(required = false) String destination,
+                         Model model) {
 
         List<AttractionResponse> attractions = providerClient.getAttractions();
 
@@ -32,7 +31,11 @@ public class SearchController {
 
             attractions = attractions.stream()
                     .filter(a ->
-                            a.getName().toLowerCase().contains(search))
+                            (a.getDisplayName() != null && a.getDisplayName().toLowerCase().contains(search))
+                                    || (a.getName() != null && a.getName().toLowerCase().contains(search))
+                                    || (a.getCity() != null && a.getCity().toLowerCase().contains(search))
+                                    || (a.getCountry() != null && a.getCountry().toLowerCase().contains(search))
+                    )
                     .toList();
         }
 
@@ -40,7 +43,6 @@ public class SearchController {
 
         return "search";
     }
-
     @GetMapping("/details")
     public String details(@RequestParam String code,
                           Model model) {

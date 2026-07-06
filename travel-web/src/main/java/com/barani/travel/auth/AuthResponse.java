@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AuthResponse {
-
+//travel-web
     private String accessToken;
 
     private String refreshToken;

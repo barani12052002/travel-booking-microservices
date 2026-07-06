@@ -32,7 +32,10 @@ public class AuthController {
 
         AuthResponse response =
                 authClient.login(request);
-
+        System.out.println("TOKEN = " + response.getAccessToken());
+        System.out.println("USERNAME = " + response.getUsername());
+        System.out.println("EMAIL = " + response.getEmail());
+        System.out.println("PHONE = " + response.getPhone());
         session.setAttribute("TOKEN",
                 response.getAccessToken());
 

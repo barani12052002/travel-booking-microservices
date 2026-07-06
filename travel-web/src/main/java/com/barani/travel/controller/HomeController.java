@@ -30,11 +30,12 @@ public class HomeController {
     }
 
     @GetMapping("/dashboard")
-    public String dashboard(HttpSession session) {
+    public String dashboard(HttpSession session,
+                            Model model) {
 
-        if (session.getAttribute("TOKEN") == null) {
-            return "redirect:/login";
-        }
+        model.addAttribute(
+                "username",
+                session.getAttribute("USERNAME"));
 
         return "dashboard";
     }

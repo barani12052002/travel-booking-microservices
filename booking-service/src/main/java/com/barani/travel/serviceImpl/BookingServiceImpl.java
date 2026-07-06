@@ -231,9 +231,29 @@ Travel Booking Team
 
     @Override
     public List<BookingResponse> getBookingsByCustomerEmail(String customerEmail) {
-        return List.of();
-    }
 
+        return bookingRepository.findByCustomerEmail(customerEmail)
+                .stream()
+                .map(booking -> {
+
+                    BookingResponse response = new BookingResponse();
+
+                    response.setBookingReference(booking.getBookingReference());
+                    response.setProviderBookingId(booking.getProviderBookingId());
+                    response.setProviderName(booking.getProviderName());
+                    response.setBookingStatus(booking.getBookingStatus().name());
+                    response.setBookingDate(booking.getCreatedDate());
+                    response.setTravelDate(booking.getTravelDate());
+                    response.setTimeSlot(booking.getTimeSlot());
+                    response.setCurrency(booking.getCurrency());
+                    response.setAdultCount(booking.getAdultCount());
+                    response.setChildCount(booking.getChildCount());
+                    response.setTotalAmount(booking.getTotalAmount());
+
+                    return response;
+                })
+                .toList();
+    }
     @Override
     public BookingResponse cancelBooking(String bookingReference) {
 

@@ -126,7 +126,7 @@ public class ProviderServiceImpl implements ProviderService {
                         "CHE001",
                         "Chennai",
                         "Explore palaces and rich heritage.",
-                        "https://images.unsplash.com/photo-1599661046827-dacde6976548?auto=format&fit=crop&w=1200&q=80",
+                        "https://media.istockphoto.com/id/1211952929/photo/marina-beach-chennai-city-tamil-nadu-india-bay-of-bengal-chennai-tourism-east-coast-road.jpg?s=1024x1024&w=is&k=20&c=XL4-z9Cm8uyt5A9SYQ8BFZdpltTX9HwNTZLiDg_KR-M=",
                         BigDecimal.valueOf(2299),
                         "2 Days",
                         15,

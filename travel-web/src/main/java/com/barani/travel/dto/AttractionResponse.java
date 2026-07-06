@@ -12,7 +12,9 @@ public class AttractionResponse {
     private String duration;
     private Integer availableSlots;
     private Double rating;
-
+    private String name;
+    private String city;
+    private String country;
     public AttractionResponse() {
     }
 
@@ -32,6 +34,30 @@ public class AttractionResponse {
         this.duration = duration;
         this.availableSlots = availableSlots;
         this.rating = rating;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public String getCode() {

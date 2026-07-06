@@ -20,17 +20,20 @@ public class SearchController {
     }
 
     @GetMapping("/search")
-    public String search(@RequestParam(required = false) String code,
-                         Model model) {
+    public String search(
+            @RequestParam(required = false) String destination,
+            Model model) {
 
         List<AttractionResponse> attractions = providerClient.getAttractions();
 
-        if(code != null){
+        if (destination != null && !destination.isBlank()) {
+
+            String search = destination.toLowerCase();
 
             attractions = attractions.stream()
-                    .filter(a -> a.getCode().equalsIgnoreCase(code))
+                    .filter(a ->
+                            a.getName().toLowerCase().contains(search))
                     .toList();
-
         }
 
         model.addAttribute("attractions", attractions);

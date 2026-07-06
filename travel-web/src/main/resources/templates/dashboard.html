@@ -600,9 +600,9 @@
         </div>
 
         <div class="profile-mini">
-            <img th:src="${user?.avatarUrl} ?: 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&w=100&q=80'" alt="User avatar">
+            <img src="/images/profile.png" alt="User avatar">
             <div class="flex-grow-1">
-                <div class="name" th:text="${username}"></div>
+                <div class="name" th:text="${session.USERNAME}"></div>
                 <div class="mail" th:text="${session.EMAIL}"></div>
                 <span class="tier"><i class="bi bi-star-fill"></i> Premium Member</span>
             </div>
@@ -635,7 +635,7 @@
         <!-- ===== HERO BANNER ===== -->
         <section class="hero">
             <div class="eyebrow"><i class="bi bi-stars"></i> YOUR NEXT JOURNEY AWAITS</div>
-            <h1>Welcome back, <span th:text="${user?.username} ?: 'guna123'">guna123</span>! 👋</h1>
+            <<h1>Welcome back,<span th:text="${session.USERNAME}">User</span>! 👋</h1>
             <p class="lead-sub">Ready for your next adventure? Discover beautiful destinations across India and the world.</p>
 
             <!-- ===== SEARCH CARD ===== -->

@@ -1,379 +1,982 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-
-    <title>Travel Dashboard</title>
-
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard · TravelBooking</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root{
+            --navy:#0B1E3F;
+            --navy-deep:#081730;
+            --ink:#0F1B33;
+            --azure:#2F6FED;
+            --azure-deep:#1B4FCB;
+            --coral:#FF6B5E;
+            --gold:#F4A93B;
+            --mint:#1FBF8F;
+            --paper:#F5F7FB;
+            --line:rgba(15,27,51,0.08);
+            --muted:#6B7686;
+            --radius-lg:22px;
+            --radius-md:16px;
+            --radius-sm:12px;
+            --shadow-soft:0 12px 32px -12px rgba(15,27,51,0.16);
+            --shadow-card:0 8px 24px -10px rgba(15,27,51,0.12);
+        }
 
-    <link rel="stylesheet" href="/css/dashboard.css">
+        *{box-sizing:border-box;}
 
+        body{
+            font-family:'Manrope', sans-serif;
+            background:var(--paper);
+            color:var(--ink);
+            overflow-x:hidden;
+        }
+
+        h1,h2,h3,h4,.display-font{
+            font-family:'Sora', sans-serif;
+        }
+
+        a{ text-decoration:none; }
+
+        /* ===== Layout shell ===== */
+        .app-shell{
+            display:flex;
+            min-height:100vh;
+        }
+
+        /* ===== Glassmorphism Sidebar ===== */
+        .sidebar{
+            width:264px;
+            flex-shrink:0;
+            position:sticky;
+            top:0;
+            height:100vh;
+            padding:28px 18px;
+            background:linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.55));
+            backdrop-filter:blur(22px);
+            -webkit-backdrop-filter:blur(22px);
+            border-right:1px solid rgba(255,255,255,0.6);
+            box-shadow:8px 0 30px -20px rgba(15,27,51,0.25);
+            display:flex;
+            flex-direction:column;
+            z-index:1030;
+            transition:transform .3s ease;
+        }
+
+        .brand{
+            display:flex;
+            align-items:center;
+            gap:10px;
+            padding:6px 10px 22px;
+            font-family:'Sora', sans-serif;
+            font-weight:800;
+            font-size:1.25rem;
+            color:var(--ink);
+        }
+        .brand .bi{ color:var(--azure); font-size:1.3rem; }
+        .brand span.accent{ color:var(--azure); }
+
+        .nav-glass{
+            display:flex;
+            flex-direction:column;
+            gap:4px;
+        }
+
+        .nav-glass .nav-link{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            padding:11px 14px;
+            border-radius:var(--radius-sm);
+            color:#3C4658;
+            font-weight:600;
+            font-size:0.94rem;
+            transition:all .18s ease;
+        }
+        .nav-glass .nav-link .bi{ font-size:1.05rem; width:20px; text-align:center; color:#7C879A; }
+
+        .nav-glass .nav-link:hover{
+            background:rgba(47,111,237,0.08);
+            color:var(--azure-deep);
+        }
+        .nav-glass .nav-link:hover .bi{ color:var(--azure-deep); }
+
+        .nav-glass .nav-link.active{
+            background:linear-gradient(135deg, var(--azure), var(--azure-deep));
+            color:#fff;
+            box-shadow:0 10px 20px -8px rgba(47,111,237,0.55);
+        }
+        .nav-glass .nav-link.active .bi{ color:#fff; }
+
+        .nav-divider{
+            height:1px;
+            background:var(--line);
+            margin:16px 6px;
+        }
+
+        .promo-glass{
+            margin-top:auto;
+            background:linear-gradient(160deg, rgba(47,111,237,0.14), rgba(31,191,143,0.10));
+            border:1px solid rgba(47,111,237,0.18);
+            border-radius:var(--radius-md);
+            padding:18px;
+            position:relative;
+            overflow:hidden;
+        }
+        .promo-glass::after{
+            content:"";
+            position:absolute; right:-30px; top:-30px;
+            width:100px;height:100px;border-radius:50%;
+            background:radial-gradient(circle, rgba(244,169,59,0.35), transparent 70%);
+        }
+        .promo-glass h6{ font-weight:800; margin-bottom:2px; font-size:1rem;}
+        .promo-glass p{ font-size:0.8rem; color:var(--muted); margin-bottom:12px;}
+        .promo-glass .btn{
+            background:var(--ink);
+            color:#fff;
+            font-weight:700;
+            font-size:0.82rem;
+            border-radius:10px;
+            padding:8px 16px;
+        }
+
+        .profile-mini{
+            margin-top:14px;
+            display:flex;
+            align-items:center;
+            gap:10px;
+            padding:12px;
+            border-radius:var(--radius-sm);
+            background:rgba(255,255,255,0.6);
+            border:1px solid rgba(255,255,255,0.7);
+        }
+        .profile-mini img{
+            width:40px;height:40px;border-radius:50%;object-fit:cover;
+            border:2px solid #fff;
+        }
+        .profile-mini .name{ font-weight:700; font-size:0.88rem; line-height:1.1; }
+        .profile-mini .mail{ font-size:0.72rem; color:var(--muted); }
+        .profile-mini .tier{
+            display:inline-flex; align-items:center; gap:4px;
+            font-size:0.68rem; font-weight:700; color:#B4790C;
+            background:rgba(244,169,59,0.18);
+            padding:2px 8px; border-radius:20px; margin-top:4px;
+        }
+        .profile-mini .logout-link{
+            display:flex; align-items:center; gap:8px;
+            font-size:0.82rem; font-weight:600; color:#94374A;
+            margin-top:10px; padding:0 2px;
+        }
+
+        /* ===== Main column ===== */
+        .main-col{
+            flex:1;
+            min-width:0;
+            padding:22px 30px 60px;
+        }
+
+        .topbar{
+            display:flex;
+            align-items:center;
+            justify-content:flex-end;
+            gap:16px;
+            margin-bottom:18px;
+        }
+        .btn-mobile-toggle{
+            display:none;
+            border:1px solid var(--line);
+            background:#fff;
+            border-radius:10px;
+            width:40px;height:40px;
+            align-items:center;justify-content:center;
+            margin-right:auto;
+        }
+        .bell-btn{
+            position:relative;
+            width:42px;height:42px;
+            border-radius:50%;
+            background:#fff;
+            border:1px solid var(--line);
+            display:flex;align-items:center;justify-content:center;
+            color:var(--ink);
+            box-shadow:var(--shadow-card);
+        }
+        .bell-btn .badge-dot{
+            position:absolute; top:6px; right:7px;
+            width:8px;height:8px;border-radius:50%;
+            background:var(--coral);
+            border:2px solid #fff;
+        }
+        .avatar-top{
+            width:42px;height:42px;border-radius:50%;object-fit:cover;
+            border:2px solid #fff; box-shadow:var(--shadow-card);
+        }
+
+        /* ===== Hero banner ===== */
+        .hero{
+            position:relative;
+            border-radius:var(--radius-lg);
+            overflow:hidden;
+            min-height:320px;
+            padding:34px 38px;
+            display:flex;
+            flex-direction:column;
+            justify-content:flex-start;
+            background:
+                    linear-gradient(115deg, rgba(8,23,48,0.92) 8%, rgba(11,30,63,0.65) 45%, rgba(11,30,63,0.15) 78%),
+                    url('https://images.unsplash.com/photo-1502920917128-1aa500764cbd?auto=format&fit=crop&w=1600&q=80') center/cover;
+            box-shadow:var(--shadow-soft);
+        }
+        .hero .eyebrow{
+            color:#BFD3FF;
+            font-weight:700;
+            letter-spacing:.06em;
+            font-size:0.78rem;
+            text-transform:uppercase;
+            display:flex;align-items:center;gap:8px;
+            margin-bottom:10px;
+        }
+        .hero h1{
+            color:#fff;
+            font-weight:800;
+            font-size:2.15rem;
+            margin-bottom:8px;
+        }
+        .hero p.lead-sub{
+            color:#DCE6FF;
+            font-size:1rem;
+            max-width:480px;
+            margin-bottom:0;
+        }
+
+        /* Search card overlapping hero */
+        .search-card{
+            background:#fff;
+            border-radius:var(--radius-md);
+            box-shadow:0 20px 45px -18px rgba(15,27,51,0.35);
+            padding:20px 22px;
+            margin-top:26px;
+            position:relative;
+            z-index:5;
+        }
+        .search-tabs{
+            display:flex; gap:8px; margin-bottom:16px;
+        }
+        .search-tabs .tab-btn{
+            border:none;
+            background:transparent;
+            font-weight:700;
+            font-size:0.88rem;
+            color:var(--muted);
+            padding:8px 16px;
+            border-radius:10px;
+            display:flex;align-items:center;gap:6px;
+        }
+        .search-tabs .tab-btn.active{
+            background:var(--azure);
+            color:#fff;
+            box-shadow:0 8px 18px -8px rgba(47,111,237,0.6);
+        }
+        .search-field label{
+            font-size:0.74rem;
+            font-weight:700;
+            color:var(--muted);
+            margin-bottom:4px;
+            display:block;
+        }
+        .search-field .input-group-text{
+            background:#F4F6FA;
+            border:1px solid var(--line);
+            border-right:none;
+            color:var(--muted);
+        }
+        .search-field .form-control, .search-field .form-select{
+            border:1px solid var(--line);
+            border-left:none;
+            background:#F4F6FA;
+            font-weight:600;
+            font-size:0.9rem;
+        }
+        .search-field .form-control:focus, .search-field .form-select:focus{
+            box-shadow:none;
+            border-color:var(--azure);
+        }
+        .btn-search-cta{
+            background:linear-gradient(135deg, var(--azure), var(--azure-deep));
+            color:#fff;
+            font-weight:700;
+            border-radius:10px;
+            padding:10px 22px;
+            white-space:nowrap;
+            box-shadow:0 12px 22px -8px rgba(47,111,237,0.55);
+            border:none;
+        }
+        .btn-search-cta:hover{ color:#fff; opacity:.95; }
+
+        /* ===== Stat cards ===== */
+        .stat-card{
+            background:#fff;
+            border-radius:var(--radius-md);
+            padding:18px 20px;
+            box-shadow:var(--shadow-card);
+            border:1px solid var(--line);
+            height:100%;
+            transition:transform .18s ease;
+        }
+        .stat-card:hover{ transform:translateY(-3px); }
+        .stat-icon{
+            width:46px;height:46px;border-radius:13px;
+            display:flex;align-items:center;justify-content:center;
+            font-size:1.25rem;
+            margin-bottom:12px;
+        }
+        .stat-card h3{ font-weight:800; font-size:1.65rem; margin-bottom:2px;}
+        .stat-card .stat-label{ font-weight:700; font-size:0.86rem; color:var(--ink);}
+        .stat-card .stat-link{ font-size:0.76rem; font-weight:700; color:var(--azure); display:inline-flex; align-items:center; gap:4px; margin-top:2px;}
+
+        .bg-soft-azure{ background:rgba(47,111,237,0.12); color:var(--azure-deep); }
+        .bg-soft-mint{ background:rgba(31,191,143,0.14); color:#0E8F6B; }
+        .bg-soft-coral{ background:rgba(255,107,94,0.14); color:#E14A3B; }
+        .bg-soft-gold{ background:rgba(244,169,59,0.16); color:#B4790C; }
+
+        /* ===== Section headers ===== */
+        .section-head{
+            display:flex;
+            align-items:flex-end;
+            justify-content:space-between;
+            margin-bottom:18px;
+        }
+        .section-head h2{
+            font-weight:800; font-size:1.4rem; margin-bottom:2px;
+        }
+        .section-head p{ color:var(--muted); font-size:0.88rem; margin-bottom:0;}
+        .section-head .view-all{
+            font-weight:700; font-size:0.86rem; color:var(--azure-deep);
+            display:flex; align-items:center; gap:6px; white-space:nowrap;
+        }
+
+        /* ===== Destination cards ===== */
+        .dest-card{
+            border-radius:var(--radius-md);
+            overflow:hidden;
+            position:relative;
+            box-shadow:var(--shadow-card);
+            background:#0F1B33;
+            height:100%;
+        }
+        .dest-card .dest-img{
+            height:190px;
+            width:100%;
+            object-fit:cover;
+            display:block;
+            transition:transform .4s ease;
+        }
+        .dest-card:hover .dest-img{ transform:scale(1.06); }
+        .dest-card .dest-overlay{
+            position:absolute; inset:0;
+            background:linear-gradient(180deg, rgba(15,27,51,0) 45%, rgba(8,17,35,0.88) 100%);
+            pointer-events:none;
+        }
+        .dest-rating{
+            position:absolute; top:12px; right:12px;
+            background:rgba(255,255,255,0.92);
+            border-radius:20px;
+            padding:3px 10px;
+            font-size:0.78rem; font-weight:800;
+            display:flex; align-items:center; gap:4px;
+            color:var(--ink);
+        }
+        .dest-rating .bi{ color:var(--gold); }
+        .dest-info{
+            position:absolute; left:0; right:0; bottom:0;
+            padding:14px 16px;
+            color:#fff;
+        }
+        .dest-info h5{ font-weight:800; margin-bottom:2px; font-size:1.12rem;}
+        .dest-info .tags{ font-size:0.78rem; color:#CBD6EE; margin-bottom:10px;}
+        .dest-body{
+            background:#fff;
+            padding:12px 16px 16px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+        }
+        .dest-body .price-label{ font-size:0.72rem; color:var(--muted); font-weight:600;}
+        .dest-body .price-val{ font-weight:800; font-size:1.05rem; color:var(--ink);}
+        .btn-explore{
+            background:var(--ink);
+            color:#fff;
+            font-weight:700;
+            font-size:0.82rem;
+            border-radius:9px;
+            padding:7px 14px;
+            border:none;
+            white-space:nowrap;
+        }
+        .btn-explore:hover{ background:var(--azure-deep); color:#fff; }
+
+        /* ===== Popular Tours (list style cards) ===== */
+        .tour-card{
+            background:#fff;
+            border-radius:var(--radius-md);
+            box-shadow:var(--shadow-card);
+            border:1px solid var(--line);
+            display:flex;
+            gap:14px;
+            padding:12px;
+            height:100%;
+            align-items:stretch;
+        }
+        .tour-card img{
+            width:96px; min-width:96px; height:96px;
+            object-fit:cover; border-radius:12px;
+        }
+        .tour-card .tour-body{ display:flex; flex-direction:column; }
+        .tour-card h6{ font-weight:800; margin-bottom:2px; font-size:0.95rem;}
+        .tour-card .meta{ font-size:0.76rem; color:var(--muted); margin-bottom:6px;}
+        .tour-card .price-row{ margin-top:auto; display:flex; align-items:center; justify-content:space-between;}
+        .tour-card .price-row .amt{ font-weight:800; font-size:0.95rem;}
+        .wishlist-btn{
+            width:30px;height:30px;border-radius:50%;
+            background:#F4F6FA;border:1px solid var(--line);
+            display:flex;align-items:center;justify-content:center;
+            color:var(--coral); font-size:0.85rem;
+        }
+
+        /* ===== Offers banner ===== */
+        .offers-strip{
+            background:linear-gradient(120deg, var(--navy) 0%, var(--navy-deep) 60%, #0A1830 100%);
+            border-radius:var(--radius-lg);
+            padding:26px 30px;
+            position:relative;
+            overflow:hidden;
+            color:#fff;
+        }
+        .offers-strip::before{
+            content:"";
+            position:absolute; top:-60px; right:-40px;
+            width:220px;height:220px;border-radius:50%;
+            background:radial-gradient(circle, rgba(47,111,237,0.35), transparent 70%);
+        }
+        .offers-strip::after{
+            content:"";
+            position:absolute; bottom:-70px; left:30%;
+            width:180px;height:180px;border-radius:50%;
+            background:radial-gradient(circle, rgba(244,169,59,0.22), transparent 70%);
+        }
+        .offer-pill{
+            background:rgba(255,255,255,0.08);
+            border:1px solid rgba(255,255,255,0.14);
+            border-radius:var(--radius-sm);
+            padding:16px 18px;
+            height:100%;
+            position:relative;
+            z-index:2;
+        }
+        .offer-pill .bi{ font-size:1.4rem; color:var(--gold); margin-bottom:10px; display:block;}
+        .offer-pill h6{ font-weight:800; margin-bottom:4px;}
+        .offer-pill p{ font-size:0.82rem; color:#C7D2E8; margin-bottom:0;}
+
+        /* ===== Popular Activities strip ===== */
+        .activity-strip{
+            background:var(--ink);
+            border-radius:var(--radius-lg);
+            padding:24px 28px;
+            color:#fff;
+            display:flex;
+            align-items:center;
+            gap:34px;
+            flex-wrap:wrap;
+        }
+        .activity-strip h4{ font-weight:800; margin-bottom:0; white-space:nowrap;}
+        .activity-item{ display:flex; align-items:center; gap:12px; }
+        .activity-item .ico{
+            width:42px;height:42px;border-radius:12px;
+            background:rgba(255,255,255,0.08);
+            display:flex;align-items:center;justify-content:center;
+            font-size:1.1rem; color:var(--gold); flex-shrink:0;
+        }
+        .activity-item .txt strong{ display:block; font-size:0.9rem; font-weight:700;}
+        .activity-item .txt span{ font-size:0.76rem; color:#A9B4C8;}
+
+        footer.app-footer{
+            text-align:center;
+            color:var(--muted);
+            font-size:0.8rem;
+            margin-top:34px;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 991.98px){
+            .sidebar{
+                position:fixed;
+                left:0; top:0;
+                transform:translateX(-100%);
+                z-index:2000;
+                width:270px;
+            }
+            .sidebar.show{ transform:translateX(0); }
+            .btn-mobile-toggle{ display:flex; }
+            .sidebar-backdrop{
+                display:none;
+                position:fixed; inset:0;
+                background:rgba(8,17,35,0.45);
+                z-index:1900;
+            }
+            .sidebar-backdrop.show{ display:block; }
+            .main-col{ padding:18px 16px 50px; }
+            .hero h1{ font-size:1.7rem; }
+        }
+        @media (max-width: 767.98px){
+            .search-card{ padding:16px; }
+            .activity-strip{ flex-direction:column; align-items:flex-start; gap:18px;}
+        }
+        @media (max-width: 575.98px){
+            .hero{ padding:24px 20px; min-height:auto;}
+            .tour-card{ flex-direction:column; }
+            .tour-card img{ width:100%; height:140px; }
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- Sidebar -->
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()"></div>
 
-<div class="sidebar">
+<div class="app-shell">
 
-    <h3>🌍 Travel Booking</h3>
+    <!-- ============ GLASSMORPHISM SIDEBAR ============ -->
+    <aside class="sidebar" id="appSidebar">
+        <a th:href="@{/dashboard}" class="brand">
+            <i class="bi bi-airplane-engines-fill"></i> Travel<span class="accent">Booking</span>
+        </a>
 
-    <a href="/dashboard">
-        <i class="bi bi-house"></i> Dashboard
-    </a>
+        <nav class="nav-glass">
+            <a th:href="@{/dashboard}" class="nav-link active">
+                <i class="bi bi-grid-1x2-fill"></i> Dashboard
+            </a>
+            <a th:href="@{/search}" class="nav-link">
+                <i class="bi bi-search"></i> Search Tours
+            </a>
+            <a th:href="@{/bookings}" class="nav-link">
+                <i class="bi bi-calendar2-check"></i> My Bookings
+            </a>
+            <a th:href="@{/dashboard}" class="nav-link">
+                <i class="bi bi-geo-alt"></i> Destinations
+            </a>
+            <a th:href="@{/dashboard}" class="nav-link">
+                <i class="bi bi-tag"></i> Offers &amp; Deals
+            </a>
+            <a th:href="@{/dashboard}" class="nav-link">
+                <i class="bi bi-heart"></i> Wishlist
+            </a>
 
-    <a href="/search">
-        <i class="bi bi-search"></i> Search Tours
-    </a>
+            <div class="nav-divider"></div>
 
-    <a href="/bookings">
-        <i class="bi bi-ticket"></i> My Bookings
-    </a>
+            <a th:href="@{/profile}" class="nav-link">
+                <i class="bi bi-person"></i> Profile
+            </a>
+            <a th:href="@{/dashboard}" class="nav-link">
+                <i class="bi bi-gear"></i> Settings
+            </a>
+            <a th:href="@{/dashboard}" class="nav-link">
+                <i class="bi bi-question-circle"></i> Help &amp; Support
+            </a>
+        </nav>
 
-    <a href="/profile">
-        <i class="bi bi-person"></i> Profile
-    </a>
+        <div class="promo-glass">
+            <h6>Get 20% OFF</h6>
+            <p>On your first booking</p>
+            <a th:href="@{/search}" class="btn btn-sm w-100 text-center">Explore Deals</a>
+        </div>
 
-    <a href="/">
-        <i class="bi bi-box-arrow-right"></i> Logout
-    </a>
+        <div class="profile-mini">
+            <img th:src="${user?.avatarUrl} ?: 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&w=100&q=80'" alt="User avatar">
+            <div class="flex-grow-1">
+                <div class="name" th:text="${username}"></div>
+                <div class="mail" th:text="${session.EMAIL}"></div>
+                <span class="tier"><i class="bi bi-star-fill"></i> Premium Member</span>
+            </div>
+        </div>
+        <a th:href="@{/logout}" class="profile-mini logout-link">
+            <i class="bi bi-box-arrow-right"></i> Logout
+        </a>
+    </aside>
 
+    <!-- ============ MAIN CONTENT ============ -->
+    <main class="main-col">
+
+        <div class="topbar">
+
+            <button class="btn-mobile-toggle" onclick="toggleSidebar()">
+                <i class="bi bi-list fs-4"></i>
+            </button>
+
+            <button class="bell-btn">
+                <i class="bi bi-bell"></i>
+                <span class="badge-dot"></span>
+            </button>
+
+            <img class="avatar-top"
+                 src="/images/profile.png"
+                 alt="User avatar">
+
+        </div>
+
+        <!-- ===== HERO BANNER ===== -->
+        <section class="hero">
+            <div class="eyebrow"><i class="bi bi-stars"></i> YOUR NEXT JOURNEY AWAITS</div>
+            <h1>Welcome back, <span th:text="${user?.username} ?: 'guna123'">guna123</span>! 👋</h1>
+            <p class="lead-sub">Ready for your next adventure? Discover beautiful destinations across India and the world.</p>
+
+            <!-- ===== SEARCH CARD ===== -->
+            <div class="search-card">
+                <div class="search-tabs">
+                    <button class="tab-btn active" type="button"><i class="bi bi-suitcase-lg"></i> Tours</button>
+                    <button class="tab-btn" type="button"><i class="bi bi-building"></i> Hotels</button>
+                </div>
+
+                <form th:action="@{/search}" method="get" class="row g-3 align-items-end">
+                    <div class="col-12 col-md-4 search-field">
+                        <label>Where to?</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                            <input type="text" name="destination" class="form-control" placeholder="Search destinations">
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-2 search-field">
+                        <label>Check-in</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-calendar3"></i></span>
+                            <input type="date" name="checkin" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-2 search-field">
+                        <label>Check-out</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-calendar3"></i></span>
+                            <input type="date" name="checkout" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-8 col-md-2 search-field">
+                        <label>Travelers</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-person"></i></span>
+                            <select class="form-select" name="travelers">
+                                <option>1 Traveler</option>
+                                <option>2 Travelers</option>
+                                <option>3 Travelers</option>
+                                <option>4+ Travelers</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-4 col-md-2 d-grid">
+                        <button type="submit" class="btn btn-search-cta"><i class="bi bi-search me-1"></i> Search</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- ===== STAT CARDS ===== -->
+        <div class="row g-3 mt-4">
+            <div class="col-6 col-lg-3">
+                <div class="stat-card">
+                    <div class="stat-icon bg-soft-azure"><i class="bi bi-globe-americas"></i></div>
+                    <h3 th:text="${stats?.availableTours} ?: '5'">5</h3>
+                    <div class="stat-label">Available Tours</div>
+                    <a th:href="@{/search}" class="stat-link">Explore new places <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="stat-card">
+                    <div class="stat-icon bg-soft-mint"><i class="bi bi-ticket-perforated"></i></div>
+                    <h3 th:text="${stats?.myBookings} ?: '0'">0</h3>
+                    <div class="stat-label">My Bookings</div>
+                    <a th:href="@{/bookings}" class="stat-link">View your trips <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="stat-card">
+                    <div class="stat-icon bg-soft-coral"><i class="bi bi-pin-map"></i></div>
+                    <h3 th:text="${stats?.destinations} ?: '5'">5</h3>
+                    <div class="stat-label">Destinations</div>
+                    <a th:href="@{/dashboard}" class="stat-link">Top locations <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="stat-card">
+                    <div class="stat-icon bg-soft-gold"><i class="bi bi-trophy"></i></div>
+                    <h3 th:text="${stats?.profileComplete} ?: '100%'">100%</h3>
+                    <div class="stat-label">Profile Complete</div>
+                    <a th:href="@{/profile}" class="stat-link">Complete your profile <i class="bi bi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== FEATURED DESTINATIONS ===== -->
+        <div class="section-head mt-5">
+            <div>
+                <h2>Featured Destinations</h2>
+                <p>Explore handpicked destinations for your next journey</p>
+            </div>
+            <a th:href="@{/search}" class="view-all">View All Destinations <i class="bi bi-arrow-right"></i></a>
+        </div>
+
+        <div class="row g-3" th:if="${destinations == null}">
+            <div class="col-6 col-lg-3">
+                <div class="dest-card">
+                    <img class="dest-img" src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=600&q=80" alt="Goa">
+                    <div class="dest-overlay"></div>
+                    <span class="dest-rating"><i class="bi bi-star-fill"></i> 4.8</span>
+                    <div class="dest-info">
+                        <h5>Goa</h5>
+                        <div class="tags">Beaches, Nightlife, Water Sports</div>
+                    </div>
+                    <div class="dest-body">
+                        <div>
+                            <div class="price-label">From</div>
+                            <div class="price-val">₹4,999</div>
+                        </div>
+                        <a th:href="@{/search}" class="btn-explore">Explore Tours</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="dest-card">
+                    <img class="dest-img" src="https://images.unsplash.com/photo-1544967082-d9d25d867d66?auto=format&fit=crop&w=600&q=80" alt="Munnar">
+                    <div class="dest-overlay"></div>
+                    <span class="dest-rating"><i class="bi bi-star-fill"></i> 4.7</span>
+                    <div class="dest-info">
+                        <h5>Munnar</h5>
+                        <div class="tags">Hill Stations, Tea Gardens, Nature</div>
+                    </div>
+                    <div class="dest-body">
+                        <div>
+                            <div class="price-label">From</div>
+                            <div class="price-val">₹6,499</div>
+                        </div>
+                        <a th:href="@{/search}" class="btn-explore">Explore Tours</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="dest-card">
+                    <img class="dest-img" src="https://images.unsplash.com/photo-1566837945700-30057527ade0?auto=format&fit=crop&w=600&q=80" alt="Kashmir">
+                    <div class="dest-overlay"></div>
+                    <span class="dest-rating"><i class="bi bi-star-fill"></i> 4.9</span>
+                    <div class="dest-info">
+                        <h5>Kashmir</h5>
+                        <div class="tags">Mountains, Lakes, Adventure</div>
+                    </div>
+                    <div class="dest-body">
+                        <div>
+                            <div class="price-label">From</div>
+                            <div class="price-val">₹12,999</div>
+                        </div>
+                        <a th:href="@{/search}" class="btn-explore">Explore Tours</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="dest-card">
+                    <img class="dest-img" src="https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=600&q=80" alt="Mumbai">
+                    <div class="dest-overlay"></div>
+                    <span class="dest-rating"><i class="bi bi-star-fill"></i> 4.5</span>
+                    <div class="dest-info">
+                        <h5>Mumbai</h5>
+                        <div class="tags">City Life, Shopping, Food</div>
+                    </div>
+                    <div class="dest-body">
+                        <div>
+                            <div class="price-label">From</div>
+                            <div class="price-val">₹3,999</div>
+                        </div>
+                        <a th:href="@{/search}" class="btn-explore">Explore Tours</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thymeleaf dynamic loop version (used when 'destinations' model attribute is supplied) -->
+        <div class="row g-3" th:if="${destinations != null}">
+            <div class="col-6 col-lg-3" th:each="d : ${destinations}">
+                <div class="dest-card">
+                    <img class="dest-img" th:src="${d.imageUrl}" alt="Destination image">
+                    <div class="dest-overlay"></div>
+                    <span class="dest-rating"><i class="bi bi-star-fill"></i> <span th:text="${d.rating}">4.8</span></span>
+                    <div class="dest-info">
+                        <h5 th:text="${d.name}">Destination</h5>
+                        <div class="tags" th:text="${d.tags}">Tags</div>
+                    </div>
+                    <div class="dest-body">
+                        <div>
+                            <div class="price-label">From</div>
+                            <div class="price-val" th:text="${'₹' + d.price}">₹0</div>
+                        </div>
+                        <a th:href="@{/search(destination=${d.name})}" class="btn-explore">Explore Tours</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== POPULAR TOURS ===== -->
+        <div class="section-head mt-5">
+            <div>
+                <h2>Popular Tours</h2>
+                <p>Trending packages loved by travelers like you</p>
+            </div>
+            <a th:href="@{/search}" class="view-all">View All Tours <i class="bi bi-arrow-right"></i></a>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-md-6 col-lg-3">
+                <div class="tour-card">
+                    <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=200&q=80" alt="Kerala Backwaters">
+                    <div class="tour-body flex-grow-1">
+                        <div class="d-flex justify-content-between">
+                            <h6>Kerala Backwaters</h6>
+                            <button class="wishlist-btn"><i class="bi bi-heart"></i></button>
+                        </div>
+                        <div class="meta"><i class="bi bi-calendar3 me-1"></i>4 Days · 3 Nights</div>
+                        <div class="price-row">
+                            <span class="amt">₹8,499</span>
+                            <span class="badge text-bg-light border"><i class="bi bi-star-fill text-warning"></i> 4.6</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="tour-card">
+                    <img src="https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=200&q=80" alt="Rajasthan Heritage">
+                    <div class="tour-body flex-grow-1">
+                        <div class="d-flex justify-content-between">
+                            <h6>Rajasthan Heritage</h6>
+                            <button class="wishlist-btn"><i class="bi bi-heart-fill"></i></button>
+                        </div>
+                        <div class="meta"><i class="bi bi-calendar3 me-1"></i>6 Days · 5 Nights</div>
+                        <div class="price-row">
+                            <span class="amt">₹15,999</span>
+                            <span class="badge text-bg-light border"><i class="bi bi-star-fill text-warning"></i> 4.8</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="tour-card">
+                    <img src="https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=200&q=80" alt="Andaman Islands">
+                    <div class="tour-body flex-grow-1">
+                        <div class="d-flex justify-content-between">
+                            <h6>Andaman Islands</h6>
+                            <button class="wishlist-btn"><i class="bi bi-heart"></i></button>
+                        </div>
+                        <div class="meta"><i class="bi bi-calendar3 me-1"></i>5 Days · 4 Nights</div>
+                        <div class="price-row">
+                            <span class="amt">₹18,499</span>
+                            <span class="badge text-bg-light border"><i class="bi bi-star-fill text-warning"></i> 4.9</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="tour-card">
+                    <img src="https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=200&q=80" alt="Ladakh Expedition">
+                    <div class="tour-body flex-grow-1">
+                        <div class="d-flex justify-content-between">
+                            <h6>Ladakh Expedition</h6>
+                            <button class="wishlist-btn"><i class="bi bi-heart"></i></button>
+                        </div>
+                        <div class="meta"><i class="bi bi-calendar3 me-1"></i>7 Days · 6 Nights</div>
+                        <div class="price-row">
+                            <span class="amt">₹22,999</span>
+                            <span class="badge text-bg-light border"><i class="bi bi-star-fill text-warning"></i> 4.7</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== OFFERS & DEALS ===== -->
+        <div class="mt-5">
+            <div class="offers-strip">
+                <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-4 position-relative" style="z-index:2;">
+                    <div>
+                        <h2 class="mb-1"><i class="bi bi-tag-fill me-2" style="color:var(--gold);"></i>Offers &amp; Deals</h2>
+                        <p class="mb-0" style="color:#C7D2E8;">Limited-time savings on your favorite destinations</p>
+                    </div>
+                    <a th:href="@{/search}" class="btn btn-light btn-sm fw-bold rounded-pill px-3">View All Offers</a>
+                </div>
+                <div class="row g-3 position-relative" style="z-index:2;">
+                    <div class="col-md-4">
+                        <div class="offer-pill">
+                            <i class="bi bi-percent"></i>
+                            <h6>Flat 20% Off</h6>
+                            <p>On your first booking with code WELCOME20</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="offer-pill">
+                            <i class="bi bi-airplane"></i>
+                            <h6>Free Flight Upgrade</h6>
+                            <p>On all Kashmir &amp; Ladakh premium packages</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="offer-pill">
+                            <i class="bi bi-people"></i>
+                            <h6>Group Discounts</h6>
+                            <p>Save up to 15% for groups of 4 or more</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== POPULAR ACTIVITIES ===== -->
+        <div class="mt-4">
+            <div class="activity-strip">
+                <h4>Popular Activities</h4>
+                <div class="activity-item">
+                    <div class="ico"><i class="bi bi-bicycle"></i></div>
+                    <div class="txt"><strong>Adventure Sports</strong><span>Thrilling experiences</span></div>
+                </div>
+                <div class="activity-item">
+                    <div class="ico"><i class="bi bi-bank2"></i></div>
+                    <div class="txt"><strong>Cultural Tours</strong><span>Heritage &amp; traditions</span></div>
+                </div>
+                <div class="activity-item">
+                    <div class="ico"><i class="bi bi-umbrella"></i></div>
+                    <div class="txt"><strong>Beach Holidays</strong><span>Sun, sand &amp; sea</span></div>
+                </div>
+                <div class="activity-item">
+                    <div class="ico"><i class="bi bi-flag"></i></div>
+                    <div class="txt"><strong>Mountain Trekking</strong><span>Explore the heights</span></div>
+                </div>
+                <a href="#" class="ms-auto text-white fs-4 d-none d-md-block"><i class="bi bi-chevron-right"></i></a>
+            </div>
+        </div>
+
+        <footer class="app-footer">
+            © 2026 TravelBooking. All rights reserved.
+        </footer>
+
+    </main>
 </div>
 
-<!-- Content -->
-
-<div class="content">
-
-    <!-- Welcome -->
-
-    <div class="top-card">
-
-        <div class="row align-items-center">
-
-            <div class="col-md-8">
-
-                <h2>
-
-                    Welcome,
-
-                    <span th:text="${username}"></span> 👋
-
-                </h2>
-
-                <h4>
-
-                    Ready for your next adventure?
-
-                </h4>
-
-                <p>
-
-                    Discover beautiful destinations across India.
-
-                </p>
-
-            </div>
-
-            <div class="col-md-4 text-end">
-
-                <a href="/search" class="btn btn-light btn-lg">
-
-                    Search Tours
-
-                </a>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- Statistics -->
-
-    <div class="row mt-5">
-
-        <div class="col-lg-3">
-
-            <div class="card stat-card">
-
-                <div class="card-body text-center">
-
-                    <h1>🌍</h1>
-
-                    <h3>5</h3>
-
-                    <p>Available Tours</p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="col-lg-3">
-
-            <div class="card stat-card">
-
-                <div class="card-body text-center">
-
-                    <h1>🎫</h1>
-
-                    <h3>0</h3>
-
-                    <p>My Bookings</p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="col-lg-3">
-
-            <div class="card stat-card">
-
-                <div class="card-body text-center">
-
-                    <h1>📍</h1>
-
-                    <h3>5</h3>
-
-                    <p>Destinations</p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="col-lg-3">
-
-            <div class="card stat-card">
-
-                <div class="card-body text-center">
-
-                    <h1>👤</h1>
-
-                    <h3>100%</h3>
-
-                    <p>Profile</p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- Featured Destinations -->
-
-    <div class="mt-5">
-
-        <h3>
-
-            Featured Destinations
-
-        </h3>
-
-        <div class="row mt-4">
-
-            <!-- Goa -->
-
-            <div class="col-lg-4 mb-4">
-
-                <div class="card destination-card">
-
-                    <img th:src="@{/images/goa.png}" class="card-img-top">
-
-                    <div class="card-body">
-
-                        <h4>🌴 Goa</h4>
-
-                        <p>★★★★★</p>
-
-                        <p class="destination-price">
-
-                            ₹2999
-
-                        </p>
-
-                        <a href="/search" class="btn btn-primary w-100">
-
-                            Explore
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- Ooty -->
-
-            <div class="col-lg-4 mb-4">
-
-                <div class="card destination-card">
-
-                    <img th:src="@{/images/ooty.png}" class="card-img-top">
-
-                    <div class="card-body">
-
-                        <h4>🏔 Ooty</h4>
-
-                        <p>★★★★★</p>
-
-                        <p class="destination-price">
-
-                            ₹1999
-
-                        </p>
-
-                        <a href="/search" class="btn btn-primary w-100">
-
-                            Explore
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- Chennai -->
-
-            <div class="col-lg-4 mb-4">
-
-                <div class="card destination-card">
-
-                    <img th:src="@{/images/chennai.png}" class="card-img-top">
-
-                    <div class="card-body">
-
-                        <h4>🌊 Chennai</h4>
-
-                        <p>★★★★☆</p>
-
-                        <p class="destination-price">
-
-                            ₹1499
-
-                        </p>
-
-                        <a href="/search" class="btn btn-primary w-100">
-
-                            Explore
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- Kerala -->
-
-            <div class="col-lg-6 mb-4">
-
-                <div class="card destination-card">
-
-                    <img th:src="@{/images/kerala.png}" class="card-img-top">
-
-                    <div class="card-body">
-
-                        <h4>🌿 Kerala</h4>
-
-                        <p>★★★★★</p>
-
-                        <p class="destination-price">
-
-                            ₹3499
-
-                        </p>
-
-                        <a href="/search" class="btn btn-success w-100">
-
-                            Explore
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- Kodaikanal -->
-
-            <div class="col-lg-6 mb-4">
-
-                <div class="card destination-card">
-
-                    <img th:src="@{/images/kodaikanal.png}" class="card-img-top">
-
-                    <div class="card-body">
-
-                        <h4>⛰ Kodaikanal</h4>
-
-                        <p>★★★★★</p>
-
-                        <p class="destination-price">
-
-                            ₹2499
-
-                        </p>
-
-                        <a href="/search" class="btn btn-success w-100">
-
-                            Explore
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- Activity -->
-
-    <div class="card activity-card shadow mt-4">
-
-        <div class="card-body">
-
-            <h4>
-
-                Recent Activity
-
-            </h4>
-
-            <hr>
-
-            <p>✅ Logged in successfully</p>
-
-            <p>🌍 Browse available destinations</p>
-
-            <p>🎫 Book your next unforgettable trip</p>
-
-        </div>
-
-    </div>
-
-</div>
-
-<script src="/js/dashboard.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function toggleSidebar(){
+        document.getElementById('appSidebar').classList.toggle('show');
+        document.getElementById('sidebarBackdrop').classList.toggle('show');
+    }
+</script>
 </body>
 </html>

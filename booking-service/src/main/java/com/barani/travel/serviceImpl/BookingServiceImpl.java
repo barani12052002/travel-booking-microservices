@@ -80,7 +80,7 @@ public class BookingServiceImpl implements BookingService {
         booking.setTotalAmount(priceResponse.getTotalPrice());
 
         booking.setBookingStatus(BookingStatus.CONFIRMED);
-        booking.setProviderName("Adventure Park");
+        booking.setProviderName("Dream Destination Tours");
 
         booking.setCurrency(priceResponse.getCurrency());
 

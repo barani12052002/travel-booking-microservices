@@ -2,319 +2,471 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <title>Complete Your Booking</title>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
-          rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fraunces:wght@500;600;700&display=swap" rel="stylesheet">
 
     <style>
-
-        body{
-            background:#f5f7fb;
-            font-family:'Segoe UI',sans-serif;
+        :root {
+            --ink: #14213d;
+            --ink-soft: #4a5568;
+            --gold: #c8963e;
+            --gold-dark: #a97b2f;
+            --teal: #0f6b64;
+            --paper: #faf8f5;
+            --line: #e7e2d9;
         }
 
-        .booking-card{
-            border:none;
-            border-radius:20px;
-            overflow:hidden;
-            box-shadow:0 15px 35px rgba(0,0,0,.12);
+        * { box-sizing: border-box; }
+
+        body {
+            background: var(--paper);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--ink);
         }
 
-        .tour-img{
-            width:100%;
-            min-height:650px;
-            object-fit:cover;
+        h1, h2, h3, h4, .display-font {
+            font-family: 'Fraunces', serif;
         }
 
-        .section-title{
-            color:#1e3a8a;
-            font-weight:bold;
+        .util-bar {
+            background: var(--ink);
+            color: #fff;
+            font-size: 0.82rem;
+            padding: 8px 0;
+            letter-spacing: 0.02em;
         }
 
-        .price{
-            font-size:32px;
-            color:#0d6efd;
-            font-weight:bold;
+        .booking-card {
+            border: none;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(20,33,61,0.10);
+            background: #fff;
         }
 
-        .slot{
-
-            border:2px solid #dee2e6;
-            border-radius:12px;
-            padding:15px;
-            margin-bottom:12px;
-            cursor:pointer;
-            transition:.3s;
-
+        .img-col {
+            position: relative;
+            min-height: 100%;
         }
 
-        .slot:hover{
-
-            border-color:#0d6efd;
-            background:#eef5ff;
-
+        .tour-img {
+            width: 100%;
+            min-height: 650px;
+            height: 100%;
+            object-fit: cover;
         }
 
-        #priceCard{
-
-            display:none;
-
+        .img-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(20,33,61,0) 45%, rgba(20,33,61,0.75) 100%);
+            pointer-events: none;
         }
 
+        .img-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--gold);
+            color: var(--ink);
+            font-weight: 700;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 7px 14px;
+            border-radius: 999px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        .img-caption {
+            position: absolute;
+            bottom: 24px;
+            left: 24px;
+            right: 24px;
+            color: #fff;
+        }
+
+        .img-caption .step-label {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(255,255,255,0.75);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .tour-title {
+            font-size: 1.9rem;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--ink);
+        }
+
+        .tour-desc {
+            color: var(--ink-soft);
+            font-size: 0.98rem;
+            line-height: 1.7;
+        }
+
+        .price-strip {
+            background: linear-gradient(135deg, #14213d 0%, #1d3159 100%);
+            border-radius: 16px;
+            padding: 18px 22px;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .price-strip .label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(255,255,255,0.7);
+            font-weight: 600;
+        }
+
+        .price-strip .amount {
+            font-family: 'Fraunces', serif;
+            font-size: 2rem;
+            font-weight: 600;
+            line-height: 1.1;
+        }
+
+        .price-strip .amount sup {
+            font-size: 0.9rem;
+            font-weight: 500;
+            top: -0.8em;
+        }
+
+        .section-label {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .section-label i { color: var(--gold-dark); }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .detail-box {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 14px 16px;
+        }
+
+        .detail-box .label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--ink-soft);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .detail-box .value {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--ink);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .detail-box .value i { color: var(--teal); font-size: 0.95rem; }
+
+        .slot {
+            border: 1.5px solid var(--line);
+            border-radius: 14px;
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: var(--paper);
+            display: flex;
+            align-items: center;
+        }
+
+        .slot:hover {
+            border-color: var(--teal);
+            background: #eef7f6;
+        }
+
+        .slot input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--teal);
+            margin-right: 12px;
+        }
+
+        .slot label {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--ink);
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .slot .time-icon {
+            color: var(--teal);
+            margin-right: 8px;
+        }
+
+        #priceCard {
+            display: none;
+            border: none;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(20,33,61,0.10);
+        }
+
+        #priceCard .card-header {
+            background: var(--ink);
+            border: none;
+            padding: 16px 20px;
+        }
+
+        #priceCard .card-header h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        #priceCard .table {
+            margin-bottom: 0;
+            font-size: 0.94rem;
+        }
+
+        #priceCard .table td, #priceCard .table th {
+            padding: 10px 4px;
+            border-color: var(--line);
+            color: var(--ink-soft);
+        }
+
+        #priceCard .table tr:first-child td {
+            border-top: none;
+        }
+
+        #priceCard .table .text-end {
+            color: var(--ink);
+            font-weight: 600;
+        }
+
+        .total-row td, .total-row th {
+            background: var(--paper) !important;
+            color: var(--ink) !important;
+            font-size: 1.15rem;
+            font-weight: 800;
+            border-top: 2px solid var(--ink) !important;
+        }
+
+        .btn-book {
+            background: var(--gold);
+            border: none;
+            color: var(--ink);
+            font-weight: 700;
+            font-size: 1.05rem;
+            padding: 15px;
+            border-radius: 14px;
+            transition: all 0.2s ease;
+            box-shadow: 0 8px 24px rgba(200,150,62,0.35);
+        }
+
+        .btn-book:hover {
+            background: var(--gold-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 28px rgba(200,150,62,0.42);
+            color: var(--ink);
+        }
+
+        .trust-row {
+            font-size: 0.8rem;
+            color: var(--ink-soft);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .trust-row i { color: var(--teal); }
+
+        .progress-steps {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--ink-soft);
+        }
+
+        .progress-steps .active { color: var(--gold-dark); }
+        .progress-steps i { font-size: 0.7rem; }
+
+        @media (max-width: 991px) {
+            .tour-img { min-height: 340px; }
+            .tour-title { font-size: 1.5rem; }
+            .detail-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 575px) {
+            .detail-grid { grid-template-columns: 1fr 1fr; }
+        }
     </style>
-
 </head>
 
 <body>
 
-<div class="container py-5">
+<div class="util-bar">
+    <div class="container d-flex justify-content-between">
+        <span><i class="bi bi-shield-check"></i>&nbsp; Verified Operator</span>
+        <span class="d-none d-sm-inline"><i class="bi bi-headset"></i>&nbsp; 24/7 Support</span>
+    </div>
+</div>
+
+<div class="container py-4 py-lg-5">
+
+    <div class="progress-steps">
+        <span><i class="bi bi-check-circle-fill text-success"></i> Tour Selected</span>
+        <i class="bi bi-chevron-right"></i>
+        <span class="active"><i class="bi bi-circle-fill"></i> Booking Details</span>
+        <i class="bi bi-chevron-right"></i>
+        <span><i class="bi bi-circle"></i> Confirmation</span>
+    </div>
 
     <div class="card booking-card">
 
         <div class="row g-0">
 
             <div class="col-lg-6">
-
-                <img th:src="${tour.imageUrl}"
-                     class="tour-img">
-
+                <div class="img-col">
+                    <img th:src="${tour.imageUrl}" class="tour-img" alt="Tour image">
+                    <div class="img-gradient"></div>
+                    <div class="img-badge">Curated Experience</div>
+                    <div class="img-caption">
+                        <div class="step-label">Step 2 of 3</div>
+                    </div>
+                </div>
             </div>
 
-            <div class="col-lg-6 p-5">
+            <div class="col-lg-6 p-4 p-lg-5">
 
-                <h2 class="section-title"
-                    th:text="${tour.displayName}">
-                </h2>
+                <h2 class="tour-title mb-2" th:text="${tour.displayName}"></h2>
 
-                <p class="text-muted"
-                   th:text="${tour.description}">
-                </p>
+                <p class="tour-desc mb-4" th:text="${tour.description}"></p>
 
-                <div class="price">
-
-                    ₹<span th:text="${tour.price}"></span>
-
+                <div class="price-strip mb-4">
+                    <div>
+                        <div class="label">Starting from</div>
+                        <div class="amount">
+                            <sup>₹</sup>
+                            <span th:text="${#numbers.formatDecimal(tour.price, 1, 2)}"></span>
+                        </div>
+                    </div>
                 </div>
 
-                <hr>
+                <div class="section-label"><i class="bi bi-journal-check"></i> Booking Details</div>
 
-                <h4 class="section-title">
+                <div class="detail-grid mb-4">
+                    <div class="detail-box">
+                        <div class="label">Travel Date</div>
+                        <div class="value"><i class="bi bi-calendar-event"></i> <strong th:text="${travelDate}"></strong></div>
+                    </div>
+                    <div class="detail-box">
+                        <div class="label">Adults</div>
+                        <div class="value"><i class="bi bi-person-fill"></i> <strong th:text="${adults}"></strong></div>
+                    </div>
+                    <div class="detail-box">
+                        <div class="label">Children</div>
+                        <div class="value"><i class="bi bi-person"></i> <strong th:text="${children}"></strong></div>
+                    </div>
+                </div>
 
-                    Booking Details
+                <input type="hidden" id="code" th:value="${tour.code}">
+                <input type="hidden" id="adultCount" th:value="${adults}">
+                <input type="hidden" id="childCount" th:value="${children}">
 
-                </h4>
+                <div class="section-label"><i class="bi bi-clock"></i> Available Time Slots</div>
 
-                <p>
-
-                    📅 Travel Date :
-                    <strong th:text="${travelDate}"></strong>
-
-                </p>
-
-                <p>
-
-                    👨 Adults :
-                    <strong th:text="${adults}"></strong>
-
-                </p>
-
-                <p>
-
-                    👧 Children :
-                    <strong th:text="${children}"></strong>
-
-                </p>
-
-                <input
-                        type="hidden"
-                        id="code"
-                        th:value="${tour.code}">
-
-                <input
-                        type="hidden"
-                        id="adultCount"
-                        th:value="${adults}">
-
-                <input
-                        type="hidden"
-                        id="childCount"
-                        th:value="${children}">
-
-                <hr>
-
-                <h4 class="section-title">
-
-                    Available Time Slots
-
-                </h4>
-
-                <div
-                        th:each="slot : ${timeslots}"
-                        class="slot">
-
-                    <input
-                            class="form-check-input"
-                            type="radio"
-                            name="time"
-                            th:value="${slot.time}"
-                            required>
-
-                    <label
-                            class="form-check-label ms-2">
-
+                <div th:each="slot : ${timeslots}" class="slot">
+                    <input class="form-check-input" type="radio" name="time" th:value="${slot.time}" required>
+                    <label class="form-check-label">
+                        <i class="bi bi-clock-history time-icon"></i>
                         <span th:text="${slot.time}"></span>
-
                     </label>
-
                 </div>
+
                 <!-- Price Summary -->
+                <div id="priceCard" class="card mt-4">
 
-                <div id="priceCard" class="card mt-4 shadow border-0">
-
-                    <div class="card-header bg-success text-white">
-
-                        <h4 class="mb-0">
-
-                            💰 Price Summary
-
-                        </h4>
-
+                    <div class="card-header text-white">
+                        <h4 class="mb-0 text-white"><i class="bi bi-receipt"></i> Price Summary</h4>
                     </div>
 
-                    <div class="card-body">
+                    <div class="card-body p-4">
 
                         <table class="table">
-
                             <tr>
-
                                 <td>Adult Price</td>
-
-                                <td>
-
-                                    ₹<span id="adultPrice"></span>
-
-                                </td>
-
+                                <td class="text-end">₹<span id="adultPrice"></span></td>
                             </tr>
-
                             <tr>
-
                                 <td>Child Price</td>
-
-                                <td>
-
-                                    ₹<span id="childPrice"></span>
-
-                                </td>
-
+                                <td class="text-end">₹<span id="childPrice"></span></td>
                             </tr>
-
                             <tr>
-
                                 <td>Tax</td>
-
-                                <td>
-
-                                    ₹<span id="tax"></span>
-
-                                </td>
-
+                                <td class="text-end">₹<span id="tax"></span></td>
                             </tr>
-
                             <tr>
-
                                 <td>Service Charge</td>
-
-                                <td>
-
-                                    ₹<span id="serviceCharge"></span>
-
-                                </td>
-
+                                <td class="text-end">₹<span id="serviceCharge"></span></td>
                             </tr>
-
                             <tr>
-
                                 <td>Discount</td>
-
-                                <td>
-
-                                    ₹<span id="discount"></span>
-
-                                </td>
-
+                                <td class="text-end">₹<span id="discount"></span></td>
                             </tr>
-
-                            <tr class="table-success">
-
+                            <tr class="total-row">
                                 <th>Total</th>
-
-                                <th>
-
-                                    ₹<span id="totalPrice"></span>
-
-                                </th>
-
+                                <th class="text-end">₹<span id="totalPrice"></span></th>
                             </tr>
-
                         </table>
 
-                        <form action="/confirm-booking"
-                              method="post">
+                        <form th:action="@{/confirm-booking}" method="post">
 
-                            <input
-                                    type="hidden"
-                                    name="code"
-                                    th:value="${tour.code}">
+                            <input type="hidden" name="code" th:value="${tour.code}">
+                            <input type="hidden" name="travelDate" th:value="${travelDate}">
+                            <input type="hidden" name="adults" th:value="${adults}">
+                            <input type="hidden" name="children" th:value="${children}">
+                            <input type="hidden" id="hiddenTime" name="time">
+                            <input type="hidden" id="hiddenTotal" name="totalAmount">
+                            <input type="hidden" id="hiddenCurrency" name="currency">
 
-                            <input
-                                    type="hidden"
-                                    name="travelDate"
-                                    th:value="${travelDate}">
-
-                            <input
-                                    type="hidden"
-                                    name="adults"
-                                    th:value="${adults}">
-
-                            <input
-                                    type="hidden"
-                                    name="children"
-                                    th:value="${children}">
-
-                            <input
-                                    type="hidden"
-                                    id="hiddenTime"
-                                    name="time">
-
-                            <input
-                                    type="hidden"
-                                    id="hiddenTotal"
-                                    name="totalAmount">
-
-                            <input
-                                    type="hidden"
-                                    id="hiddenCurrency"
-                                    name="currency">
-
-                            <button
-                                    class="btn btn-success btn-lg w-100">
-
-                                <i class="bi bi-check-circle-fill"></i>
-
-                                Book Now
-
+                            <button type="submit" class="btn btn-book w-100 mt-2">
+                                <i class="bi bi-check-circle-fill"></i> Book Now
                             </button>
+
+                            <div class="trust-row mt-3 pt-3" style="border-top: 1px solid var(--line);">
+                                <span><i class="bi bi-shield-lock"></i> Secure checkout</span>
+                                <span><i class="bi bi-arrow-repeat"></i> Free cancellation</span>
+                                <span><i class="bi bi-patch-check"></i> Best price guarantee</span>
+                            </div>
 
                         </form>
 

@@ -18,8 +18,15 @@ async function calculatePrice() {
     const children =
         Number(document.getElementById("childCount").value);
 
-    const selectedTime =
-        document.querySelector("input[name='time']:checked").value;
+    const selectedSlot =
+        document.querySelector("input[name='time']:checked");
+
+    if (!selectedSlot) {
+        alert("Please select a time slot.");
+        return;
+    }
+
+    const selectedTime = selectedSlot.value;
 
     const response = await fetch("/price", {
 

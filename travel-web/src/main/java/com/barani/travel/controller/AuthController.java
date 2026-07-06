@@ -30,9 +30,20 @@ public class AuthController {
     public String login(@ModelAttribute LoginRequest request,
                         HttpSession session) {
 
-        AuthResponse response = authClient.login(request);
+        AuthResponse response =
+                authClient.login(request);
 
-        session.setAttribute("TOKEN", response.getAccessToken());
+        session.setAttribute("TOKEN",
+                response.getAccessToken());
+
+        session.setAttribute("USERNAME",
+                response.getUsername());
+
+        session.setAttribute("EMAIL",
+                response.getEmail());
+
+        session.setAttribute("PHONE",
+                response.getPhone());
 
         return "redirect:/dashboard";
     }

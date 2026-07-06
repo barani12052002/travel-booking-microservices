@@ -59,27 +59,27 @@ public class BookingController {
 
         BookingRequest request = new BookingRequest();
 
-        request.setProviderCode(code);
+        request.setCustomerName(
+                (String) session.getAttribute("USERNAME"));
+
+        request.setCustomerEmail(
+                (String) session.getAttribute("EMAIL"));
+
+        request.setCustomerPhone(
+                (String) session.getAttribute("PHONE"));
+
         request.setAttractionCode(code);
 
         request.setTravelDate(LocalDate.parse(travelDate));
 
-        request.setAdultCount(adults);
-        request.setChildCount(children);
-
         request.setTimeSlot(time);
 
+        request.setAdultCount(adults);
+
+        request.setChildCount(children);
         request.setTotalAmount(totalAmount);
 
         request.setCurrency(currency);
-
-        // Temporary values until we use JWT
-        request.setCustomerName("Barani");
-
-        request.setCustomerEmail("baraniece007@gmail.com");
-
-        request.setCustomerPhone("9876543210");
-
         BookingResponse response =
                 bookingClient.createBooking(request);
 

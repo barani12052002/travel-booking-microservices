@@ -75,6 +75,9 @@ public class BookingServiceImpl implements BookingService {
         booking.setTravelDate(request.getTravelDate());
         booking.setAdultCount(request.getAdultCount());
         booking.setChildCount(request.getChildCount());
+        booking.setTotalAmount(request.getTotalAmount());
+
+        booking.setCurrency(request.getCurrency());
         booking.setTotalAmount(priceResponse.getTotalPrice());
 
         booking.setBookingStatus(BookingStatus.CONFIRMED);
@@ -180,7 +183,6 @@ Travel Booking Team
         response.setCurrency(booking.getCurrency());
         response.setAdultCount(booking.getAdultCount());
         response.setChildCount(booking.getChildCount());
-
         return response;
     }
 

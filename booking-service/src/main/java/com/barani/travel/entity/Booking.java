@@ -26,6 +26,8 @@ public class Booking {
 
     private String attractionCode;
 
+    private String attractionName;
+
     private LocalDate travelDate;
 
     private Integer adultCount;
@@ -58,6 +60,14 @@ public class Booking {
     @PreUpdate
     public void preUpdate() {
         updatedDate = LocalDateTime.now();
+    }
+
+    public String getAttractionName() {
+        return attractionName;
+    }
+
+    public void setAttractionName(String attractionName) {
+        this.attractionName = attractionName;
     }
 
     public String getProviderName() {

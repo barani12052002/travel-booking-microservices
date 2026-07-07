@@ -30,7 +30,16 @@ public class BookingResponse {
 
     private String message;
 
+    private String attractionName;
     public BookingResponse() {
+    }
+
+    public String getAttractionName() {
+        return attractionName;
+    }
+
+    public void setAttractionName(String attractionName) {
+        this.attractionName = attractionName;
     }
 
     public String getBookingReference() {

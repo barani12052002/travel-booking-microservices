@@ -54,6 +54,7 @@ public class BookingController {
                                  @RequestParam String time,
                                  @RequestParam BigDecimal totalAmount,
                                  @RequestParam String currency,
+                                 @RequestParam String attractionName,
                                  HttpSession session,
                                  Model model) {
 
@@ -75,7 +76,7 @@ public class BookingController {
 
         request.setChildCount(children);
         request.setTotalAmount(totalAmount);
-
+        request.setAttractionName(attractionName);
         request.setCurrency(currency);
         String token = "Bearer " +
                 (String) session.getAttribute("TOKEN");

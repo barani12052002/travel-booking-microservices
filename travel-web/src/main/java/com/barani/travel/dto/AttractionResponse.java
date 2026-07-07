@@ -15,6 +15,7 @@ public class AttractionResponse {
     private String name;
     private String city;
     private String country;
+    private String attractionName;
     public AttractionResponse() {
     }
 
@@ -35,6 +36,7 @@ public class AttractionResponse {
         this.availableSlots = availableSlots;
         this.rating = rating;
     }
+
 
     public String getName() {
         return name;
@@ -122,5 +124,13 @@ public class AttractionResponse {
 
     public void setRating(Double rating) {
         this.rating = rating;
+    }
+
+    public String getAttractionName() {
+        return attractionName;
+    }
+
+    public void setAttractionName(String attractionName) {
+        this.attractionName = attractionName;
     }
 }

@@ -17,6 +17,7 @@ public class BookingRequest {
     @NotBlank(message = "Attraction code is required")
     private String attractionCode;
 
+
     @NotNull(message = "Travel date is required")
     @Future(message = "Travel date must be in the future")
     private LocalDate travelDate;
@@ -33,7 +34,16 @@ public class BookingRequest {
     private Integer childCount;
     private BigDecimal totalAmount;
 
+    private String attractionName;
     private String currency;
+
+    public String getAttractionName() {
+        return attractionName;
+    }
+
+    public void setAttractionName(String attractionName) {
+        this.attractionName = attractionName;
+    }
 
     public BigDecimal getTotalAmount() {
         return totalAmount;

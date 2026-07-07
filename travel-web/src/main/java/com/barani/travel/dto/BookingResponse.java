@@ -31,9 +31,18 @@ public class BookingResponse {
     private String message;
     private String providerCode;
     private String attractionCode;
+    private String attractionName;
 
 
     public BookingResponse() {
+    }
+
+    public String getAttractionName() {
+        return attractionName;
+    }
+
+    public void setAttractionName(String attractionName) {
+        this.attractionName = attractionName;
     }
 
     public String getProviderCode() {

@@ -324,7 +324,7 @@
         <div class="card-top">
           <h4 class="attraction-code">
             <i class="bi bi-geo-alt-fill"></i>
-            <span th:text="${booking.attractionCode}"></span>
+            <span th:text="${booking.attractionName}"></span>
           </h4>
           <span class="status"
                 th:classappend="${booking.bookingStatus == 'CONFIRMED'} ? ' confirmed' : ' cancelled'"

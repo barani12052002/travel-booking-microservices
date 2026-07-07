@@ -17,12 +17,14 @@ import com.barani.travel.exception.BookingNotFoundException;
 import com.barani.travel.repository.BookingRepository;
 import com.barani.travel.service.BookingService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.barani.travel.pdf.PdfService;
 
 @Service
+@EnableAsync
 public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepository;
@@ -60,6 +62,7 @@ public class BookingServiceImpl implements BookingService {
         providerRequest.setTimeSlot(request.getTimeSlot());
         providerRequest.setAdultCount(request.getAdultCount());
         providerRequest.setChildCount(request.getChildCount());
+        providerRequest.setAttractionName(request.getAttractionName());
 
         BookingResponse providerResponse = providerClient.createBooking(providerRequest);
         log.info("Provider Booking Id : {}", providerResponse.getProviderBookingId());
@@ -71,6 +74,7 @@ public class BookingServiceImpl implements BookingService {
         booking.setCustomerName(request.getCustomerName());
         booking.setCustomerEmail(request.getCustomerEmail());
         booking.setAttractionCode(request.getAttractionCode());
+        booking.setAttractionName(request.getAttractionName());
         booking.setTravelDate(request.getTravelDate());
         booking.setAdultCount(request.getAdultCount());
         booking.setChildCount(request.getChildCount());
@@ -90,65 +94,69 @@ public class BookingServiceImpl implements BookingService {
         String subject = "Booking Confirmation - " + booking.getBookingReference();
 
         String body = """
+<!DOCTYPE html>
 <html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body style="margin:0;padding:0;background-color:#eef1f5;font-family:'Segoe UI',Helvetica,Arial,sans-serif;">
 
-<body style="font-family:Arial;background:#f5f5f5;padding:20px">
+<div style="max-width:600px;margin:40px auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
 
-<div style="max-width:650px;
-background:white;
-padding:30px;
-border-radius:10px">
+  <!-- Header -->
+  <div style="background:linear-gradient(135deg,#667eea 0%%,#764ba2 100%%);padding:40px 32px;text-align:center;">
+    <div style="font-size:15px;letter-spacing:2px;color:rgba(255,255,255,0.85);text-transform:uppercase;margin-bottom:8px;">Dream Destination Tours</div>
+    <div style="font-size:26px;font-weight:700;color:#ffffff;">Booking Confirmed 🎉</div>
+  </div>
 
-<h2 style="color:#1E88E5">
-🎉 Booking Confirmed
-</h2>
+  <!-- Body -->
+  <div style="padding:36px 32px;">
 
-<p>Hello <b>%s</b>,</p>
+    <p style="font-size:15px;color:#333333;margin:0 0 8px;">Hello <b>%s</b>,</p>
+    <p style="font-size:14px;color:#666666;line-height:1.6;margin:0 0 28px;">
+      Great news — your booking is confirmed. Here are your trip details below.
+    </p>
 
-<p>Your booking has been confirmed successfully.</p>
+    <!-- Reference badge -->
+    <div style="background:#f0f4ff;border-radius:10px;padding:16px 20px;margin-bottom:24px;">
+      <div style="font-size:11px;color:#667eea;text-transform:uppercase;letter-spacing:0.5px;font-weight:600;margin-bottom:4px;">Booking Reference</div>
+      <div style="font-size:20px;color:#1a1a2e;font-weight:700;">%s</div>
+    </div>
 
-<table border="0" cellpadding="8">
+    <!-- Details table -->
+    <table width="100%%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;margin-bottom:28px;">
+      <tr>
+        <td style="padding:12px 0;border-bottom:1px solid #f0f0f0;font-size:13px;color:#999999;">Travel Date</td>
+        <td style="padding:12px 0;border-bottom:1px solid #f0f0f0;font-size:14px;color:#1a1a2e;font-weight:600;text-align:right;">%s</td>
+      </tr>
+      <tr>
+        <td style="padding:12px 0;border-bottom:1px solid #f0f0f0;font-size:13px;color:#999999;">Time Slot</td>
+        <td style="padding:12px 0;border-bottom:1px solid #f0f0f0;font-size:14px;color:#1a1a2e;font-weight:600;text-align:right;">%s</td>
+      </tr>
+      <tr>
+        <td style="padding:12px 0;font-size:13px;color:#999999;">Total Amount</td>
+        <td style="padding:12px 0;font-size:18px;color:#667eea;font-weight:700;text-align:right;">%s %s</td>
+      </tr>
+    </table>
 
-<tr>
-<td><b>Booking Reference</b></td>
-<td>%s</td>
-</tr>
+    <div style="background:#fafafa;border-radius:10px;padding:16px 20px;display:flex;align-items:center;gap:10px;">
+      <span style="font-size:20px;">📎</span>
+      <span style="font-size:13px;color:#666666;">Your e-ticket is attached to this email as a PDF.</span>
+    </div>
 
-<tr>
-<td><b>Travel Date</b></td>
-<td>%s</td>
-</tr>
+  </div>
 
-<tr>
-<td><b>Time Slot</b></td>
-<td>%s</td>
-</tr>
-
-<tr>
-<td><b>Total Amount</b></td>
-<td>%s %s</td>
-</tr>
-
-</table>
-
-<br>
-
-<p>📎 Your booking ticket is attached as a PDF.</p>
-
-<hr>
-
-<p style="color:gray">
-Travel Booking Team
-
-📧 support@travelbooking.com
-🌐 www.travelbooking.com
-📞 +91 8667600676
-</p>
+  <!-- Footer -->
+  <div style="background:#1a1a2e;padding:28px 32px;text-align:center;">
+    <div style="font-size:14px;color:#ffffff;font-weight:600;margin-bottom:10px;">Dream Destination Tours</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.8;">
+      📧 support@travelbooking.com &nbsp;|&nbsp; 🌐 www.travelbooking.com &nbsp;|&nbsp; 📞 +91 8667600676
+    </div>
+  </div>
 
 </div>
 
 </body>
-
 </html>
 """.formatted(
                 booking.getCustomerName(),
@@ -157,6 +165,7 @@ Travel Booking Team
                 booking.getTimeSlot(),
                 booking.getCurrency(),
                 booking.getTotalAmount());
+
         byte[] pdf = pdfService.generateBookingPdf(booking);
         log.info("Sending confirmation email to {}", booking.getCustomerEmail());
         try {
@@ -182,6 +191,7 @@ Travel Booking Team
         response.setCurrency(booking.getCurrency());
         response.setAdultCount(booking.getAdultCount());
         response.setChildCount(booking.getChildCount());
+        response.setAttractionName(booking.getAttractionName());
         return response;
     }
 
@@ -225,6 +235,8 @@ Travel Booking Team
 
         response.setTotalAmount(booking.getTotalAmount());
 
+        response.setAttractionName(booking.getAttractionName());
+
         return response;
     }
 
@@ -248,6 +260,7 @@ Travel Booking Team
                     response.setAdultCount(booking.getAdultCount());
                     response.setChildCount(booking.getChildCount());
                     response.setTotalAmount(booking.getTotalAmount());
+                    response.setAttractionName(booking.getAttractionName());
 
                     return response;
                 })
@@ -287,6 +300,8 @@ Travel Booking Team
 
         response.setTotalAmount(booking.getTotalAmount());
 
+        response.setAttractionName(booking.getAttractionName());
+
         response.setMessage("Booking Cancelled Successfully");
 
         return response;
@@ -311,6 +326,7 @@ Travel Booking Team
                     response.setAdultCount(booking.getAdultCount());
                     response.setChildCount(booking.getChildCount());
                     response.setTotalAmount(booking.getTotalAmount());
+                    response.setAttractionName(booking.getAttractionName());
 
                     return response;
                 });

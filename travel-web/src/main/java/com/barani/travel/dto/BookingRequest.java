@@ -34,6 +34,15 @@ public class BookingRequest {
     private String providerCode;
     private BigDecimal totalAmount;
     private String currency;
+    private String attractionName;
+
+    public String getAttractionName() {
+        return attractionName;
+    }
+
+    public void setAttractionName(String attractionName) {
+        this.attractionName = attractionName;
+    }
 
     public BigDecimal getTotalAmount() {
         return totalAmount;

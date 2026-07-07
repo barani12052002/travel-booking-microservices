@@ -333,6 +333,14 @@
                     <div class="detail-grid mb-4">
 
                         <div class="detail-box">
+                            <div class="label">
+                                <i class="bi bi-geo-alt-fill"></i>
+                                Destination
+                            </div>
+                            <div class="value" th:text="${booking.attractionName}"></div>
+                        </div>
+
+                        <div class="detail-box">
                             <div class="label"><i class="bi bi-calendar-event"></i> Travel Date</div>
                             <div class="value" th:text="${booking.travelDate}"></div>
                         </div>

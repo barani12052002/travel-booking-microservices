@@ -307,6 +307,30 @@ http://localhost:8761
 
 # 📸 Screenshots
 
+## Dashboard
+
+<img width="1366" height="647" alt="dashboard" src="https://github.com/user-attachments/assets/8f6d1e04-14d8-49d6-894a-724f86d7e644" />
+
+## Search Page
+
+<img width="1351" height="646" alt="search" src="https://github.com/user-attachments/assets/b247834b-27c0-4eec-9c3e-0bc98e6da840" />
+
+## Tour Details
+
+<img width="1358" height="643" alt="tour details" src="https://github.com/user-attachments/assets/3890d2af-d7db-497e-bebf-5d01bea9cd87" />
+
+## Booking Page
+
+<img width="1349" height="645" alt="booking page" src="https://github.com/user-attachments/assets/85e19332-e045-445c-8902-7618026b8506" />
+
+## Confirm Booking
+
+<img width="1366" height="636" alt="booking confirmed" src="https://github.com/user-attachments/assets/edb144f0-1742-4a59-9853-de41c68ccd82" />
+
+## My Bookings
+
+<img width="1354" height="645" alt="mybookings" src="https://github.com/user-attachments/assets/ec78aa56-cdf7-4793-8de3-cda67b4e329a" />
+
 ## Swagger UI
 
 <img width="1342" height="638" alt="Swagger UI" src="https://github.com/user-attachments/assets/28211ae1-797e-4db4-9d78-0bf5be1b16a6" />

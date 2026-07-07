@@ -1,5 +1,6 @@
 package com.barani.travel.controller;
 
+import com.barani.travel.client.AuthClient;
 import com.barani.travel.client.BookingHistoryClient;
 import com.barani.travel.client.ProviderClient;
 import jakarta.servlet.http.HttpSession;
@@ -15,6 +16,9 @@ public class HomeController {
     private BookingHistoryClient bookingHistoryClient;
     @Autowired
     ProviderClient providerClient;
+    @Autowired
+    private AuthClient authClient;
+
     @GetMapping("/")
     public String home() {
 
@@ -60,6 +64,16 @@ public class HomeController {
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
+
+        String jwt = (String) session.getAttribute("TOKEN");
+
+        if (jwt != null && !jwt.isBlank()) {
+            try {
+                authClient.logout("Bearer " + jwt);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         session.invalidate();
 

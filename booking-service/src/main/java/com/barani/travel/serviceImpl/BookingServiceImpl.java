@@ -1,4 +1,5 @@
 package com.barani.travel.serviceImpl;
+
 import com.barani.travel.dto.provider.PriceRequest;
 import com.barani.travel.dto.provider.PriceResponse;
 import com.barani.travel.entity.Booking;
@@ -17,14 +18,12 @@ import com.barani.travel.exception.BookingNotFoundException;
 import com.barani.travel.repository.BookingRepository;
 import com.barani.travel.service.BookingService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.barani.travel.pdf.PdfService;
 
 @Service
-@EnableAsync
 public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepository;
@@ -49,7 +48,6 @@ public class BookingServiceImpl implements BookingService {
         PriceRequest priceRequest = new PriceRequest();
         priceRequest.setAdultCount(request.getAdultCount());
         priceRequest.setChildCount(request.getChildCount());
-
         PriceResponse priceResponse = providerClient.getPrice(priceRequest);
         log.info("Price calculated : {}", priceResponse.getTotalPrice());
         // Step 2 - Provider Booking
@@ -158,22 +156,19 @@ public class BookingServiceImpl implements BookingService {
 
 </body>
 </html>
-""".formatted(
-                booking.getCustomerName(),
-                booking.getBookingReference(),
-                booking.getTravelDate(),
-                booking.getTimeSlot(),
-                booking.getCurrency(),
-                booking.getTotalAmount());
+""".formatted(booking.getCustomerName(), booking.getBookingReference(), booking.getTravelDate(),
+                booking.getTimeSlot(), booking.getCurrency(), booking.getTotalAmount());
 
-        byte[] pdf = pdfService.generateBookingPdf(booking);
-        log.info("Sending confirmation email to {}", booking.getCustomerEmail());
         try {
+            byte[] pdf = pdfService.generateBookingPdf(booking);
+
             emailService.sendBookingConfirmation(booking.getCustomerEmail(), subject, body, pdf,
                     "Booking-" + booking.getBookingReference() + ".pdf");
+
             log.info("Email sent successfully");
+
         } catch (Exception e) {
-            log.error("Mail sending failed", e);
+            log.error("PDF or Email failed", e);
         }
         // Step 4 - Return Response
 
@@ -244,8 +239,7 @@ public class BookingServiceImpl implements BookingService {
     public List<BookingResponse> getBookingsByCustomerEmail(String customerEmail) {
 
         return bookingRepository.findByCustomerEmail(customerEmail)
-                .stream()
-                .map(booking -> {
+                .stream().map(booking -> {
 
                     BookingResponse response = new BookingResponse();
 
@@ -263,9 +257,9 @@ public class BookingServiceImpl implements BookingService {
                     response.setAttractionName(booking.getAttractionName());
 
                     return response;
-                })
-                .toList();
+                }).toList();
     }
+
     @Override
     public BookingResponse cancelBooking(String bookingReference) {
 
@@ -306,13 +300,13 @@ public class BookingServiceImpl implements BookingService {
 
         return response;
     }
+
     @Override
     public Page<BookingResponse> getBookings(int page, int size) {
 
         Pageable pageable = PageRequest.of(page, size);
 
-        return bookingRepository.findAll(pageable)
-                .map(booking -> {
+        return bookingRepository.findAll(pageable).map(booking -> {
                     BookingResponse response = new BookingResponse();
 
                     response.setBookingReference(booking.getBookingReference());

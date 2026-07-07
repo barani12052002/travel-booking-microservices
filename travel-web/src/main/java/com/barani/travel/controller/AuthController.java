@@ -30,21 +30,17 @@ public class AuthController {
     public String login(@ModelAttribute LoginRequest request,
                         HttpSession session) {
 
-        AuthResponse response =
-                authClient.login(request);
+        AuthResponse response = authClient.login(request);
         System.out.println("TOKEN = " + response.getAccessToken());
         System.out.println("USERNAME = " + response.getUsername());
         System.out.println("EMAIL = " + response.getEmail());
-        session.setAttribute("TOKEN",
-                response.getAccessToken());
 
-        session.setAttribute("USERNAME",
-                response.getUsername());
+        session.setAttribute("TOKEN", response.getAccessToken());
+        session.setAttribute("REFRESH_TOKEN", response.getRefreshToken());
+        session.setAttribute("USERNAME", response.getUsername());
+        session.setAttribute("EMAIL", response.getEmail());
 
-        session.setAttribute("EMAIL",
-                response.getEmail());
-
-
+        System.out.println("REFRESH TOKEN = " + response.getRefreshToken());
         return "redirect:/dashboard";
     }
 

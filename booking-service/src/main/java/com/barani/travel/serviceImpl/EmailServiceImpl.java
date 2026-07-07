@@ -9,7 +9,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
-@Async
 public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender mailSender;
@@ -18,6 +17,7 @@ public class EmailServiceImpl implements EmailService {
         this.mailSender = mailSender;
     }
 
+    @Async
     @Override
     public void sendBookingConfirmation(String to, String subject, String body, byte[] pdf, String fileName) {
 

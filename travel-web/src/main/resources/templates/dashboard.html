@@ -174,9 +174,10 @@
         }
         .profile-mini .logout-link{
             display:flex; align-items:center; gap:8px;
-            font-size:0.82rem; font-weight:600; color:#94374A;
+            font-size:0.82rem; font-weight:700; color:#E14A3B;
             margin-top:10px; padding:0 2px;
         }
+        .profile-mini .logout-link .bi{ color:#E14A3B; }
 
         /* ===== Main column ===== */
         .main-col{
@@ -629,6 +630,7 @@
             <img class="avatar-top"
                  src="/images/avatar.png"
                  alt="User avatar">
+            <span class="fw-bold" th:text="${session.USERNAME}"></span>
 
         </div>
         <!-- ===== HERO BANNER ===== -->

@@ -1,8 +1,6 @@
 package com.barani.travel.service;
 
-import com.barani.travel.auth.AuthResponse;
-import com.barani.travel.auth.LoginRequest;
-import com.barani.travel.auth.RegisterRequest;
+import com.barani.travel.auth.*;
 
 public interface AuthService {
 
@@ -10,4 +8,7 @@ public interface AuthService {
 
     AuthResponse login(LoginRequest request);
 
+    RefreshTokenResponse refreshToken(RefreshTokenRequest request);
+
+    void logout(String email);
 }

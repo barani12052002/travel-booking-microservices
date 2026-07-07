@@ -49,7 +49,7 @@ public class SearchController {
 
         model.addAttribute(
                 "tour",
-                providerClient.getAttraction(code)
+                providerClient.getAttractionByCode(code)
         );
 
         return "details";

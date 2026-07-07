@@ -6,6 +6,7 @@ import com.barani.travel.auth.RegisterRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 @FeignClient(
         name = "booking-service",
@@ -20,4 +21,6 @@ public interface AuthClient {
     @PostMapping("/auth/login")
     AuthResponse login(@RequestBody LoginRequest request);
 
+    @PostMapping("/auth/logout")
+    void logout(@RequestHeader("Authorization") String token);
 }

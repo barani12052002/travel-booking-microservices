@@ -17,14 +17,12 @@ import com.barani.travel.exception.BookingNotFoundException;
 import com.barani.travel.repository.BookingRepository;
 import com.barani.travel.service.BookingService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.barani.travel.pdf.PdfService;
 
 @Service
-@EnableAsync
 public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepository;

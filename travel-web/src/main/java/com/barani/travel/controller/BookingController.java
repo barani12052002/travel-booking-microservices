@@ -86,7 +86,8 @@ public class BookingController {
         System.out.println("HEADER = " + token);
         BookingResponse response =
                 bookingClient.createBooking(token, request);
-
+        model.addAttribute("destination",
+                providerClient.getAttraction(code).getDisplayName());
         model.addAttribute("booking", response);
 
         return "success";

@@ -5,11 +5,13 @@ import com.barani.travel.entity.User;
 import com.barani.travel.repository.RefreshTokenRepository;
 import com.barani.travel.service.RefreshTokenService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class RefreshTokenServiceImpl implements RefreshTokenService {
 
     private final RefreshTokenRepository repository;

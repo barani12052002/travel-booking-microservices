@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "booking-service")
+@FeignClient(
+        name = "booking-service",
+        contextId = "adminClient"
+)
 public interface AdminClient {
 
     @GetMapping("/admin/users")

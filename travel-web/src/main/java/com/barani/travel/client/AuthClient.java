@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 @FeignClient(
         name = "booking-service",
-        contextId = "authClient",
-        url = "${booking.service.url}"
+        contextId = "authClient"
 )
 public interface AuthClient {
 

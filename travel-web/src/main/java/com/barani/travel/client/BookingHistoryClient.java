@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.List;
-@FeignClient(name = "booking-service", contextId = "bookingHistoryClient", url = "${booking.service.url}")
+@FeignClient(name = "booking-service", contextId = "bookingHistoryClient")
 public interface BookingHistoryClient {
 
     @GetMapping("/booking/customer/{email}")

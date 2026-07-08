@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 @FeignClient(
         name = "booking-service",
-        contextId = "bookingClient",
-        url = "${booking.service.url}"
+        contextId = "bookingClient"
 )
 public interface BookingClient {
 

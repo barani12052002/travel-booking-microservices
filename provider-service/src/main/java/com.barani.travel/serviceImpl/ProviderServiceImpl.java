@@ -81,7 +81,7 @@ public class ProviderServiceImpl implements ProviderService {
                 new AttractionResponse(
                         "OOTY001",
                         "Ooty",
-                        "Beautiful hill station with tea estates.",
+                        "Queen of Hill Stations, famous for tea gardens, Nilgiri Mountain Railway, and scenic lakes.",
                         "/images/ooty.png",
                          BigDecimal.valueOf(1999),
                         "2 Days / 1 Night",
@@ -92,7 +92,7 @@ public class ProviderServiceImpl implements ProviderService {
                 new AttractionResponse(
                         "GOA001",
                         "Goa",
-                        "Enjoy beaches, nightlife and adventure.",
+                        "Experience golden beaches, Portuguese heritage, vibrant nightlife, and thrilling water sports.",
                         "/images/goa.png",
                         BigDecimal.valueOf(2999),
                         "3 Days / 2 Nights",
@@ -103,7 +103,7 @@ public class ProviderServiceImpl implements ProviderService {
                 new AttractionResponse(
                         "KER001",
                         "Kerala",
-                        "God's Own Country with backwaters.",
+                        "God's Own Country featuring serene backwaters, lush greenery, houseboats, and peaceful landscapes.",
                         "/images/kerala.png",
                         BigDecimal.valueOf(3499),
                         "4 Days / 3 Nights",
@@ -114,7 +114,7 @@ public class ProviderServiceImpl implements ProviderService {
                 new AttractionResponse(
                         "KOD001",
                         "Kodaikanal",
-                        "Princess of Hill Stations.",
+                        "The Princess of Hill Stations, known for its peaceful lake, misty hills, waterfalls, and pine forests.",
                         "/images/kodaikanal.png",
                         BigDecimal.valueOf(2499),
                         "2 Days",
@@ -125,7 +125,7 @@ public class ProviderServiceImpl implements ProviderService {
                 new AttractionResponse(
                         "CHE001",
                         "Chennai",
-                        "Explore palaces and rich heritage.",
+                        "Explore Marina Beach, historic landmarks, vibrant culture, and authentic South Indian cuisine.",
                         "/images/chennai.png",
                         BigDecimal.valueOf(2299),
                         "2 Days",

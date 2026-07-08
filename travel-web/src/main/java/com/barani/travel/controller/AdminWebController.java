@@ -26,7 +26,7 @@ public class AdminWebController {
         model.addAttribute("users",
                 adminClient.getUsers(token));
 
-        return "admin-users";
+        return "admin-dashboard";
     }
     @GetMapping("/dashboard")
     public String dashboard(HttpSession session, Model model) {

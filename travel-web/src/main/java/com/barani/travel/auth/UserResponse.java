@@ -5,21 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AuthResponse {
+public class UserResponse {
 
-    private String accessToken;
-
-    private String refreshToken;
-
+    private Long id;
     private String username;
-
     private String email;
-
-    private String phone;
-
     private String role;
-
-    public AuthResponse() {
-    }
-
 }

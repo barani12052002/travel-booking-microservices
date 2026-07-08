@@ -1,25 +1,41 @@
 package com.barani.travel.controller;
 
-import com.barani.travel.entity.User;
-import com.barani.travel.repository.UserRepository;
+import com.barani.travel.auth.AdminDashboardResponse;
+import com.barani.travel.dto.BookingResponse;
+import com.barani.travel.service.AdminService;
+import com.barani.travel.service.BookingService;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/admin")
 @PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 
-    private final UserRepository userRepository;
+    private final AdminService adminService;
+    private final BookingService bookingService;
+    public AdminController(AdminService adminService, BookingService bookingService) {
 
-    public AdminController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+        this.adminService = adminService;
+        this.bookingService = bookingService;
     }
 
-    @GetMapping("/users")
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    @GetMapping("/dashboard")
+    public AdminDashboardResponse dashboard() {
+
+        return adminService.dashboard();
     }
+
+    @GetMapping("/bookings")
+    public Page<BookingResponse> bookings(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        return bookingService.getBookings(page, size);
+    }
+
 }

@@ -59,7 +59,7 @@ public class AuthServiceImpl implements AuthService {
         response.setUsername(user.getUsername());
 
         response.setEmail(user.getEmail());
-
+        response.setRole(user.getRole().name());
         return response;
     }
 
@@ -80,7 +80,7 @@ public class AuthServiceImpl implements AuthService {
         response.setAccessToken(token);
         response.setRefreshToken(refreshToken.getToken());
         response.setUsername(user.getUsername());
-
+        response.setRole(user.getRole().name());
         response.setEmail(user.getEmail());
 
 

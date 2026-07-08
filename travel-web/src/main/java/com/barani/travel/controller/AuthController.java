@@ -34,6 +34,7 @@ public class AuthController {
         System.out.println("TOKEN = " + response.getAccessToken());
         System.out.println("USERNAME = " + response.getUsername());
         System.out.println("EMAIL = " + response.getEmail());
+        System.out.println("ROLE = " + response.getRole());
 
         session.setAttribute("TOKEN", response.getAccessToken());
         session.setAttribute("REFRESH_TOKEN", response.getRefreshToken());
@@ -42,6 +43,7 @@ public class AuthController {
         session.setAttribute("ROLE", response.getRole());
         System.out.println("REFRESH TOKEN = " + response.getRefreshToken());
         if ("ADMIN".equals(response.getRole())) {
+            System.out.println("Redirecting to admin dashboard...");
             return "redirect:/admin/dashboard";
         }
 

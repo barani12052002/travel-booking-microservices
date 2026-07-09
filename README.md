@@ -1,4 +1,8 @@
 # 🌍 Travel Booking Microservices
+
+![GitHub stars](https://img.shields.io/github/stars/barani12052002/travel-booking-microservices?style=social)
+![GitHub forks](https://img.shields.io/github/forks/barani12052002/travel-booking-microservices?style=social)
+![GitHub last commit](https://img.shields.io/github/last-commit/barani12052002/travel-booking-microservices)
 ![Java](https://img.shields.io/badge/Java-17-orange)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.x-brightgreen)
 ![JWT](https://img.shields.io/badge/JWT-Security-blue)
@@ -93,22 +97,28 @@ This project demonstrates how a real-world microservices architecture can be des
 # 🏗 Microservices Architecture
 
 ```
-                        Client
-                           │
-                           ▼
-                  API Gateway (8080)
-                           │
-          ┌────────────────┴────────────────┐
-          ▼                                 ▼
- Booking Service                     Provider Service
-          │
+                               Browser
+           │
+           ▼
+     API Gateway
+           │
+   ┌───────┴────────┐
+   ▼                ▼
+Booking        Provider
+Service         Service
+   │                │
+   └──────┬─────────┘
           ▼
-      MySQL Database
-          │
-          ▼
- Email + PDF Ticket + QR Code
+       MySQL
 
-        Eureka Discovery Server
+      Eureka
+      Discovery
+
+GitHub Actions
+      │
+ Docker Hub
+      │
+ AWS EC2
 ```
 
 ---
@@ -440,6 +450,27 @@ docker compose up --build
 - Terraform Infrastructure
 
 ---
+# ⭐ Project Highlights
+
+✔ Production Ready Architecture
+
+✔ Secure JWT Authentication
+
+✔ Dockerized Microservices
+
+✔ Automated CI/CD Pipeline
+
+✔ AWS EC2 Deployment
+
+✔ Fault Tolerant Communication
+
+✔ API Documentation
+
+✔ Email + PDF + QR Ticket
+
+# 💡 Why This Project?
+
+This project was built to simulate how a real-world travel booking platform is designed using modern backend engineering practices including secure authentication, scalable microservices, automated deployment, and cloud hosting.
 
 # 👨‍💻 Author
 

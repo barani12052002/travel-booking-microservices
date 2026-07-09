@@ -325,4 +325,19 @@ public class BookingServiceImpl implements BookingService {
                     return response;
                 });
     }
+
+    @Override
+    public List<BookingResponse> searchBookings(String keyword) {
+        return List.of();
+    }
+
+    @Override
+    public List<BookingResponse> filterBookings(BookingStatus status) {
+        return List.of();
+    }
+
+    @Override
+    public List<BookingResponse> searchAndFilterBookings(String keyword, BookingStatus status) {
+        return List.of();
+    }
 }

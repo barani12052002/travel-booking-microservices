@@ -16,5 +16,5 @@ public interface BookingHistoryClient {
 
     @PutMapping("/booking/cancel/{bookingReference}")
     BookingResponse cancelBooking(@RequestHeader("Authorization") String token,
-            @PathVariable String bookingReference);
+                                  @PathVariable String bookingReference);
 }

@@ -17,10 +17,7 @@ public class AttractionController {
     public List<AttractionResponse> getAll(){
 
         return Arrays.stream(Attraction.values())
-                .map(a -> new AttractionResponse(
-                        a.getCode(),
-                        a.getDisplayName()))
-                .toList();
+                .map(a -> new AttractionResponse(a.getCode(), a.getDisplayName())).toList();
 
     }
 

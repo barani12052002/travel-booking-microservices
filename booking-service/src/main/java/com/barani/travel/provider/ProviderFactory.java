@@ -14,11 +14,8 @@ public class ProviderFactory {
 
     public ProviderFactory(List<BookingProvider> providerList){
 
-        providers = providerList.stream()
-
-                .collect(Collectors.toMap(
-                        BookingProvider::getProviderCode,
-                        Function.identity()));
+        providers = providerList.stream().collect(Collectors.toMap(
+                        BookingProvider::getProviderCode, Function.identity()));
 
     }
 

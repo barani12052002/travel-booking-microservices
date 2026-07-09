@@ -8,11 +8,15 @@ import com.barani.travel.repository.UserRepository;
 import com.barani.travel.security.JwtService;
 import com.barani.travel.service.AuthService;
 import com.barani.travel.service.RefreshTokenService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthServiceImpl implements AuthService {
+
+    private static final Logger log = LoggerFactory.getLogger(AuthServiceImpl.class);
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -119,5 +123,74 @@ public class AuthServiceImpl implements AuthService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         refreshTokenService.deleteByUser(user);
+    }
+
+    @Override
+    public ProfileResponse getProfile(String email) {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        ProfileResponse response = new ProfileResponse();
+
+        response.setId(user.getId());
+        response.setUsername(user.getUsername());
+        response.setEmail(user.getEmail());
+        response.setPhone(user.getPhone());
+        response.setRole(user.getRole().name());
+
+        return response;
+    }
+
+    @Override
+    public ProfileResponse updateProfile(String email, UpdateProfileRequest request) {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.setUsername(request.getUsername());
+        user.setPhone(request.getPhone());
+
+        userRepository.save(user);
+
+        ProfileResponse response = new ProfileResponse();
+
+        response.setId(user.getId());
+        response.setUsername(user.getUsername());
+        response.setEmail(user.getEmail());
+        response.setPhone(user.getPhone());
+        response.setRole(user.getRole().name());
+
+        return response;
+    }
+
+    @Override
+    public void changePassword(String email, ChangePasswordRequest request) {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Verify current password
+        if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
+
+            throw new RuntimeException("Current password is incorrect");
+        }
+
+        // Check new password and confirm password
+        if (!request.getNewPassword().equals(request.getConfirmPassword())) {
+
+            throw new RuntimeException("New password and Confirm password do not match");
+        }
+
+        // Optional: prevent using the same password
+        if (passwordEncoder.matches(request.getNewPassword(), user.getPassword())) {
+
+            throw new RuntimeException("New password must be different from the current password");
+        }
+
+        // Encode and save the new password
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+
+        userRepository.save(user);
     }
 }

@@ -818,7 +818,31 @@
                 </div>
             </div>
         </div>
+        <!-- ===== ADMIN PANEL (Only ADMIN) ===== -->
+        <div class="col-6 col-lg-3"
+             th:if="${session.ROLE == 'ADMIN'}">
 
+            <div class="stat-card">
+
+                <div class="stat-icon bg-danger text-white">
+                    <i class="bi bi-shield-lock"></i>
+                </div>
+
+                <h3>Admin</h3>
+
+                <div class="stat-label">
+                    Administration Panel
+                </div>
+
+                <a th:href="@{/admin/dashboard}"
+                   class="stat-link">
+                    Open Admin Panel
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+
+            </div>
+
+        </div>
         <!-- ===== FEATURED DESTINATIONS ===== -->
         <div class="section-head mt-5">
             <div>

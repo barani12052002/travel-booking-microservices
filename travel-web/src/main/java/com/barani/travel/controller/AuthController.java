@@ -5,6 +5,8 @@ import com.barani.travel.auth.LoginRequest;
 import com.barani.travel.auth.RegisterRequest;
 import com.barani.travel.client.AuthClient;
 import jakarta.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class AuthController {
 
+    private static final Logger log = LoggerFactory.getLogger(AuthController.class);
     private final AuthClient authClient;
 
     public AuthController(AuthClient authClient) {
@@ -31,21 +34,19 @@ public class AuthController {
                         HttpSession session) {
 
         AuthResponse response = authClient.login(request);
-        System.out.println("TOKEN = " + response.getAccessToken());
-        System.out.println("USERNAME = " + response.getUsername());
-        System.out.println("EMAIL = " + response.getEmail());
-        System.out.println("ROLE = " + response.getRole());
+
+        log.info("JWT generated TOKEN {}", response.getAccessToken());
+        log.info("USERNAME {}", response.getUsername());
+        log.info("ROLE {}", response.getRole());
+
 
         session.setAttribute("TOKEN", response.getAccessToken());
         session.setAttribute("REFRESH_TOKEN", response.getRefreshToken());
         session.setAttribute("USERNAME", response.getUsername());
         session.setAttribute("EMAIL", response.getEmail());
         session.setAttribute("ROLE", response.getRole());
-        System.out.println("REFRESH TOKEN = " + response.getRefreshToken());
-        if ("ADMIN".equals(response.getRole())) {
-            System.out.println("Redirecting to admin dashboard...");
-            return "redirect:/admin/dashboard";
-        }
+        log.info("REFRESH TOKEN {}",  response.getRefreshToken());
+
 
         return "redirect:/dashboard";
     }

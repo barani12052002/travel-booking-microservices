@@ -17,40 +17,38 @@ public class AdminWebController {
     }
 
     @GetMapping("/users")
-    public String users(HttpSession session, Model model) {
+    public String users(HttpSession session, Model model,
+                        @RequestParam(required = false) String keyword) {
+
         if (!"ADMIN".equals(session.getAttribute("ROLE"))) {
             return "redirect:/dashboard";
         }
+
         String token = "Bearer " + session.getAttribute("TOKEN");
 
-        model.addAttribute("users",
-                adminClient.getUsers(token));
+        model.addAttribute("users", adminClient.getUsers(token, keyword));
 
-        return "admin-dashboard";
+        model.addAttribute("keyword", keyword);
+
+        return "admin-users";
     }
+
     @GetMapping("/dashboard")
     public String dashboard(HttpSession session, Model model) {
 
-        String token = "Bearer " + session.getAttribute("TOKEN");
-
-        System.out.println("ROLE = " + session.getAttribute("ROLE"));
-        System.out.println("TOKEN = " + token);
-
-        try {
-            var response = adminClient.dashboard(token);
-
-            System.out.println(response);
-
-            model.addAttribute("dashboard", response);
-
-            return "admin-dashboard";
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
+        if (!"ADMIN".equals(session.getAttribute("ROLE"))) {
+            return "redirect:/dashboard";
         }
 
+        String token = "Bearer " + session.getAttribute("TOKEN");
+
+        var response = adminClient.dashboard(token);
+
+        model.addAttribute("dashboard", response);
+
+        return "admin-dashboard";
     }
+
     @GetMapping("/bookings")
     public String bookings(HttpSession session,
                            Model model,

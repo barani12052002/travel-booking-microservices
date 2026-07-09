@@ -2,6 +2,7 @@ package com.barani.travel.controller;
 
 import com.barani.travel.auth.*;
 import com.barani.travel.service.AuthService;
+import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,14 +22,13 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public AuthResponse login(@RequestBody LoginRequest request) {
+    public AuthResponse login(@Valid @RequestBody LoginRequest request) {
 
         return authService.login(request);
     }
 
     @PostMapping("/refresh")
-    public RefreshTokenResponse refreshToken(
-            @RequestBody RefreshTokenRequest request) {
+    public RefreshTokenResponse refreshToken(@RequestBody RefreshTokenRequest request) {
 
         return authService.refreshToken(request);
     }
@@ -36,5 +36,25 @@ public class AuthController {
     @PostMapping("/logout")
     public void logout(Authentication authentication) {
         authService.logout(authentication.getName());
+    }
+
+    @GetMapping("/profile")
+    public ProfileResponse profile(Authentication authentication) {
+
+        return authService.getProfile(authentication.getName());
+    }
+
+    @PutMapping("/profile")
+    public ProfileResponse updateProfile(Authentication authentication,@Valid
+            @RequestBody UpdateProfileRequest request) {
+
+        return authService.updateProfile(authentication.getName(), request);
+    }
+
+    @PutMapping("/change-password")
+    public void changePassword(Authentication authentication,@Valid
+            @RequestBody ChangePasswordRequest request) {
+
+        authService.changePassword(authentication.getName(), request);
     }
 }

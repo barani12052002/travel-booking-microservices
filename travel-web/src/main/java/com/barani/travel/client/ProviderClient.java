@@ -5,9 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@FeignClient(
-        name = "provider-service",
-        contextId = "providerClient")
+@FeignClient(name = "provider-service", contextId = "providerClient")
 public interface ProviderClient {
 
     @GetMapping("/provider/timeslots")
@@ -17,8 +15,7 @@ public interface ProviderClient {
     PriceResponse getPrice(@RequestBody PriceRequest request);
 
     @PostMapping("/provider/book")
-    BookingResponse createBooking(
-            @RequestBody BookingRequest request);
+    BookingResponse createBooking(@RequestBody BookingRequest request);
 
     @GetMapping("/provider/attractions")
     List<AttractionResponse> getAttractions();

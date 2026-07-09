@@ -20,6 +20,5 @@ public interface ProviderClient {
     PriceResponse getPrice(@RequestBody PriceRequest request);
 
     @PostMapping("/provider/book")
-    BookingResponse createBooking(
-            @RequestBody BookingRequest request);
+    BookingResponse createBooking(@RequestBody BookingRequest request);
 }

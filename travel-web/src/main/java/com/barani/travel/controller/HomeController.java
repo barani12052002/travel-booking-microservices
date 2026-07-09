@@ -45,17 +45,13 @@ public class HomeController {
 
         model.addAttribute("username", username);
 
-        int bookingCount = bookingHistoryClient
-                .getBookings(token, email)
-                .size();
+        int bookingCount = bookingHistoryClient.getBookings(token, email).size();
 
         model.addAttribute("bookingCount", bookingCount);
 
-        model.addAttribute("tourCount",
-                providerClient.getAttractions().size());
+        model.addAttribute("tourCount", providerClient.getAttractions().size());
 
-        model.addAttribute("destinationCount",
-                providerClient.getAttractions().size());
+        model.addAttribute("destinationCount", providerClient.getAttractions().size());
 
         model.addAttribute("profileComplete", "100%");
 

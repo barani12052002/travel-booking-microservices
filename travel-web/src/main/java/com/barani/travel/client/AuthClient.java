@@ -1,17 +1,10 @@
 package com.barani.travel.client;
 
-import com.barani.travel.auth.AuthResponse;
-import com.barani.travel.auth.LoginRequest;
-import com.barani.travel.auth.RegisterRequest;
+import com.barani.travel.auth.*;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.*;
 
-@FeignClient(
-        name = "booking-service",
-        contextId = "authClient"
-)
+@FeignClient(name = "booking-service", contextId = "authClient")
 public interface AuthClient {
 
     @PostMapping("/auth/register")
@@ -22,4 +15,15 @@ public interface AuthClient {
 
     @PostMapping("/auth/logout")
     void logout(@RequestHeader("Authorization") String token);
+
+    @GetMapping("/auth/profile")
+    ProfileResponse getProfile(@RequestHeader("Authorization") String token);
+
+    @PutMapping("/auth/profile")
+    ProfileResponse updateProfile(@RequestHeader("Authorization") String token,
+            @RequestBody UpdateProfileRequest request);
+
+    @PutMapping("/auth/change-password")
+    void changePassword(@RequestHeader("Authorization") String token,
+            @RequestBody ChangePasswordRequest request);
 }

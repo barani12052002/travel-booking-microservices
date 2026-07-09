@@ -5,6 +5,8 @@ import com.barani.travel.client.ProviderClient;
 import com.barani.travel.dto.BookingRequest;
 import com.barani.travel.dto.BookingResponse;
 import jakarta.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,7 @@ import java.time.LocalDate;
 @Controller
 public class BookingController {
 
+    private static final Logger log = LoggerFactory.getLogger(AuthController.class);
     private final ProviderClient providerClient;
     private final BookingClient bookingClient;
 
@@ -66,24 +69,24 @@ public class BookingController {
         }
 
         String token = "Bearer " + jwt;
-
-        System.out.println("JWT = " + jwt);
-        System.out.println("HEADER = " + token);
+        log.info("JWT {}", jwt);
+        log.info("HEADER {}", token);
 
         try {
             BookingResponse response = bookingClient.createBooking(token, request);
-            System.out.println("Returned from Booking Service");
-            System.out.println(response);
+            log.info("Returned from Booking Service");
+            log.info("Response {}", response);
             model.addAttribute("booking", response);
             return "success";
 
         } catch (Exception e) {
-            System.err.println("=================================");
-            System.err.println("Booking failed");
-            System.err.println("Exception: " + e.getClass().getName());
-            System.err.println("Message: " + e.getMessage());
+            log.info("=================================");
+            log.error("Booking failed", e);
+            log.error("Exception: {} ", e.getClass().getName());
+            log.error("Message: {}", e.getMessage());
             e.printStackTrace();
-            System.err.println("=================================");
+            log.info("=================================");
+
 
             model.addAttribute("error", "Booking failed. Please try again.");
 

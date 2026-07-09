@@ -68,11 +68,8 @@ public class PdfServiceImpl implements PdfService {
 
             // ---------- HEADER BANNER ----------
             Table headerBanner = new Table(1).useAllAvailableWidth();
-            Cell bannerCell = new Cell()
-                    .setBackgroundColor(BRAND_PRIMARY)
-                    .setBorder(Border.NO_BORDER)
-                    .setPadding(28)
-                    .setTextAlignment(TextAlignment.CENTER);
+            Cell bannerCell = new Cell().setBackgroundColor(BRAND_PRIMARY)
+                    .setBorder(Border.NO_BORDER).setPadding(28).setTextAlignment(TextAlignment.CENTER);
 
             InputStream logoStream = getClass().getResourceAsStream("/images/logo.png");
             if (logoStream != null) {
@@ -85,18 +82,13 @@ public class PdfServiceImpl implements PdfService {
                 bannerCell.add(new Paragraph(" ").setFontSize(4));
             }
 
-            bannerCell.add(new Paragraph("E-TICKET")
-                    .setFont(bold)
-                    .setFontColor(ColorConstants.WHITE)
-                    .setFontSize(26)
-                    .setMultipliedLeading(1f)
-                    .setTextAlignment(TextAlignment.CENTER));
+            bannerCell.add(new Paragraph("E-TICKET").setFont(bold)
+                    .setFontColor(ColorConstants.WHITE).setFontSize(26)
+                    .setMultipliedLeading(1f).setTextAlignment(TextAlignment.CENTER));
 
             bannerCell.add(new Paragraph("Booking Confirmation")
-                    .setFont(regular)
-                    .setFontColor(new DeviceRgb(230, 230, 250))
-                    .setFontSize(11)
-                    .setTextAlignment(TextAlignment.CENTER));
+                    .setFont(regular).setFontColor(new DeviceRgb(230, 230, 250))
+                    .setFontSize(11).setTextAlignment(TextAlignment.CENTER));
 
             headerBanner.addCell(bannerCell);
             document.add(headerBanner);
@@ -108,8 +100,7 @@ public class PdfServiceImpl implements PdfService {
             Table refStrip = new Table(UnitValue.createPercentArray(new float[]{6, 4}))
                     .useAllAvailableWidth();
 
-            Cell refCell = new Cell()
-                    .setBorder(Border.NO_BORDER)
+            Cell refCell = new Cell().setBorder(Border.NO_BORDER)
                     .add(new Paragraph("BOOKING REFERENCE")
                             .setFont(regular).setFontSize(8.5f).setFontColor(TEXT_MUTED)
                             .setCharacterSpacing(0.5f))
@@ -119,10 +110,8 @@ public class PdfServiceImpl implements PdfService {
             boolean confirmed = "CONFIRMED".equals(booking.getBookingStatus().name());
             DeviceRgb statusColor = confirmed ? SUCCESS : DANGER;
 
-            Cell statusCell = new Cell()
-                    .setBorder(Border.NO_BORDER)
-                    .setTextAlignment(TextAlignment.RIGHT)
-                    .add(new Paragraph("STATUS")
+            Cell statusCell = new Cell().setBorder(Border.NO_BORDER)
+                    .setTextAlignment(TextAlignment.RIGHT).add(new Paragraph("STATUS")
                             .setFont(regular).setFontSize(8.5f).setFontColor(TEXT_MUTED)
                             .setCharacterSpacing(0.5f).setTextAlignment(TextAlignment.RIGHT))
                     .add(new Paragraph(booking.getBookingStatus().name())
@@ -157,8 +146,7 @@ public class PdfServiceImpl implements PdfService {
             amountBox.addCell(new Cell()
                     .setBackgroundColor(ROW_ALT)
                     .setBorder(new SolidBorder(new DeviceRgb(225, 230, 250), 1))
-                    .setPadding(16)
-                    .add(new Paragraph("TOTAL AMOUNT PAID")
+                    .setPadding(16).add(new Paragraph("TOTAL AMOUNT PAID")
                             .setFont(regular).setFontSize(9).setFontColor(TEXT_MUTED)
                             .setCharacterSpacing(0.5f))
                     .add(new Paragraph(booking.getCurrency() + " " + amountFormatter.format(booking.getTotalAmount()))

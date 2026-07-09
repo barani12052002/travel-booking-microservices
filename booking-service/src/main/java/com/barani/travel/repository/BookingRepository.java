@@ -27,4 +27,14 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
            """)
     BigDecimal getTotalRevenue();
 
+    List<Booking> findByBookingReferenceContainingIgnoreCaseOrCustomerNameContainingIgnoreCase(
+            String bookingReference,
+            String customerName);
+
+
+    List<Booking> findByBookingStatusAndBookingReferenceContainingIgnoreCaseOrBookingStatusAndCustomerNameContainingIgnoreCase(
+            BookingStatus status1,
+            String bookingReference,
+            BookingStatus status2,
+            String customerName);
 }

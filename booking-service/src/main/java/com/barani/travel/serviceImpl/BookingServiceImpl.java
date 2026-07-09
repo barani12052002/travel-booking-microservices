@@ -187,6 +187,8 @@ public class BookingServiceImpl implements BookingService {
         response.setAdultCount(booking.getAdultCount());
         response.setChildCount(booking.getChildCount());
         response.setAttractionName(booking.getAttractionName());
+        response.setCustomerName(booking.getCustomerName());
+        response.setCustomerEmail(booking.getCustomerEmail());
         return response;
     }
 
@@ -231,7 +233,8 @@ public class BookingServiceImpl implements BookingService {
         response.setTotalAmount(booking.getTotalAmount());
 
         response.setAttractionName(booking.getAttractionName());
-
+        response.setCustomerName(booking.getCustomerName());
+        response.setCustomerEmail(booking.getCustomerEmail());
         return response;
     }
 
@@ -255,7 +258,8 @@ public class BookingServiceImpl implements BookingService {
                     response.setChildCount(booking.getChildCount());
                     response.setTotalAmount(booking.getTotalAmount());
                     response.setAttractionName(booking.getAttractionName());
-
+                    response.setCustomerName(booking.getCustomerName());
+                    response.setCustomerEmail(booking.getCustomerEmail());
                     return response;
                 }).toList();
     }
@@ -295,7 +299,8 @@ public class BookingServiceImpl implements BookingService {
         response.setTotalAmount(booking.getTotalAmount());
 
         response.setAttractionName(booking.getAttractionName());
-
+        response.setCustomerName(booking.getCustomerName());
+        response.setCustomerEmail(booking.getCustomerEmail());
         response.setMessage("Booking Cancelled Successfully");
 
         return response;
@@ -321,7 +326,8 @@ public class BookingServiceImpl implements BookingService {
                     response.setChildCount(booking.getChildCount());
                     response.setTotalAmount(booking.getTotalAmount());
                     response.setAttractionName(booking.getAttractionName());
-
+                    response.setCustomerName(booking.getCustomerName());
+                    response.setCustomerEmail(booking.getCustomerEmail());
                     return response;
                 });
     }

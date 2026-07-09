@@ -32,9 +32,26 @@ public class BookingResponse {
     private String providerCode;
     private String attractionCode;
     private String attractionName;
-
+    private String customerName;
+    private String customerEmail;
 
     public BookingResponse() {
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerEmail() {
+        return customerEmail;
+    }
+
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
     }
 
     public String getAttractionName() {

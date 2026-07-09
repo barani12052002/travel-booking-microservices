@@ -2,12 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 
-    <title>Register</title>
+    <title>Register • Destinora</title>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,6 +31,14 @@
             --ink:#12242B;
             --coral:#D9704F;
             --paper:#FFFDF9;
+            --glass-border:rgba(255,255,255,.28);
+            --weak:#D9704F;
+            --medium:#E8A34D;
+            --strong:#3E8F6F;
+        }
+
+        html{
+            scroll-behavior:smooth;
         }
 
         body{
@@ -37,7 +46,7 @@
             min-height:100vh;
 
             background:
-                    linear-gradient(180deg, rgba(7,30,40,.35) 0%, rgba(7,30,40,.55) 55%, rgba(7,20,28,.75) 100%),
+                    linear-gradient(180deg, rgba(7,20,28,.58) 0%, rgba(7,24,32,.68) 45%, rgba(5,16,22,.86) 100%),
                     url("https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=1800&q=80");
 
             background-size:cover;
@@ -74,8 +83,45 @@
 
             inset:0;
 
-            background:rgba(7,20,28,.28);
+            background:
+                    radial-gradient(1100px 620px at 14% 8%, rgba(232,163,77,.16), transparent 62%),
+                    radial-gradient(900px 700px at 88% 92%, rgba(217,112,79,.14), transparent 60%),
+                    rgba(7,20,28,.18);
 
+            pointer-events:none;
+
+        }
+
+        /* gentle floating light, CSS only */
+        .glow-drift{
+            position:absolute;
+            z-index:1;
+            width:640px;
+            height:640px;
+            top:-220px;
+            left:-200px;
+            border-radius:50%;
+            background:radial-gradient(circle, rgba(243,197,131,.20) 0%, transparent 68%);
+            filter:blur(4px);
+            animation:drift 16s ease-in-out infinite;
+            pointer-events:none;
+        }
+
+        .glow-drift.two{
+            top:auto;
+            left:auto;
+            bottom:-260px;
+            right:-220px;
+            width:560px;
+            height:560px;
+            background:radial-gradient(circle, rgba(217,112,79,.16) 0%, transparent 68%);
+            animation-duration:19s;
+            animation-delay:-4s;
+        }
+
+        @keyframes drift{
+            0%,100%{ transform:translate(0,0) scale(1); }
+            50%{ transform:translate(26px,22px) scale(1.05); }
         }
 
         /* wayfinding compass watermark, echoes the login/home page signature */
@@ -86,8 +132,14 @@
             bottom:-110px;
             width:420px;
             height:420px;
-            opacity:.14;
+            opacity:.12;
             pointer-events:none;
+            animation:spin-slow 90s linear infinite;
+        }
+
+        @keyframes spin-slow{
+            from{ transform:rotate(0deg); }
+            to{ transform:rotate(360deg); }
         }
 
         .brand-bar{
@@ -98,6 +150,7 @@
             display:flex;
             align-items:center;
             gap:8px;
+            animation:fade-down .7s cubic-bezier(.16,1,.3,1) both;
         }
 
         .brand-mark{
@@ -118,20 +171,41 @@
 
             z-index:2;
 
-            width:430px;
+            width:440px;
 
             max-width:100%;
 
-            background:var(--paper);
+            background:linear-gradient(180deg, rgba(255,253,249,.86) 0%, rgba(255,253,249,.78) 100%);
 
-            border-radius:20px;
+            -webkit-backdrop-filter:blur(22px) saturate(140%);
 
-            padding:44px 40px;
+            backdrop-filter:blur(22px) saturate(140%);
 
-            box-shadow:0 30px 70px rgba(7,20,28,.45), 0 2px 0 rgba(255,255,255,.6) inset;
+            border-radius:22px;
 
-            border:1px solid rgba(255,255,255,.4);
+            padding:46px 42px;
 
+            box-shadow:
+                    0 40px 90px rgba(5,16,22,.55),
+                    0 12px 28px rgba(5,16,22,.28),
+                    0 1.5px 0 rgba(255,255,255,.7) inset;
+
+            border:1px solid var(--glass-border);
+
+            animation:card-rise .8s cubic-bezier(.16,1,.3,1) both;
+
+            animation-delay:.08s;
+
+        }
+
+        @keyframes fade-down{
+            from{ opacity:0; transform:translateY(-10px); }
+            to{ opacity:1; transform:translateY(0); }
+        }
+
+        @keyframes card-rise{
+            from{ opacity:0; transform:translateY(22px) scale(.98); }
+            to{ opacity:1; transform:translateY(0) scale(1); }
         }
 
         .eyebrow{
@@ -185,6 +259,25 @@
             display:inline-block;
         }
 
+        .input-shell{
+            position:relative;
+        }
+
+        .input-icon{
+            position:absolute;
+            left:16px;
+            top:50%;
+            transform:translateY(-50%);
+            color:#9AA9AC;
+            font-size:16px;
+            pointer-events:none;
+            transition:color .2s ease;
+        }
+
+        .input-shell:focus-within .input-icon{
+            color:var(--sunrise-gold);
+        }
+
         .form-control{
 
             height:50px;
@@ -197,8 +290,14 @@
 
             font-size:15px;
 
-            transition:.2s ease;
+            padding-left:44px;
 
+            transition:border-color .2s ease, box-shadow .2s ease, background .2s ease, transform .15s ease;
+
+        }
+
+        .form-control.has-toggle{
+            padding-right:44px;
         }
 
         .form-control:focus{
@@ -209,6 +308,71 @@
 
             box-shadow:0 0 0 .2rem rgba(232,163,77,.22);
 
+            transform:translateY(-1px);
+
+        }
+
+        .toggle-visibility{
+            position:absolute;
+            right:14px;
+            top:50%;
+            transform:translateY(-50%);
+            background:none;
+            border:none;
+            color:#9AA9AC;
+            font-size:16px;
+            padding:4px;
+            line-height:1;
+            cursor:pointer;
+            transition:color .2s ease;
+        }
+
+        .toggle-visibility:hover,
+        .toggle-visibility:focus-visible{
+            color:var(--dusk-teal);
+        }
+
+        .toggle-visibility:focus-visible{
+            outline:2px solid var(--sunrise-gold-soft);
+            outline-offset:2px;
+            border-radius:6px;
+        }
+
+        /* password strength */
+        .strength-wrap{
+            margin-top:10px;
+            opacity:0;
+            max-height:0;
+            overflow:hidden;
+            transition:opacity .25s ease, max-height .25s ease, margin-top .25s ease;
+        }
+
+        .strength-wrap.is-visible{
+            opacity:1;
+            max-height:40px;
+            margin-top:10px;
+        }
+
+        .strength-track{
+            display:flex;
+            gap:6px;
+            height:5px;
+            margin-bottom:6px;
+        }
+
+        .strength-seg{
+            flex:1;
+            border-radius:4px;
+            background:#E4DDD0;
+            transition:background .25s ease;
+        }
+
+        .strength-label{
+            font-size:12px;
+            font-weight:600;
+            letter-spacing:.03em;
+            color:#8B9A9E;
+            transition:color .25s ease;
         }
 
         .btn-login{
@@ -223,23 +387,54 @@
 
             letter-spacing:.01em;
 
-            background:var(--dusk-teal);
+            background:linear-gradient(135deg, var(--dusk-teal) 0%, var(--dusk-teal-deep) 100%);
 
             border:none;
 
             color:var(--paper);
 
-            transition:.25s ease;
+            position:relative;
 
+            overflow:hidden;
+
+            transition:transform .22s cubic-bezier(.16,1,.3,1), box-shadow .22s ease, background .3s ease;
+
+            box-shadow:0 10px 24px rgba(11,46,60,.35);
+
+        }
+
+        .btn-login::before{
+            content:"";
+            position:absolute;
+            inset:0;
+            background:linear-gradient(135deg, var(--coral) 0%, var(--sunrise-gold) 100%);
+            opacity:0;
+            transition:opacity .3s ease;
+        }
+
+        .btn-login span{
+            position:relative;
+            z-index:1;
         }
 
         .btn-login:hover,
         .btn-login:focus{
 
-            background:var(--coral);
-
             color:var(--paper);
 
+            transform:translateY(-2px);
+
+            box-shadow:0 16px 32px rgba(217,112,79,.4), 0 0 0 1px rgba(243,197,131,.3);
+
+        }
+
+        .btn-login:hover::before,
+        .btn-login:focus::before{
+            opacity:1;
+        }
+
+        .btn-login:active{
+            transform:translateY(0);
         }
 
         .btn-login:focus-visible{
@@ -263,6 +458,11 @@
             margin:26px 0 18px;
         }
 
+        .signin-row{
+            font-size:14.5px;
+            color:#5A6B70;
+        }
+
         a{
 
             text-decoration:none;
@@ -271,25 +471,51 @@
 
             font-weight:600;
 
+            transition:color .2s ease;
+
         }
 
         a:hover{
             color:var(--dusk-teal);
             text-decoration:underline;
+            text-underline-offset:3px;
+        }
+
+        a:focus-visible{
+            outline:2px solid var(--sunrise-gold-soft);
+            outline-offset:3px;
+            border-radius:4px;
         }
 
         .text-center.mb-4 p{
             margin-top:2px;
         }
 
+        .mb-3, .mb-4{
+            animation:fade-up .6s cubic-bezier(.16,1,.3,1) both;
+        }
+
+        .mb-3:nth-of-type(1){ animation-delay:.18s; }
+        .mb-3:nth-of-type(2){ animation-delay:.26s; }
+        .mb-4{ animation-delay:.34s; }
+
+        @keyframes fade-up{
+            from{ opacity:0; transform:translateY(10px); }
+            to{ opacity:1; transform:translateY(0); }
+        }
+
         @media (max-width:480px){
             .brand-bar{ left:20px; top:20px; }
             .login-card{ padding:36px 26px; }
             .compass-mark{ width:260px; height:260px; right:-70px; bottom:-70px; }
+            .glow-drift{ width:400px; height:400px; }
+            .glow-drift.two{ width:360px; height:360px; }
         }
 
         @media (prefers-reduced-motion:reduce){
-            .form-control, .btn-login, a{ transition:none; }
+            .form-control, .btn-login, a, .toggle-visibility, .input-icon{ transition:none; }
+            .login-card, .brand-bar, .mb-3, .mb-4{ animation:none; }
+            .compass-mark, .glow-drift{ animation:none; }
         }
 
     </style>
@@ -299,6 +525,9 @@
 <body>
 
 <div class="overlay"></div>
+
+<div class="glow-drift" aria-hidden="true"></div>
+<div class="glow-drift two" aria-hidden="true"></div>
 
 <svg class="compass-mark" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <circle cx="100" cy="100" r="98" fill="none" stroke="#F3C583" stroke-width="1"/>
@@ -315,7 +544,7 @@
 </svg>
 
 <div class="brand-bar">
-    <span class="brand-mark">Dream<span>.</span>Destination</span>
+    <span class="brand-mark">Destinora<span>.</span></span>
 </div>
 
 <div class="login-card">
@@ -338,50 +567,77 @@
 
     </div>
 
-    <form action="/register" method="post">
+    <form action="/register" method="post" novalidate>
 
         <div class="mb-3">
 
-            <label>Full Name</label>
+            <label for="username">Full Name</label>
 
-            <input
-                    type="text"
-                    name="username"
-                    class="form-control"
-                    placeholder="Enter your full name"
-                    required>
+            <div class="input-shell">
+                <i class="bi bi-person input-icon" aria-hidden="true"></i>
+                <input
+                        id="username"
+                        type="text"
+                        name="username"
+                        class="form-control"
+                        placeholder="Enter your full name"
+                        autocomplete="name"
+                        required>
+            </div>
 
         </div>
 
         <div class="mb-3">
 
-            <label>Email</label>
+            <label for="email">Email</label>
 
-            <input
-                    type="email"
-                    name="email"
-                    class="form-control"
-                    placeholder="Enter your email"
-                    required>
+            <div class="input-shell">
+                <i class="bi bi-envelope input-icon" aria-hidden="true"></i>
+                <input
+                        id="email"
+                        type="email"
+                        name="email"
+                        class="form-control"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                        required>
+            </div>
 
         </div>
 
         <div class="mb-4">
 
-            <label>Password</label>
+            <label for="password">Password</label>
 
-            <input
-                    type="password"
-                    name="password"
-                    class="form-control"
-                    placeholder="Enter your password"
-                    required>
+            <div class="input-shell">
+                <i class="bi bi-lock input-icon" aria-hidden="true"></i>
+                <input
+                        id="password"
+                        type="password"
+                        name="password"
+                        class="form-control has-toggle"
+                        placeholder="Enter your password"
+                        autocomplete="new-password"
+                        required>
+                <button type="button" class="toggle-visibility" id="toggleVisibility" aria-label="Show password" aria-pressed="false">
+                    <i class="bi bi-eye" id="toggleIcon" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <div class="strength-wrap" id="strengthWrap">
+                <div class="strength-track">
+                    <div class="strength-seg" id="seg1"></div>
+                    <div class="strength-seg" id="seg2"></div>
+                    <div class="strength-seg" id="seg3"></div>
+                </div>
+                <span class="strength-label" id="strengthLabel">&nbsp;</span>
+            </div>
 
         </div>
 
-        <button class="btn btn-primary w-100 btn-login">
+        <button class="btn btn-primary w-100 btn-login" type="submit">
 
-            Register
+            <span>Register</span>
 
         </button>
 
@@ -389,7 +645,7 @@
 
     <hr>
 
-    <div class="text-center">
+    <div class="text-center signin-row">
 
         Already have an account?
 
@@ -402,6 +658,75 @@
     </div>
 
 </div>
+
+<script>
+    (function(){
+        var pwdInput = document.getElementById('password');
+        var toggleBtn = document.getElementById('toggleVisibility');
+        var toggleIcon = document.getElementById('toggleIcon');
+        var strengthWrap = document.getElementById('strengthWrap');
+        var strengthLabel = document.getElementById('strengthLabel');
+        var segs = [document.getElementById('seg1'), document.getElementById('seg2'), document.getElementById('seg3')];
+        var colors = { weak: getComputedStyle(document.documentElement).getPropertyValue('--weak').trim(),
+            medium: getComputedStyle(document.documentElement).getPropertyValue('--medium').trim(),
+            strong: getComputedStyle(document.documentElement).getPropertyValue('--strong').trim() };
+
+        toggleBtn.addEventListener('click', function(){
+            var isPassword = pwdInput.getAttribute('type') === 'password';
+            pwdInput.setAttribute('type', isPassword ? 'text' : 'password');
+            toggleIcon.className = isPassword ? 'bi bi-eye-slash' : 'bi bi-eye';
+            toggleBtn.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+            toggleBtn.setAttribute('aria-pressed', isPassword ? 'true' : 'false');
+        });
+
+        function scorePassword(value){
+            var score = 0;
+            if (!value) return 0;
+            if (value.length >= 8) score++;
+            if (value.length >= 12) score++;
+            if (/[A-Z]/.test(value) && /[a-z]/.test(value)) score++;
+            if (/\d/.test(value)) score++;
+            if (/[^A-Za-z0-9]/.test(value)) score++;
+            return score;
+        }
+
+        function resetSegs(){
+            segs.forEach(function(seg){ seg.style.background = '#E4DDD0'; });
+        }
+
+        pwdInput.addEventListener('input', function(){
+            var value = pwdInput.value;
+
+            if (!value){
+                strengthWrap.classList.remove('is-visible');
+                resetSegs();
+                strengthLabel.textContent = '\u00A0';
+                return;
+            }
+
+            strengthWrap.classList.add('is-visible');
+            var score = scorePassword(value);
+            resetSegs();
+
+            if (score <= 1){
+                segs[0].style.background = colors.weak;
+                strengthLabel.textContent = 'Weak';
+                strengthLabel.style.color = colors.weak;
+            } else if (score <= 3){
+                segs[0].style.background = colors.medium;
+                segs[1].style.background = colors.medium;
+                strengthLabel.textContent = 'Medium';
+                strengthLabel.style.color = colors.medium;
+            } else {
+                segs[0].style.background = colors.strong;
+                segs[1].style.background = colors.strong;
+                segs[2].style.background = colors.strong;
+                strengthLabel.textContent = 'Strong';
+                strengthLabel.style.color = colors.strong;
+            }
+        });
+    })();
+</script>
 
 </body>
 </html>

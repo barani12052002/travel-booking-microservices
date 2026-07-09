@@ -323,7 +323,7 @@ http://localhost:8761
 
 ## Search Page
 
-<img width="1351" height="646" alt="search" src="https://github.com/user-attachments/assets/b247834b-27c0-4eec-9c3e-0bc98e6da840" />
+<img width="1351" height="642" alt="search attractions" src="https://github.com/user-attachments/assets/2aab0ce4-60a2-4086-82dd-572ef9ed848e" />
 
 ## Tour Details
 
@@ -339,7 +339,7 @@ http://localhost:8761
 
 ## My Bookings
 
-<img width="1354" height="645" alt="mybookings" src="https://github.com/user-attachments/assets/ec78aa56-cdf7-4793-8de3-cda67b4e329a" />
+<img width="1354" height="646" alt="bookings" src="https://github.com/user-attachments/assets/672481d6-da59-47f5-8296-f4b22dcc0522" />
 
 ## Swagger UI
 

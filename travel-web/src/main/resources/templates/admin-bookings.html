@@ -13,17 +13,937 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        :root{
+            --royal:      #4F5FF7;
+            --royal-2:    #7B61FF;
+            --purple:     #A855F7;
+            --cyan:       #22D3EE;
+            --gold-1:     #F5B942;
+            --gold-2:     #FFD98A;
+
+            --bg-0:       #060815;
+            --bg-1:       #0A0F24;
+            --bg-2:       #0D1330;
+
+            --ink-0:      #F5F6FF;
+            --ink-1:      #C4C9E8;
+            --ink-2:      #8B90BA;
+
+            --glass:      rgba(255,255,255,.055);
+            --glass-2:    rgba(255,255,255,.09);
+            --glass-brd:  rgba(255,255,255,.14);
+
+            --r-xl: 28px;
+            --r-lg: 24px;
+            --r-md: 18px;
+            --r-sm: 12px;
+
+            --shadow-soft: 0 20px 60px -20px rgba(3,4,20,.65);
+            --shadow-lift: 0 30px 80px -25px rgba(79,95,247,.35);
+
+            --ease: cubic-bezier(.19,1,.22,1);
+        }
+
+        *{
+            box-sizing:border-box;
+        }
+
+        html,body{
+            height:100%;
+        }
+
+        body{
+            font-family:'Manrope', 'Segoe UI', sans-serif;
+            color:var(--ink-0);
+            background:var(--bg-0);
+            position:relative;
+            overflow-x:hidden;
+            min-height:100vh;
+        }
+
+        h1,h2,h3,h4,h5,h6{
+            font-family:'Sora', 'Manrope', sans-serif;
+        }
+
+        /* ===================== AURORA BACKGROUND ===================== */
+
+        .aurora-field{
+            position:fixed;
+            inset:0;
+            z-index:-2;
+            background:
+                    radial-gradient(ellipse 120% 90% at 15% -10%, rgba(79,95,247,.35), transparent 55%),
+                    radial-gradient(ellipse 100% 80% at 90% 0%, rgba(168,85,247,.30), transparent 50%),
+                    radial-gradient(ellipse 110% 90% at 50% 120%, rgba(34,211,238,.22), transparent 55%),
+                    linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 45%, var(--bg-2) 100%);
+        }
+
+        .aurora-field::before,
+        .aurora-field::after{
+            content:'';
+            position:absolute;
+            width:60vmax;
+            height:60vmax;
+            border-radius:50%;
+            filter:blur(90px);
+            opacity:.55;
+            will-change:transform;
+        }
+
+        .aurora-field::before{
+            top:-20vmax;
+            left:-10vmax;
+            background:radial-gradient(circle at 30% 30%, rgba(79,95,247,.55), transparent 70%);
+            animation:blobDrift1 26s var(--ease) infinite alternate;
+        }
+
+        .aurora-field::after{
+            bottom:-25vmax;
+            right:-15vmax;
+            background:radial-gradient(circle at 60% 60%, rgba(168,85,247,.5), transparent 70%);
+            animation:blobDrift2 32s var(--ease) infinite alternate;
+        }
+
+        .blob-cyan{
+            position:fixed;
+            top:35%;
+            right:8%;
+            width:38vmax;
+            height:38vmax;
+            border-radius:50%;
+            background:radial-gradient(circle at 50% 50%, rgba(34,211,238,.35), transparent 72%);
+            filter:blur(80px);
+            z-index:-1;
+            opacity:.5;
+            animation:blobDrift3 22s var(--ease) infinite alternate;
+        }
+
+        .noise-overlay{
+            position:fixed;
+            inset:0;
+            z-index:-1;
+            pointer-events:none;
+            background-image:radial-gradient(rgba(255,255,255,.025) 1px, transparent 1px);
+            background-size:3px 3px;
+            opacity:.4;
+        }
+
+        @keyframes blobDrift1{
+            0%   { transform:translate(0,0) scale(1); }
+            100% { transform:translate(8vmax,10vmax) scale(1.15); }
+        }
+
+        @keyframes blobDrift2{
+            0%   { transform:translate(0,0) scale(1.1); }
+            100% { transform:translate(-6vmax,-8vmax) scale(1); }
+        }
+
+        @keyframes blobDrift3{
+            0%   { transform:translate(0,0) scale(1); }
+            100% { transform:translate(-5vmax,6vmax) scale(1.2); }
+        }
+
+        @media (prefers-reduced-motion: reduce){
+            .aurora-field::before,
+            .aurora-field::after,
+            .blob-cyan{
+                animation:none;
+            }
+        }
+
+        /* ===================== NAVBAR ===================== */
+
+        .navbar{
+            background:transparent !important;
+            padding:22px 0 0;
+            position:sticky;
+            top:0;
+            z-index:1000;
+        }
+
+        .navbar > .container{
+            background:var(--glass);
+            border:1px solid var(--glass-brd);
+            border-radius:100px;
+            padding:12px 22px;
+            backdrop-filter:blur(22px) saturate(160%);
+            -webkit-backdrop-filter:blur(22px) saturate(160%);
+            box-shadow:var(--shadow-soft), inset 0 1px 0 rgba(255,255,255,.08);
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            flex-wrap:wrap;
+            gap:12px;
+        }
+
+        .navbar-brand{
+            font-family:'Sora', sans-serif;
+            font-weight:700 !important;
+            font-size:1.15rem;
+            color:var(--ink-0) !important;
+            display:flex;
+            align-items:center;
+            gap:10px;
+            letter-spacing:.2px;
+        }
+
+        .brand-badge{
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            width:38px;
+            height:38px;
+            border-radius:12px;
+            background:linear-gradient(135deg, var(--royal), var(--purple));
+            box-shadow:0 6px 18px -4px rgba(79,95,247,.6);
+            font-size:1.05rem;
+        }
+
+        .navbar .btn-outline-light{
+            border:1px solid var(--glass-brd);
+            background:rgba(255,255,255,.03);
+            color:var(--ink-1);
+            font-weight:600;
+            font-size:.88rem;
+            border-radius:100px;
+            padding:9px 18px;
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            transition:.3s var(--ease);
+        }
+
+        .navbar .btn-outline-light:hover{
+            color:var(--ink-0);
+            background:var(--glass-2);
+            border-color:rgba(255,255,255,.28);
+            transform:translateY(-2px);
+            box-shadow:0 10px 24px -8px rgba(79,95,247,.45);
+        }
+
+        .navbar .btn-outline-light.active-link{
+            color:var(--ink-0);
+            background:linear-gradient(135deg, rgba(79,95,247,.35), rgba(168,85,247,.28));
+            border-color:rgba(255,255,255,.3);
+            box-shadow:0 10px 26px -8px rgba(79,95,247,.5), inset 0 1px 0 rgba(255,255,255,.2);
+        }
+
+        .navbar .btn-warning{
+            background:linear-gradient(135deg, var(--gold-1), var(--gold-2));
+            border:none;
+            color:#241a02;
+            font-weight:700;
+            font-size:.88rem;
+            border-radius:100px;
+            padding:9px 20px;
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            box-shadow:0 8px 22px -6px rgba(245,185,66,.55);
+            transition:.3s var(--ease);
+        }
+
+        .navbar .btn-warning:hover{
+            transform:translateY(-2px) scale(1.03);
+            box-shadow:0 14px 30px -6px rgba(245,185,66,.7);
+            color:#241a02;
+        }
+
+        /* ===================== PAGE HEADER ===================== */
+
+        .container.py-5{
+            padding-top:3.2rem !important;
+            padding-bottom:3.2rem !important;
+        }
+
+        .page-header-row{
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-start;
+            flex-wrap:wrap;
+            gap:24px;
+            margin-bottom:2.4rem !important;
+        }
+
+        .page-header-row .eyebrow{
+            font-size:.78rem;
+            font-weight:700;
+            letter-spacing:2px;
+            text-transform:uppercase;
+            color:var(--cyan);
+            margin-bottom:10px;
+            display:flex;
+            align-items:center;
+            gap:8px;
+        }
+
+        .page-header-row h2{
+            font-weight:800;
+            font-size:2.5rem;
+            letter-spacing:-.5px;
+            background:linear-gradient(120deg, #FFFFFF 15%, var(--ink-1) 60%);
+            -webkit-background-clip:text;
+            background-clip:text;
+            color:transparent;
+            margin-bottom:10px;
+            display:flex;
+            align-items:center;
+            gap:14px;
+        }
+
+        .page-header-row h2 i{
+            font-size:2rem;
+            background:linear-gradient(135deg, var(--royal), var(--purple));
+            -webkit-background-clip:text;
+            background-clip:text;
+            color:transparent;
+            -webkit-text-fill-color:transparent;
+        }
+
+        .page-header-row p.header-subtitle{
+            color:var(--ink-2);
+            font-size:1.02rem;
+            font-weight:500;
+            margin-bottom:16px;
+        }
+
+        .header-rule{
+            width:86px;
+            height:5px;
+            border-radius:100px;
+            background:linear-gradient(90deg, var(--royal), var(--purple), var(--cyan));
+            box-shadow:0 0 18px rgba(123,97,255,.55);
+        }
+
+        .analytics-badge{
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+            padding:6px 14px 6px 10px;
+            border-radius:100px;
+            background:linear-gradient(135deg, rgba(79,95,247,.25), rgba(168,85,247,.25));
+            border:1px solid rgba(255,255,255,.18);
+            font-size:.72rem;
+            font-weight:700;
+            letter-spacing:.6px;
+            text-transform:uppercase;
+            color:var(--ink-0);
+            margin-left:6px;
+        }
+
+        .analytics-badge .dot{
+            width:7px;
+            height:7px;
+            border-radius:50%;
+            background:var(--cyan);
+            box-shadow:0 0 8px 2px rgba(34,211,238,.8);
+        }
+
+        /* ===================== SUMMARY CARDS ===================== */
+
+        .summary-row{
+            margin-bottom:2.6rem !important;
+        }
+
+        .kpi-card{
+            position:relative;
+            border-radius:var(--r-lg);
+            border:1px solid var(--glass-brd);
+            background:linear-gradient(145deg, var(--glass-2), var(--glass));
+            backdrop-filter:blur(20px) saturate(150%);
+            -webkit-backdrop-filter:blur(20px) saturate(150%);
+            box-shadow:var(--shadow-soft), inset 0 1px 0 rgba(255,255,255,.12);
+            padding:26px 24px;
+            height:100%;
+            overflow:hidden;
+            transition:transform .45s var(--ease), box-shadow .45s var(--ease);
+        }
+
+        .kpi-card::before{
+            content:'';
+            position:absolute;
+            inset:0;
+            padding:1px;
+            border-radius:var(--r-lg);
+            background:linear-gradient(135deg, rgba(255,255,255,.5), rgba(255,255,255,0) 40%, rgba(255,255,255,.12) 100%);
+            -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite:xor;
+            mask-composite:exclude;
+            pointer-events:none;
+        }
+
+        .kpi-card::after{
+            content:'';
+            position:absolute;
+            top:-40%;
+            left:-20%;
+            width:70%;
+            height:180%;
+            background:linear-gradient(120deg, rgba(255,255,255,.14), transparent 60%);
+            transform:rotate(20deg);
+            pointer-events:none;
+        }
+
+        .kpi-card:hover{
+            transform:translateY(-8px);
+            box-shadow:var(--shadow-lift), inset 0 1px 0 rgba(255,255,255,.16);
+        }
+
+        .kpi-icon-wrap{
+            width:54px;
+            height:54px;
+            border-radius:16px;
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            margin-bottom:16px;
+            font-size:1.4rem;
+            color:#fff;
+            position:relative;
+            z-index:1;
+            box-shadow:0 10px 24px -8px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.25);
+        }
+
+        .kpi-icon-wrap.grad-blue{
+            background:linear-gradient(135deg, var(--royal), var(--royal-2));
+        }
+
+        .kpi-icon-wrap.grad-green{
+            background:linear-gradient(135deg, #22C55E, #0EA5A5);
+        }
+
+        .kpi-icon-wrap.grad-red{
+            background:linear-gradient(135deg, #F43F5E, #FB7185);
+        }
+
+        .kpi-icon-wrap.grad-gold{
+            background:linear-gradient(135deg, var(--gold-1), var(--gold-2));
+            color:#3A2600;
+        }
+
+        .kpi-label{
+            font-size:.78rem;
+            font-weight:700;
+            letter-spacing:.8px;
+            text-transform:uppercase;
+            color:var(--ink-2);
+            margin-bottom:6px;
+            position:relative;
+            z-index:1;
+        }
+
+        .kpi-number{
+            font-family:'Sora', sans-serif;
+            font-size:2.05rem;
+            font-weight:700;
+            letter-spacing:-.5px;
+            color:var(--ink-0);
+            position:relative;
+            z-index:1;
+            line-height:1.15;
+        }
+
+        .kpi-card.gold-card{
+            background:linear-gradient(155deg, rgba(245,185,66,.16), rgba(255,217,138,.05));
+            border:1px solid rgba(245,185,66,.4);
+            box-shadow:0 20px 60px -20px rgba(245,185,66,.35), inset 0 1px 0 rgba(255,255,255,.2);
+        }
+
+        .kpi-card.gold-card::before{
+            background:linear-gradient(135deg, rgba(255,217,138,.75), rgba(255,255,255,0) 45%, rgba(245,185,66,.25) 100%);
+        }
+
+        .kpi-card.gold-card .kpi-number{
+            background:linear-gradient(120deg, var(--gold-2), var(--gold-1) 60%, #fff);
+            -webkit-background-clip:text;
+            background-clip:text;
+            color:transparent;
+        }
+
+        .kpi-legend-card{
+            display:flex;
+            align-items:center;
+        }
+
+        .kpi-legend-row{
+            display:flex;
+            flex-wrap:wrap;
+            gap:24px;
+            width:100%;
+            position:relative;
+            z-index:1;
+        }
+
+        .kpi-legend-item{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            flex:1;
+            min-width:160px;
+        }
+
+        .kpi-icon-sm{
+            width:40px;
+            height:40px;
+            border-radius:12px;
+            margin-bottom:0;
+            font-size:1.05rem;
+        }
+
+        .kpi-legend-sub{
+            font-size:.78rem;
+            color:var(--ink-2);
+            font-weight:500;
+        }
+
+        @media (max-width:767.98px){
+            .kpi-legend-row{
+                flex-direction:column;
+                gap:14px;
+            }
+        }
+
+        /* ===================== TABLE PANEL ===================== */
+
+        .table-panel{
+            border-radius:var(--r-xl);
+            border:1px solid var(--glass-brd);
+            background:linear-gradient(160deg, var(--glass-2), var(--glass));
+            backdrop-filter:blur(22px) saturate(150%);
+            -webkit-backdrop-filter:blur(22px) saturate(150%);
+            box-shadow:var(--shadow-soft), inset 0 1px 0 rgba(255,255,255,.1);
+            overflow:hidden;
+        }
+
+        .table-responsive{
+            border-radius:var(--r-xl);
+        }
+
+        table.table{
+            margin-bottom:0;
+            color:var(--ink-0);
+            border-color:rgba(255,255,255,.08) !important;
+            min-width:960px;
+        }
+
+        table.table > :not(caption) > * > *{
+            background:transparent;
+            border-bottom-width:1px;
+            box-shadow:none;
+        }
+
+        thead.table-dark{
+            position:sticky;
+            top:0;
+            z-index:2;
+        }
+
+        thead.table-dark th{
+            background:linear-gradient(180deg, rgba(13,19,48,.92), rgba(13,19,48,.82)) !important;
+            backdrop-filter:blur(14px);
+            color:var(--ink-1) !important;
+            font-size:.75rem;
+            font-weight:700;
+            letter-spacing:1px;
+            text-transform:uppercase;
+            padding:18px 22px;
+            border-bottom:1px solid rgba(255,255,255,.12) !important;
+            border-color:rgba(255,255,255,.08) !important;
+            white-space:nowrap;
+        }
+
+        tbody tr{
+            transition:background .3s var(--ease);
+        }
+
+        tbody tr:nth-of-type(odd){
+            background:rgba(255,255,255,.015);
+        }
+
+        tbody tr:hover{
+            background:linear-gradient(90deg, rgba(79,95,247,.12), rgba(168,85,247,.06)) !important;
+        }
+
+        tbody td{
+            padding:17px 22px;
+            border-color:rgba(255,255,255,.07) !important;
+            font-size:.92rem;
+            vertical-align:middle;
+        }
+
+        /* reference badge */
+
+        .ref-badge{
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+            padding:7px 15px;
+            border-radius:100px;
+            background:linear-gradient(135deg, rgba(79,95,247,.28), rgba(168,85,247,.2));
+            border:1px solid rgba(123,97,255,.45);
+            box-shadow:0 0 16px -3px rgba(123,97,255,.5);
+            font-family:'JetBrains Mono', monospace;
+            font-weight:700;
+            font-size:.78rem;
+            letter-spacing:.4px;
+            color:#E4E7FF;
+        }
+
+        .ref-badge i{
+            color:var(--cyan);
+            font-size:.85rem;
+        }
+
+        /* customer cell */
+
+        .customer-cell{
+            display:flex;
+            align-items:center;
+            gap:12px;
+        }
+
+        .customer-avatar{
+            width:38px;
+            height:38px;
+            border-radius:50%;
+            flex-shrink:0;
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            background:linear-gradient(135deg, var(--royal), var(--purple));
+            box-shadow:0 6px 16px -4px rgba(79,95,247,.55), inset 0 1px 0 rgba(255,255,255,.3);
+            font-size:1.05rem;
+            color:#fff;
+        }
+
+        .customer-cell .customer-name{
+            font-weight:700;
+            color:var(--ink-0);
+            font-size:.9rem;
+        }
+
+        /* attraction card */
+
+        .attraction-pill{
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            background:rgba(255,255,255,.045);
+            border:1px solid rgba(255,255,255,.1);
+            border-radius:var(--r-sm);
+            padding:8px 14px;
+            font-size:.86rem;
+            color:var(--ink-1);
+            font-weight:500;
+        }
+
+        .attraction-pill i{
+            color:var(--cyan);
+            font-size:.92rem;
+        }
+
+        /* travel date pill */
+
+        .date-pill{
+            display:inline-flex;
+            align-items:center;
+            gap:7px;
+            background:rgba(255,255,255,.04);
+            border:1px solid rgba(255,255,255,.1);
+            border-radius:100px;
+            padding:7px 14px;
+            font-size:.83rem;
+            color:var(--ink-1);
+            font-weight:600;
+        }
+
+        .date-pill i{
+            color:var(--royal-2);
+            font-size:.85rem;
+        }
+
+        /* amount */
+
+        .amount-cell{
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+            font-family:'Sora', sans-serif;
+            font-weight:700;
+            font-size:1.02rem;
+            background:linear-gradient(120deg, #4ADE80, #22D3EE);
+            -webkit-background-clip:text;
+            background-clip:text;
+            color:transparent;
+        }
+
+        .amount-cell i{
+            color:#4ADE80;
+            font-size:.95rem;
+            -webkit-text-fill-color:#4ADE80;
+        }
+
+        /* status pills */
+
+        .status-pill{
+            display:inline-flex;
+            align-items:center;
+            gap:7px;
+            padding:7px 16px;
+            border-radius:100px;
+            font-size:.76rem;
+            font-weight:800;
+            letter-spacing:.5px;
+            text-transform:uppercase;
+        }
+
+        .status-pill.status-confirmed{
+            background:linear-gradient(135deg, rgba(34,197,94,.26), rgba(14,165,165,.14));
+            border:1px solid rgba(74,222,128,.4);
+            color:#CFFAE0;
+            box-shadow:0 0 18px -3px rgba(34,197,94,.4);
+            animation:pulseGlowGreen 3s ease-in-out infinite;
+        }
+
+        .status-pill.status-cancelled{
+            background:linear-gradient(135deg, rgba(244,63,94,.28), rgba(251,113,133,.14));
+            border:1px solid rgba(251,113,133,.45);
+            color:#FFD3DA;
+            box-shadow:0 0 18px -3px rgba(244,63,94,.55);
+        }
+
+        @keyframes pulseGlowGreen{
+            0%, 100% { box-shadow:0 0 18px -3px rgba(34,197,94,.4); }
+            50%      { box-shadow:0 0 22px -1px rgba(34,197,94,.65); }
+        }
+
+        @media (prefers-reduced-motion: reduce){
+            .status-pill.status-confirmed{
+                animation:none;
+            }
+        }
+
+        /* action buttons */
+
+        .btn-cancel-premium{
+            background:linear-gradient(135deg, #F43F5E, #FB7185);
+            border:none;
+            border-radius:100px;
+            padding:9px 18px;
+            font-weight:700;
+            font-size:.82rem;
+            color:#fff;
+            display:inline-flex;
+            align-items:center;
+            gap:7px;
+            box-shadow:0 8px 20px -6px rgba(244,63,94,.5);
+            transition:.35s var(--ease);
+        }
+
+        .btn-cancel-premium:hover{
+            transform:translateY(-2px);
+            box-shadow:0 12px 26px -6px rgba(244,63,94,.65);
+            color:#fff;
+        }
+
+        .btn-cancel-premium i{
+            transition:transform .35s var(--ease);
+        }
+
+        .btn-cancel-premium:hover i{
+            transform:rotate(-90deg);
+        }
+
+        .btn-cancelled-state{
+            background:rgba(255,255,255,.045);
+            border:1px solid rgba(255,255,255,.12);
+            border-radius:100px;
+            padding:9px 18px;
+            font-weight:700;
+            font-size:.82rem;
+            color:var(--ink-2);
+            display:inline-flex;
+            align-items:center;
+            gap:7px;
+            opacity:.85;
+        }
+
+        /* ===================== EMPTY STATE ===================== */
+
+        .empty-state-cell{
+            padding:70px 24px !important;
+        }
+
+        .empty-state{
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            gap:14px;
+            animation:floatY 5s ease-in-out infinite;
+        }
+
+        .empty-state .empty-icon{
+            width:84px;
+            height:84px;
+            border-radius:24px;
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            font-size:2.2rem;
+            background:linear-gradient(135deg, rgba(79,95,247,.22), rgba(168,85,247,.16));
+            border:1px solid rgba(255,255,255,.14);
+            color:var(--cyan);
+            box-shadow:var(--shadow-soft), inset 0 1px 0 rgba(255,255,255,.15);
+        }
+
+        .empty-state .empty-title{
+            font-family:'Sora', sans-serif;
+            font-weight:700;
+            font-size:1.15rem;
+            color:var(--ink-0);
+        }
+
+        .empty-state .empty-sub{
+            font-size:.9rem;
+            color:var(--ink-2);
+            font-weight:500;
+            max-width:320px;
+            text-align:center;
+        }
+
+        @keyframes floatY{
+            0%, 100% { transform:translateY(0); }
+            50%      { transform:translateY(-8px); }
+        }
+
+        @media (prefers-reduced-motion: reduce){
+            .empty-state{
+                animation:none;
+            }
+        }
+
+        /* ===================== PAGINATION ===================== */
+
+        nav[aria-label="bookings-pagination"],
+        .pagination-wrap{
+            margin-top:2.4rem;
+            display:flex;
+            justify-content:center;
+        }
+
+        .pagination{
+            gap:8px;
+            padding:10px;
+            border-radius:100px;
+            background:var(--glass);
+            border:1px solid var(--glass-brd);
+            backdrop-filter:blur(18px) saturate(150%);
+            -webkit-backdrop-filter:blur(18px) saturate(150%);
+            box-shadow:var(--shadow-soft), inset 0 1px 0 rgba(255,255,255,.1);
+        }
+
+        .pagination .page-item .page-link{
+            border:none;
+            background:transparent;
+            color:var(--ink-1);
+            font-weight:700;
+            font-size:.88rem;
+            border-radius:100px !important;
+            padding:9px 18px;
+            transition:.3s var(--ease);
+            display:inline-flex;
+            align-items:center;
+            gap:6px;
+        }
+
+        .pagination .page-item .page-link:hover{
+            background:var(--glass-2);
+            color:var(--ink-0);
+            transform:translateY(-2px);
+        }
+
+        .pagination .page-item.active .page-link{
+            background:linear-gradient(135deg, var(--royal), var(--purple));
+            color:#fff;
+            box-shadow:0 8px 22px -6px rgba(123,97,255,.6);
+        }
+
+        .pagination .page-item.disabled .page-link{
+            color:var(--ink-2);
+            opacity:.4;
+            pointer-events:none;
+        }
+
+        /* ===================== RESPONSIVE ===================== */
+
+        @media (max-width:991.98px){
+            .navbar > .container{
+                border-radius:24px;
+                justify-content:center;
+            }
+
+            .navbar > .container > div{
+                display:flex;
+                flex-wrap:wrap;
+                justify-content:center;
+                gap:8px;
+                width:100%;
+            }
+
+            .page-header-row h2{
+                font-size:2rem;
+            }
+        }
+
+        @media (max-width:575.98px){
+            .navbar .btn-outline-light,
+            .navbar .btn-warning{
+                font-size:.8rem;
+                padding:8px 14px;
+            }
+
+            .kpi-number{
+                font-size:1.7rem;
+            }
+
+            .pagination .page-item .page-link{
+                padding:8px 13px;
+                font-size:.82rem;
+            }
+        }
+
+        /* Focus visibility for accessibility */
+        a:focus-visible,
+        button:focus-visible{
+            outline:2px solid var(--cyan);
+            outline-offset:3px;
+            border-radius:8px;
+        }
+
+    </style>
+
 </head>
 
-<body class="bg-light">
+<body>
 
-<nav class="navbar navbar-dark bg-dark shadow">
+<div class="aurora-field"></div>
+<div class="blob-cyan"></div>
+<div class="noise-overlay"></div>
+
+<nav class="navbar navbar-dark">
 
     <div class="container">
 
         <a class="navbar-brand fw-bold" href="/admin/dashboard">
 
-            🌍 Destinora Admin
+            <span class="brand-badge">🌍</span>
+            Destinora Admin
 
         </a>
 
@@ -49,17 +969,33 @@
 
 <div class="container py-5">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 page-header-row">
 
-        <h2>
+        <div>
 
-            <i class="bi bi-calendar-check-fill"></i>
+            <span class="eyebrow"><i class="bi bi-airplane-fill"></i> Travel Operations</span>
 
-            Manage Bookings
+            <h2>
 
-        </h2>
+                <i class="bi bi-calendar-check-fill"></i>
 
-        <span class="badge bg-primary fs-6">
+                Manage Bookings
+
+                <span class="analytics-badge"><span class="dot"></span> Live</span>
+
+            </h2>
+
+            <p class="header-subtitle">
+
+                Monitor, manage and control customer travel bookings.
+
+            </p>
+
+            <div class="header-rule"></div>
+
+        </div>
+
+        <span class="badge bg-primary fs-6 d-none">
 
             Total:
             <span th:text="${#lists.size(bookings)}"></span>
@@ -68,134 +1004,243 @@
 
     </div>
 
-    <table class="table table-hover table-bordered shadow bg-white align-middle">
+    <!-- Summary Cards -->
 
-        <thead class="table-dark">
+    <div class="row g-4 summary-row">
 
-        <tr>
+        <div class="col-md-4 col-sm-6">
 
-            <th>Reference</th>
+            <div class="kpi-card">
 
-            <th>Customer</th>
+                <div class="kpi-icon-wrap grad-blue">
+                    <i class="bi bi-calendar-check-fill"></i>
+                </div>
 
-            <th>Attraction</th>
+                <div class="kpi-label">Total Bookings</div>
 
-            <th>Travel Date</th>
+                <div class="kpi-number" th:text="${#lists.size(bookings)}"></div>
 
-            <th>Amount</th>
+            </div>
 
-            <th>Status</th>
+        </div>
 
-            <th width="170">Action</th>
+        <div class="col-md-8">
 
-        </tr>
+            <div class="kpi-card kpi-legend-card">
 
-        </thead>
+                <div class="kpi-legend-row">
 
-        <tbody>
+                    <div class="kpi-legend-item">
+                        <span class="kpi-icon-wrap grad-green kpi-icon-sm"><i class="bi bi-check-circle-fill"></i></span>
+                        <div>
+                            <div class="kpi-label">Confirmed</div>
+                            <div class="kpi-legend-sub">Marked in the table below</div>
+                        </div>
+                    </div>
 
-        <tr th:each="booking : ${bookings}">
+                    <div class="kpi-legend-item">
+                        <span class="kpi-icon-wrap grad-red kpi-icon-sm"><i class="bi bi-x-circle-fill"></i></span>
+                        <div>
+                            <div class="kpi-label">Cancelled</div>
+                            <div class="kpi-legend-sub">Marked in the table below</div>
+                        </div>
+                    </div>
 
-            <td>
+                    <div class="kpi-legend-item">
+                        <span class="kpi-icon-wrap grad-gold kpi-icon-sm"><i class="bi bi-currency-rupee"></i></span>
+                        <div>
+                            <div class="kpi-label">Revenue</div>
+                            <div class="kpi-legend-sub">Per booking, in the amount column</div>
+                        </div>
+                    </div>
 
-                <span class="badge bg-secondary"
-                      th:text="${booking.bookingReference}">
-                </span>
+                </div>
 
-            </td>
+            </div>
 
-            <td th:text="${booking.customerName}"></td>
+        </div>
 
-            <td th:text="${booking.attractionName}"></td>
+    </div>
 
-            <td th:text="${booking.travelDate}"></td>
+    <!-- Bookings Table -->
 
-            <td class="fw-bold text-success">
+    <div class="table-panel">
 
-                ₹ <span th:text="${booking.totalAmount}"></span>
+        <div class="table-responsive">
 
-            </td>
+            <table class="table table-hover table-bordered align-middle">
 
-            <td>
+                <thead class="table-dark">
 
-                <span
-                        th:if="${booking.bookingStatus == 'CONFIRMED'}"
-                        class="badge bg-success">
+                <tr>
 
-                    <i class="bi bi-check-circle-fill"></i>
-                    Confirmed
+                    <th>Reference</th>
 
-                </span>
+                    <th>Customer</th>
 
-                <span
-                        th:if="${booking.bookingStatus == 'CANCELLED'}"
-                        class="badge bg-danger">
+                    <th>Attraction</th>
 
-                    <i class="bi bi-x-circle-fill"></i>
-                    Cancelled
+                    <th>Travel Date</th>
 
-                </span>
+                    <th>Amount</th>
 
-            </td>
+                    <th>Status</th>
 
-            <td>
+                    <th width="170">Action</th>
 
-                <form
-                        th:if="${booking.bookingStatus == 'CONFIRMED'}"
-                        th:action="@{'/admin/bookings/cancel/' + ${booking.bookingReference}}"
-                        method="post">
+                </tr>
 
-                    <button
-                            type="submit"
-                            class="btn btn-danger btn-sm"
-                            onclick="return confirm('Cancel this booking?')">
+                </thead>
 
-                        <i class="bi bi-x-circle"></i>
+                <tbody>
 
-                        Cancel
+                <tr th:each="booking : ${bookings}">
 
-                    </button>
+                    <td>
 
-                </form>
+                        <span class="ref-badge"
+                              th:text="${booking.bookingReference}">
+                        </span>
 
-                <button
-                        th:if="${booking.bookingStatus == 'CANCELLED'}"
-                        class="btn btn-secondary btn-sm"
-                        disabled>
+                    </td>
 
-                    <i class="bi bi-check2-all"></i>
+                    <td>
 
-                    Cancelled
+                        <div class="customer-cell">
 
-                </button>
+                            <span class="customer-avatar">
+                                <i class="bi bi-person-fill"></i>
+                            </span>
 
-            </td>
+                            <span class="customer-name" th:text="${booking.customerName}"></span>
 
-        </tr>
+                        </div>
 
-        <tr th:if="${#lists.isEmpty(bookings)}">
+                    </td>
 
-            <td colspan="7" class="text-center">
+                    <td>
 
-                No bookings found.
+                        <span class="attraction-pill">
+                            <i class="bi bi-geo-alt-fill"></i>
+                            <span th:text="${booking.attractionName}"></span>
+                        </span>
 
-            </td>
+                    </td>
 
-        </tr>
+                    <td>
 
-        </tbody>
+                        <span class="date-pill">
+                            <i class="bi bi-calendar3"></i>
+                            <span th:text="${booking.travelDate}"></span>
+                        </span>
 
-    </table>
+                    </td>
+
+                    <td>
+
+                        <span class="amount-cell">
+
+                            <i class="bi bi-currency-rupee"></i> <span th:text="${booking.totalAmount}"></span>
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <span
+                                th:if="${booking.bookingStatus == 'CONFIRMED'}"
+                                class="status-pill status-confirmed">
+
+                            <i class="bi bi-check-circle-fill"></i>
+                            Confirmed
+
+                        </span>
+
+                        <span
+                                th:if="${booking.bookingStatus == 'CANCELLED'}"
+                                class="status-pill status-cancelled">
+
+                            <i class="bi bi-x-circle-fill"></i>
+                            Cancelled
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <form
+                                th:if="${booking.bookingStatus == 'CONFIRMED'}"
+                                th:action="@{'/admin/bookings/cancel/' + ${booking.bookingReference}}"
+                                method="post">
+
+                            <button
+                                    type="submit"
+                                    class="btn-cancel-premium"
+                                    onclick="return confirm('Cancel this booking?')">
+
+                                <i class="bi bi-x-circle"></i>
+
+                                Cancel
+
+                            </button>
+
+                        </form>
+
+                        <button
+                                th:if="${booking.bookingStatus == 'CANCELLED'}"
+                                class="btn-cancelled-state"
+                                disabled>
+
+                            <i class="bi bi-check2-all"></i>
+
+                            Cancelled
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(bookings)}">
+
+                    <td colspan="7" class="text-center empty-state-cell">
+
+                        <div class="empty-state">
+
+                            <span class="empty-icon">
+                                <i class="bi bi-calendar-x"></i>
+                            </span>
+
+                            <span class="empty-title">No bookings found.</span>
+
+                            <span class="empty-sub">New bookings will appear here as customers reserve their travel experiences.</span>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
 
     <!-- Pagination -->
 
-    <nav th:if="${totalPages > 1}">
+    <nav th:if="${totalPages > 1}" class="pagination-wrap">
         <ul class="pagination justify-content-center">
 
             <li class="page-item"
                 th:classappend="${currentPage == 0} ? 'disabled'">
                 <a class="page-link"
                    th:href="@{/admin/bookings(page=(${currentPage - 1}))}">
+                    <i class="bi bi-chevron-left"></i>
                     Previous
                 </a>
             </li>
@@ -214,6 +1259,7 @@
                 <a class="page-link"
                    th:href="@{/admin/bookings(page=(${currentPage + 1}))}">
                     Next
+                    <i class="bi bi-chevron-right"></i>
                 </a>
             </li>
 

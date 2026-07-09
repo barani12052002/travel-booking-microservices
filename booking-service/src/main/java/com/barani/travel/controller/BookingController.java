@@ -23,7 +23,7 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @Operation(summary = "Create Booking")
     @PostMapping
     public BookingResponse createBooking(@Valid @RequestBody BookingRequest request){
@@ -32,7 +32,7 @@ public class BookingController {
 
     }
 
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @Operation(summary = "Get Booking By Reference")
     @GetMapping("/{bookingReference}")
     public BookingResponse getBooking(@PathVariable String bookingReference) {
@@ -45,7 +45,7 @@ public class BookingController {
         log.info("Booking history endpoint reached for user {}", email);
         return bookingService.getBookingsByCustomerEmail(email);
     }
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @PutMapping("/cancel/{bookingReference}")
     public BookingResponse cancelBooking(@PathVariable String bookingReference){
 

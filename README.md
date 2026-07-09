@@ -23,6 +23,7 @@ This project demonstrates how a real-world microservices architecture can be des
 - User Registration
 - User Login
 - JWT Authentication
+- Refresh Token Authentication
 - Role-Based Authorization (USER / ADMIN)
 - BCrypt Password Encryption
 - Stateless Security
@@ -363,19 +364,19 @@ http://localhost:8761
 
 ## Booking Confirmation Email
 
-<img width="1018" height="630" alt="booking mail" src="https://github.com/user-attachments/assets/20104b85-9744-4b1f-9c9b-6b04b93726ed" />
+<img width="1192" height="638" alt="mail" src="https://github.com/user-attachments/assets/3d45d54a-666d-4980-a7dc-e1ff68ffcb34" />
 
 ---
 
 ## PDF Ticket
 
-<img width="332" height="604" alt="ticket pdf" src="https://github.com/user-attachments/assets/af678562-ec99-43d2-9724-ef08d6de1b17" />
+<img width="857" height="646" alt="pdf" src="https://github.com/user-attachments/assets/658b94e3-dbb2-420b-b3ca-281a78a35d62" />
 
 ---
 
 ## QR Code
 
-<img width="1072" height="627" alt="QR Code" src="https://github.com/user-attachments/assets/6c27d04b-420e-4e59-9670-ddbf232fe51f" />
+<img width="1046" height="519" alt="qr" src="https://github.com/user-attachments/assets/521ab374-dbc8-4842-81de-6347e13f206d" />
 
 ---
 
@@ -437,7 +438,6 @@ docker compose up --build
 
 # 📈 Future Improvements
 
-- Refresh Token Authentication
 - Redis Cache
 - Spring Cloud Config Server
 - RabbitMQ / Kafka Event Messaging
